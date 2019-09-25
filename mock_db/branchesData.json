@@ -1,0 +1,22 @@
+{
+    "Branches": [
+        {
+            "branchesID": 100,
+            "place": "jerusalem",
+            "phon": "845-026-451-086",
+            "isActive": true
+        },
+        {
+            "branchesID": 101,
+            "place": "Beni - Berak",
+            "phon": "845-036-368-584",
+            "isActive": false
+        },
+        {
+            "branchesID": 102,
+            "place": "Petah Tiqwa",
+            "phon": "845-039-528-742",
+            "isActive": true
+        }
+    ]
+}

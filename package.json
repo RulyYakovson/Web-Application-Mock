@@ -1,0 +1,34 @@
+{
+  "name": "web-application-mock",
+  "version": "1.0.0",
+  "description": "3rd exercise",
+  "main": "app.js",
+  "dependencies": {
+    "bootstrap-4-migrate": "^1.0.1",
+    "cookie-parser": "^1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.17.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "nodemon": "^1.19.2",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.10.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RulyYakovson/Web-Application-Mock.git"
+  },
+  "author": "Ruli Yakovson & Itzchak Weiss",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RulyYakovson/Web-Application-Mock/issues"
+  },
+  "homepage": "https://github.com/RulyYakovson/Web-Application-Mock#readme"
+}

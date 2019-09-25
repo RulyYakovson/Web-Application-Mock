@@ -1,0 +1,35 @@
+{
+    "flowers": [
+        {
+            "name": "tulipa", 
+            "color": "red",
+            "img": "public/images/837px-Tulipa-Sharonensis-ZE-5473.jpg",
+            "price": 15.5
+        },
+        {
+            "name": "anemones", 
+            "color": "red",
+            "img": "public/images/1199px-Anemones5.jpg",
+            "price": 10
+        },
+        {
+            "name": "marganit", 
+            "color": "purple",
+            "img": "public/images/margnit.jpg",
+            "price": 8
+        },
+        {
+            "name": "oxalis", 
+            "color": "yellow",
+            "img": "public/images/Oxalis-pes-caprae-16c-Zachi-Evenor.jpg",
+            "price": 12
+        },
+        {
+            "name": "plumeria", 
+            "color": "yellow",
+            "img": "public/images/Plumeria-0006-Zachi-Evenor.jpg",
+            "price": 13.5
+        }
+    ]
+
+}
