@@ -1,2 +1,2 @@
-## JQuery exercise
-# Internet software engineering course
+# JQuery exercise
+## Internet software engineering course
