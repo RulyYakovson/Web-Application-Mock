@@ -33,6 +33,18 @@
                     </div>
                 </li>
             <% } %>
+            <% if (userRole && userRole === 'admin') { %>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Employees
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a id="employees" class="dropdown-item" href="#employees">All</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-emp-modal">Add</a>
+                    </div>
+                </li>
+            <% } %>
         </ul>
         <ul class="navbar-nav mr-2 my-2 my-lg-0">
             <% if (!userRole) { %>

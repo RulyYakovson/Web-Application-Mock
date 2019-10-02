@@ -4,21 +4,21 @@ module.exports = usersData =
         {
             "username": "israel israeli",
             "id": "508068457",
-            "branchesID": 100,
+            "branch": 100,
             "password": "123456",
             "role": "admin"
         },
         {
             "username": "shy shmuly",
             "id": "362498524",
-            "branchesID": 101,
+            "branch": 101,
             "password": "123456",
             "role": "admin"
         },
         {
             "username": "guy gby",
             "id": "967458524",
-            "branchesID": 102,
+            "branch": 102,
             "password": "123456",
             "role": "admin"
         },
@@ -27,42 +27,42 @@ module.exports = usersData =
         {
             "username": "roy ariel",
             "id": "963521458",
-            "branchesID": 100,
+            "branch": 100,
             "password": "123456",
             "role": "employee"
         },
         {
             "username": "yochy ochi",
             "id": "632784569",
-            "branchesID": 100,
+            "branch": 100,
             "password": "123456",
             "role": "employee"
         },
         {
             "username": "dan zilber",
             "id": "589125473",
-            "branchesID": 101,
+            "branch": 101,
             "password": "123456",
             "role": "employee"
         },
         {
             "username": "sari ariel",
             "id": "583124569",
-            "branchesID": 101,
+            "branch": 101,
             "password": "123456",
             "role": "employee"
         },
         {
             "username": "rachi riche",
             "id": "25968741",
-            "branchesID": 102,
+            "branch": 102,
             "password": "123456",
             "role": "employee"
         },
         {
             "username": "riki levi",
             "id": "967325648",
-            "branchesID": 102,
+            "branch": 102,
             "password": "123456",
             "role": "employee"
         },
