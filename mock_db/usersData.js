@@ -69,7 +69,7 @@ module.exports = usersData =
 
         // Customers
         {
-            "username": "ari coen",
+            "username": "ari cohen",
             "id": "98653214",
             "password": "123456",
             "role": "customer"
