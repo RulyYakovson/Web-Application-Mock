@@ -1,0 +1,14 @@
+<div class="card" style="width: fit-content">
+    <div class="card-body">
+        <h5 class="card-title"><%= customers[i].username %></h5>
+        <% if (userRole && userRole === 'admin') { %>
+            <h6 class="card-subtitle mb-2 text-muted"><%= 'Password: ' + customers[i].password %></h6>
+        <% } %>
+        <p class="card-subtitle"><%= 'Phone: ' + customers[i].phone %></p>
+        <p class="card-text"><%= 'ID: ' + customers[i].id %></p>
+        <% if (userRole && userRole === 'admin') { %>
+            <a id="remove-customer" href="#" class="card-link" style="color: red"
+            onclick="removeCustomer(<%= customers[i].id %>)">Remove</a>
+        <% } %>
+    </div>
+</div>

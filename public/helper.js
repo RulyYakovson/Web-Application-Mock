@@ -23,3 +23,22 @@ module.exports.addEmployee = (emp) => {
     console.log(users);
     return userAddesSuccessfully;
 }
+
+module.exports.getAllCustomers = () => {
+    return users.filter( (user) => user.role === 'customer');
+}
+
+module.exports.removeCustomer = (id) => {
+    users = users.filter( (user) => user.id !== id );
+    console.log(users);
+}
+
+module.exports.addCustomer = (customer) => {
+    let userAddesSuccessfully = false;
+    if (!users.find( (user) => user.id === customer.id || user.username === customer.username)) {
+        users.push(customer);
+        userAddesSuccessfully = true;
+    }
+    console.log(users);
+    return userAddesSuccessfully;
+}

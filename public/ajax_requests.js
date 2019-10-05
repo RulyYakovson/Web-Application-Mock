@@ -11,6 +11,9 @@ $(document).ready(function() {
         case 'employees':
             $('#employees').trigger('click');
             break;
+        case 'customers':
+            $('#customers').trigger('click');
+            break;
         case '':
             $('#home').trigger('click');
     }
@@ -20,13 +23,6 @@ $(document).ready(function(){
     $(".form-control").focus(function() {
         removeMsg()
     });
-});
-
-$(document).ready(function(){
-    $('#exampleModal').on('hide.bs.modal', function () {
-        $(".form-control").val('');
-        removeMsg()
-    })
 });
 
 $('#home').click(function() {
@@ -69,7 +65,7 @@ $('#contact').click(function() {
 });
 
 $('#employees').click(function() {
-    $.ajax({url:'/all/employees', type:'GET', contentType:'text/html', success: function(data, status) {
+    $.ajax({url:'/all/employees' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
         console.log('Status: ' + status);
         if (status == 'success') {
             console.log('result is 200');
@@ -103,11 +99,49 @@ $('#add-emp-button').click(async function() {
         console.log(`ajax_requests:add-emp:: Adding user: ${username} finished successfully`);
         jQuery.noConflict();
         $('#add-emp-modal').modal('hide');
-        if (window.location.hash.slice(1) === 'employees') {
-            $('#employees').trigger('click');
-        }
+        location.reload();
     } else {
         $('#add-emp-err-msg').text('An error occurred while trying to add the user');
+    }
+});
+
+$('#customers').click(function() {
+    $.ajax({url:'/all/customers' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
+        console.log('Status: ' + status);
+        if (status == 'success') {
+            console.log('result is 200');
+            $('#main-body').html(data);
+        }
+    }});
+});
+
+$('#add-customer-button').click(async function() {
+    let username = $('#add-customer-username').val();
+    let password = $('#add-customer-password').val();
+    let id = $('#add-customer-id').val();
+    let phone = $('#add-customer-phone').val();
+    console.log(`ajax_requests:add-emp:: Username: ${username}, Passward: ${password}, ID: ${id}, Phone: ${phone}`);
+    let response = await fetch("/add/customer",
+    {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username : username,
+            password : password,
+            id: id,
+            role: 'customer',
+            phone: phone
+        })
+    });
+    if (response.status === 200){
+        console.log(`ajax_requests:add-customer:: Adding user: ${username} finished successfully`);
+        jQuery.noConflict();
+        $('#add-customer-modal').modal('hide');
+        location.reload();
+    } else {
+        $('#add-customer-err-msg').text('An error occurred while trying to add the user');
     }
 });
 
@@ -145,6 +179,18 @@ const removeEmployee = (id) => {
     }});
 }
 
+const removeCustomer = (id) => {
+    console.log(`ajax_requests:remove-customer:: ID: ${id}`);
+    $.ajax({url:`/remove/customer/${id}`, type:'DELETE', contentType:'text/html', success: function(data, status) {
+        console.log('Status: ' + status);
+        if (status == 'success') {
+            console.log('result is 200');
+            $('#main-body').html(data);
+        }
+    }});
+}
+
 const removeMsg = () => {
-    $('#add-emp-err-msg').text('')
+    $('#add-emp-err-msg').text('');
+    $('#add-customer-err-msg').text('');
 }

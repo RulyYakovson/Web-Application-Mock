@@ -1,0 +1,20 @@
+<div class="jumbotron text-center">
+        <h1>Customers details</h1>
+</div>
+<div style="margin: 0px 130px 50px 130px">
+    <table class="table">
+        <tbody>
+            <% for(let i = 0; i < customers.length; i++) { %>
+                <% if(i % 5 === 0) { %>
+                    <tr>
+                <% } %>
+                <td>
+                    <% include ../partials/customer %>
+                </td>
+                <% if(i % 5 === 4) { %>
+                    </tr>
+                <% } %>
+            <% } %>
+        </tbody>
+    </table>
+</div>

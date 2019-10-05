@@ -11,15 +11,15 @@
             <li class="nav-item" id="about"><a href="#about" class="nav-link">About</a></li>
             <li class="nav-item" id="contact"><a href="#contact" class="nav-link">Contact Us</a></li>
             
-            <% if (userRole && userRole === 'admin') { %>
+            <% if (userRole && (userRole === 'admin' || userRole === 'employee')) { %>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         Customers
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Show all</a>
-                        <a class="dropdown-item" href="#">Add</a>
+                        <a id="customers" class="dropdown-item" href="#customers">All</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-customer-modal">Add</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -28,12 +28,10 @@
                         Branches
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Show all</a>
-                        <a class="dropdown-item" href="#">Add</a>
+                        <a id="branches" class="dropdown-item" href="#branches">All</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-branch-modal">Add</a>
                     </div>
                 </li>
-            <% } %>
-            <% if (userRole && userRole === 'admin') { %>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
@@ -41,7 +39,9 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a id="employees" class="dropdown-item" href="#employees">All</a>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-emp-modal">Add</a>
+                        <% if (userRole && userRole === 'admin') { %>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-emp-modal">Add</a>
+                        <% } %>
                     </div>
                 </li>
             <% } %>

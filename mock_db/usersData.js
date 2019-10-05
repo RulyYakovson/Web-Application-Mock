@@ -72,12 +72,42 @@ module.exports = usersData =
             "username": "ari cohen",
             "id": "98653214",
             "password": "123456",
-            "role": "customer"
+            "role": "customer",
+            "phone": "0528888888"
         },
         {
             "username": "hana levi",
             "id": "63528741",
             "password": "123456",
-            "role": "customer"
+            "role": "customer",
+            "phone": "0524856582"
+        },
+        {
+            "username": "ari levi",
+            "id": "98653564",
+            "password": "123456",
+            "role": "customer",
+            "phone": "0528888888"
+        },
+        {
+            "username": "hana shlomovich",
+            "id": "635287777",
+            "password": "123456",
+            "role": "customer",
+            "phone": "0524856582"
+        },
+        {
+            "username": "moshe rabinu",
+            "id": "1151515",
+            "password": "123456",
+            "role": "customer",
+            "phone": "2566885684"
+        },
+        {
+            "username": "dvora haneviah",
+            "id": "63528555",
+            "password": "123456",
+            "role": "customer",
+            "phone": "0524856582"
         }
     ]

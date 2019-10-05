@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
     user = helper.getUser(req.query.username, req.query.password);
     user && console.log(`router.js:: User: Name: ${user.username}, Role: ${user.role}`);
     res.status(200);
-    res.render('index', {pageName:'Home', pageId:'home', userRole: user && user.role});
+    res.render('index', {userRole: user && user.role});
 });
 
 router.get('/home', (req, res, next) => {
@@ -15,38 +15,63 @@ router.get('/home', (req, res, next) => {
     user = helper.getUser(req.query.username, req.query.password);
     user && console.log(`router.js:home::: User: Name: ${user.username}, Role: ${user.role}`);
     res.status(200);
-    res.render('mains/home', {pageName:'Home', pageId:'home'});
+    res.render('mains/home');
 });
 
 router.get('/about', (req, res, next) => {
     console.log('Received get about page request');
     res.status(200);
-    res.render('mains/about', {pageName:'About', pageId:'about'});
+    res.render('mains/about');
 });
 
 router.get('/contact', (req, res) => {
     console.log('Received get contact page request');
     res.status(200);
-    res.render('mains/contact', {pageName:'Contact', pageId:'contact'});
+    res.render('mains/contact');
 });
 
 router.get('/all/employees', (req, res) => {
     console.log('Received get all employees request');
     let employees = helper.getAllEmployees();
+    user = helper.getUser(req.query.username, req.query.password);
     res.status(200);
-    res.render('mains/employees', {employees: employees, pageName:'Contact', pageId:'contact'});
+    res.render('mains/employees', {employees: employees, userRole: user && user.role});
 });
 
 router.delete('/remove/employee/:id', (req, res, next) => {
     console.log(`Received remove employee request for ID: ${req.params.id}`);
     helper.removeEmployee(req.params.id);
     let employees = helper.getAllEmployees();
+    user = helper.getUser(req.query.username, req.query.password);
     res.status(200);
-    res.render('mains/employees', {employees: employees, pageName:'Contact', pageId:'contact'});
+    res.render('mains/employees', {employees: employees, userRole: user && user.role});
 });
 
 router.post('/add/emp', (req, res) => {
     let sucsses = helper.addEmployee(req.body);
+    sucsses && res.status(200).send('OK');
+    res.status(500).send('ERROR');
+});
+
+router.get('/all/customers', (req, res) => {
+    console.log('Received get all customers request');
+    let customers = helper.getAllCustomers();
+    user = helper.getUser(req.query.username, req.query.password);
+    res.status(200);
+    res.render('mains/customers', {customers: customers, userRole: user && user.role});
+});
+
+router.delete('/remove/customer/:id', (req, res, next) => {
+    console.log(`Received remove customer request for ID: ${req.params.id}`);
+    helper.removeCustomer(req.params.id);
+    let customers = helper.getAllCustomers();
+    user = helper.getUser(req.query.username, req.query.password);
+    res.status(200);
+    res.render('mains/customers', {customers: customers, userRole: user && user.role});
+});
+
+router.post('/add/customer', (req, res) => {
+    let sucsses = helper.addCustomer(req.body);
     sucsses && res.status(200).send('OK');
     res.status(500).send('ERROR');
 });
