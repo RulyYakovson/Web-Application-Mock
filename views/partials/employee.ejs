@@ -1,4 +1,5 @@
 <div class="card" style="width: fit-content">
+	<% include modals/update_emp_modal %>
     <div class="card-body">
         <h5 class="card-title"><%= employees[i].username %></h5>
         <h6 class="card-subtitle mb-2 text-muted"><%= employees[i].role %></h6>
@@ -10,6 +11,7 @@
         <% if (userRole && userRole === 'admin') { %>
             <a id="remove-employee" href="#" class="card-link" style="color: red"
             onclick="removeEmployee(<%= employees[i].id %>)">Remove</a>
+            <a href="#" class="card-link" data-toggle="modal" data-target=<%='#' + employees[i].id %> >Update</a>
         <% } %>
     </div>
 </div>
