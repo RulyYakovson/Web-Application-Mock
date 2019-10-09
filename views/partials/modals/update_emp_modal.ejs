@@ -2,26 +2,23 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">				
-                    <h4 class="modal-title">Update employee</h4>
+                    <h4 class="modal-title"><%= 'Update details for ' + employees[i].username %></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group">
+                        <h5 class="modal-dialog"> <%='ID: '+ employees[i].id %> </h5>
+                    </div>
                     <div class="md-form mb-4">
-                        <input value="gtgggg" id="add-emp-password" type="password" class="form-control" placeholder="Password" required="required">					
+                        <input value=<%= employees[i].role %> id=<%="update-emp-role" + employees[i].id %> type="text" class="form-control" placeholder="Role" required="required">					
+                    </div>
+                    <div class="md-form mb-4">
+                        <input value=<%= employees[i].branch %> id=<%="update-emp-branch" + employees[i].id %> type="number" class="form-control" placeholder="Branch number" required="required">					
                     </div>
                     <div class="form-group">
-                        <input value=<%= employees[i].id %> id="add-emp-id" type="number" class="form-control" placeholder="ID" required="required">
+                        <button onclick="update_emp(<%= employees[i].id %>)" id="update-emp-button" class="btn btn-primary btn-block btn-lg">Update</button>
                     </div>
-                    <div class="md-form mb-4">
-                        <input value=<%= employees[i].username %> id="add-emp-role" type="text" class="form-control" placeholder="Role" required="required">					
-                    </div>
-                    <div class="md-form mb-4">
-                        <input id="add-emp-branch" type="number" class="form-control" placeholder="Branch number" required="required">					
-                    </div>
-                    <div class="form-group">
-                        <button id="add-emp-button" class="btn btn-primary btn-block btn-lg">Update</button>
-                    </div>
-                    <p id="add-emp-err-msg" style="color: red"></p>
+                    <p id=<%="update-emp-err-msg" + employees[i].id %> style="color: red"></p>
                 </div>
             </div>
         </div>

@@ -105,6 +105,32 @@ $('#add-emp-button').click(async function() {
     }
 });
 
+const update_emp = async (id) => {
+    let role = $('#update-emp-role' + id).val();
+    let branch = $('#update-emp-branch' + id).val();
+    console.log(`ajax_requests:update-emp::  ID: ${id}, Role: ${role}, Branch: ${branch}`);
+    let response = await fetch("/update/emp",
+    {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,
+            role: role,
+            branch: branch
+        })
+    });
+    if (response.status === 200){
+        console.log(`ajax_requests:update-emp:: Updating user: ${id} finished successfully`);
+        jQuery.noConflict();
+        $('#' + id).modal('hide');
+        location.reload();
+    } else {
+        $('#update-emp-err-msg' + id).text('An error occurred while trying to updating the user');
+    }
+};
+
 $('#customers').click(function() {
     $.ajax({url:'/all/customers' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
         console.log('Status: ' + status);
@@ -170,7 +196,7 @@ $('#logout').click(function() {
 
 const removeEmployee = (id) => {
     console.log(`ajax_requests:remove-employee:: ID: ${id}`);
-    $.ajax({url:`/remove/employee/${id}`, type:'DELETE', contentType:'text/html', success: function(data, status) {
+    $.ajax({url:`/remove/employee/${id}` + window.location.search, type:'DELETE', contentType:'text/html', success: function(data, status) {
         console.log('Status: ' + status);
         if (status == 'success') {
             console.log('result is 200');

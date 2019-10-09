@@ -53,6 +53,14 @@ router.post('/add/emp', (req, res) => {
     res.status(500).send('ERROR');
 });
 
+router.post('/update/emp', (req, res) => {
+    console.log('aaaaaaaaaaaaa' + req.body);
+    let sucsses = helper.updateEmployee(req.body);
+    console.log('bbbbbbbbbbbbb' + sucsses);
+    sucsses && res.status(200).send('OK');
+    res.status(500).send('ERROR');
+});
+
 router.get('/all/customers', (req, res) => {
     console.log('Received get all customers request');
     let customers = helper.getAllCustomers();

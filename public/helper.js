@@ -15,13 +15,26 @@ module.exports.removeEmployee = (id) => {
 }
 
 module.exports.addEmployee = (emp) => {
-    let userAddesSuccessfully = false;
+    let userAddedSuccessfully = false;
     if (!users.find( (user) => user.id === emp.id || user.username === emp.username)) {
         users.push(emp);
-        userAddesSuccessfully = true;
+        userAddedSuccessfully = true;
     }
     console.log(users);
-    return userAddesSuccessfully;
+    return userAddedSuccessfully;
+}
+
+module.exports.updateEmployee = (emp) => {
+    let userUpdatedSuccessfully = false;
+    let user = users.find( (user) =>  user.id == emp.id );
+    console.log(user);
+    if (user) {
+        user.role = emp.role;
+        user.branch = emp.branch;
+        userUpdatedSuccessfully = true;
+    }
+    console.log(users);
+    return userUpdatedSuccessfully;
 }
 
 module.exports.getAllCustomers = () => {
