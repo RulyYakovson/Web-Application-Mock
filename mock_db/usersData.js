@@ -73,41 +73,47 @@ module.exports = usersData =
             "id": "98653214",
             "password": "123456",
             "role": "customer",
-            "phone": "0528888888"
+            "phone": "0528888888",
+            "address": "mail@dom.co"
         },
         {
             "username": "hana levi",
             "id": "63528741",
             "password": "123456",
             "role": "customer",
-            "phone": "0524856582"
+            "phone": "0524856582",
+            "address": "mail@dom.co"
         },
         {
             "username": "ari levi",
             "id": "98653564",
             "password": "123456",
             "role": "customer",
-            "phone": "0528888888"
+            "phone": "0528888888",
+            "address": "mail@dom.co"
         },
         {
             "username": "hana shlomovich",
             "id": "635287777",
             "password": "123456",
             "role": "customer",
-            "phone": "0524856582"
+            "phone": "0524856582",
+            "address": "mail@dom.co"
         },
         {
             "username": "moshe rabinu",
             "id": "1151515",
             "password": "123456",
             "role": "customer",
-            "phone": "2566885684"
+            "phone": "2566885684",
+            "address": "mail@dom.co"
         },
         {
             "username": "dvora haneviah",
             "id": "63528555",
             "password": "123456",
             "role": "customer",
-            "phone": "0524856582"
+            "phone": "0524856582",
+            "address": "mail@dom.co"
         }
     ]

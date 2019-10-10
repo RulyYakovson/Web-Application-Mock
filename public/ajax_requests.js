@@ -146,7 +146,8 @@ $('#add-customer-button').click(async function() {
     let password = $('#add-customer-password').val();
     let id = $('#add-customer-id').val();
     let phone = $('#add-customer-phone').val();
-    console.log(`ajax_requests:add-emp:: Username: ${username}, Passward: ${password}, ID: ${id}, Phone: ${phone}`);
+    let address = $('#add-customer-address').val();
+    console.log(`ajax_requests:add-customer:: Username: ${username}, Passward: ${password}, ID: ${id}, Phone: ${phone}`);
     let response = await fetch("/add/customer",
     {
         method: 'POST',
@@ -158,7 +159,8 @@ $('#add-customer-button').click(async function() {
             password : password,
             id: id,
             role: 'customer',
-            phone: phone
+            phone: phone,
+            address: address
         })
     });
     if (response.status === 200){
@@ -170,6 +172,32 @@ $('#add-customer-button').click(async function() {
         $('#add-customer-err-msg').text('An error occurred while trying to add the user');
     }
 });
+
+const update_customer = async (id) => {
+    let phone = $('#update-customer-phone' + id).val();
+    let address = $('#update-customer-address' + id).val();
+    console.log(`ajax_requests:update-emp::  ID: ${id}, Phone: ${phone}, Address: ${address}`);
+    let response = await fetch("/update/customer",
+    {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,
+            phone: phone,
+            address: address
+        })
+    });
+    if (response.status === 200){
+        console.log(`ajax_requests:add-customer:: Adding user: ${id} finished successfully`);
+        jQuery.noConflict();
+        $('#' + id).modal('hide');
+        location.reload();
+    } else {
+        $('#update-customer-err-msg').text('An error occurred while trying to updating the user');
+    }
+};
 
 $('#login-button').click(async function() {
     let username = $('#login-username').val();
@@ -207,7 +235,7 @@ const removeEmployee = (id) => {
 
 const removeCustomer = (id) => {
     console.log(`ajax_requests:remove-customer:: ID: ${id}`);
-    $.ajax({url:`/remove/customer/${id}`, type:'DELETE', contentType:'text/html', success: function(data, status) {
+    $.ajax({url:`/remove/customer/${id}` + window.location.search, type:'DELETE', contentType:'text/html', success: function(data, status) {
         console.log('Status: ' + status);
         if (status == 'success') {
             console.log('result is 200');

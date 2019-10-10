@@ -26,7 +26,7 @@ module.exports.addEmployee = (emp) => {
 
 module.exports.updateEmployee = (emp) => {
     let userUpdatedSuccessfully = false;
-    let user = users.find( (user) =>  user.id == emp.id );
+    let user = users.find( (user) =>  user.id == emp.id ); // Important - Do not change to '===' since emp.id is a number
     console.log(user);
     if (user) {
         user.role = emp.role;
@@ -54,4 +54,17 @@ module.exports.addCustomer = (customer) => {
     }
     console.log(users);
     return userAddesSuccessfully;
+}
+
+module.exports.updateCustomer = (customer) => {
+    let userUpdatedSuccessfully = false;
+    let user = users.find( (user) =>  user.id == customer.id ); // Important - Do not change to '===' since customer.id is a number
+    console.log(user);
+    if (user) {
+        user.phone = customer.phone;
+        user.address = customer.address;
+        userUpdatedSuccessfully = true;
+    }
+    console.log(users);
+    return userUpdatedSuccessfully;
 }

@@ -54,9 +54,7 @@ router.post('/add/emp', (req, res) => {
 });
 
 router.post('/update/emp', (req, res) => {
-    console.log('aaaaaaaaaaaaa' + req.body);
     let sucsses = helper.updateEmployee(req.body);
-    console.log('bbbbbbbbbbbbb' + sucsses);
     sucsses && res.status(200).send('OK');
     res.status(500).send('ERROR');
 });
@@ -80,6 +78,12 @@ router.delete('/remove/customer/:id', (req, res, next) => {
 
 router.post('/add/customer', (req, res) => {
     let sucsses = helper.addCustomer(req.body);
+    sucsses && res.status(200).send('OK');
+    res.status(500).send('ERROR');
+});
+
+router.post('/update/customer', (req, res) => {
+    let sucsses = helper.updateCustomer(req.body);
     sucsses && res.status(200).send('OK');
     res.status(500).send('ERROR');
 });
