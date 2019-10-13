@@ -14,6 +14,9 @@ $(document).ready(function() {
         case 'customers':
             $('#customers').trigger('click');
             break;
+        case 'flowers':
+            $('#flowers').trigger('click');
+            break;
         case '':
             $('#home').trigger('click');
     }
@@ -31,8 +34,7 @@ $('#home').click(function() {
         if (status == 'success') {
             console.log('result is 200');
             $('#main-body').html(data);
-            $('#about').removeClass('active');
-            $('#contact').removeClass('active');
+            removeActive();
             $('#home').addClass('active');
         }
     }});
@@ -44,9 +46,20 @@ $('#about').click(function() {
         if (status == 'success') {
             console.log('result is 200');
             $('#main-body').html(data);
+            removeActive();
             $('#about').addClass('active');
-            $('#contact').removeClass('active');
-            $('#home').removeClass('active');
+        }
+    }});
+});
+
+$('#flowers').click(function() {
+    $.ajax({url:'/flowers' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
+        console.log('Status: ' + status);
+        if (status == 'success') {
+            console.log('result is 200');
+            $('#main-body').html(data);
+            removeActive();
+            $('#flowers').addClass('active');
         }
     }});
 });
@@ -57,9 +70,8 @@ $('#contact').click(function() {
         if (status == 'success') {
             console.log('result is 200');
             $('#main-body').html(data);
+            removeActive();
             $('#contact').addClass('active');
-            $('#about').removeClass('active');
-            $('#home').removeClass('active');
         }
     }});
 });
@@ -69,7 +81,9 @@ $('#employees').click(function() {
         console.log('Status: ' + status);
         if (status == 'success') {
             console.log('result is 200');
+            removeActive();
             $('#main-body').html(data);
+            $('#employees-menu').addClass('active');
         }
     }});
 });
@@ -137,6 +151,8 @@ $('#customers').click(function() {
         if (status == 'success') {
             console.log('result is 200');
             $('#main-body').html(data);
+            removeActive();
+            $('#customers-menu').addClass('active');
         }
     }});
 });
@@ -147,7 +163,8 @@ $('#add-customer-button').click(async function() {
     let id = $('#add-customer-id').val();
     let phone = $('#add-customer-phone').val();
     let address = $('#add-customer-address').val();
-    console.log(`ajax_requests:add-customer:: Username: ${username}, Passward: ${password}, ID: ${id}, Phone: ${phone}`);
+    let gender = $('#add-customer-gender').val();
+    console.log(`ajax_requests:add-customer:: Username: ${username}, Passward: ${password}, ID: ${id}, Phone: ${phone}, Gender: ${gender}`);
     let response = await fetch("/add/customer",
     {
         method: 'POST',
@@ -160,7 +177,8 @@ $('#add-customer-button').click(async function() {
             id: id,
             role: 'customer',
             phone: phone,
-            address: address
+            address: address,
+            gender: gender
         })
     });
     if (response.status === 200){
@@ -176,7 +194,8 @@ $('#add-customer-button').click(async function() {
 const update_customer = async (id) => {
     let phone = $('#update-customer-phone' + id).val();
     let address = $('#update-customer-address' + id).val();
-    console.log(`ajax_requests:update-emp::  ID: ${id}, Phone: ${phone}, Address: ${address}`);
+    let gender = $('#update-customer-gender' + id).val();
+    console.log(`ajax_requests:update-emp::  ID: ${id}, Phone: ${phone}, Address: ${address}, Gender: ${gender}`);
     let response = await fetch("/update/customer",
     {
         method: 'POST',
@@ -186,7 +205,8 @@ const update_customer = async (id) => {
         body: JSON.stringify({
             id: id,
             phone: phone,
-            address: address
+            address: address,
+            gender: gender
         })
     });
     if (response.status === 200){
@@ -244,7 +264,20 @@ const removeCustomer = (id) => {
     }});
 }
 
+const selectCurrentGender = (id, gender) => {
+    if (gender === 'Male') { 
+        $('#update-customer-gender' + id + ' option[value=Male]').attr('selected', 'selected');
+    }
+    else if (gender === 'Female') {
+        $('#update-customer-gender' + id + ' option[value=Female]').attr('selected', 'selected');
+    }
+}
+
 const removeMsg = () => {
     $('#add-emp-err-msg').text('');
     $('#add-customer-err-msg').text('');
+}
+
+const removeActive = () => {
+    $('.nav-item').removeClass('active');
 }

@@ -74,7 +74,8 @@ module.exports = usersData =
             "password": "123456",
             "role": "customer",
             "phone": "0528888888",
-            "address": "mail@dom.co"
+            "address": "mail@dom.co",
+            "gender": "Male"
         },
         {
             "username": "hana levi",
@@ -82,7 +83,8 @@ module.exports = usersData =
             "password": "123456",
             "role": "customer",
             "phone": "0524856582",
-            "address": "mail@dom.co"
+            "address": "mail@dom.co",
+            "gender": "Female"
         },
         {
             "username": "ari levi",
@@ -90,7 +92,8 @@ module.exports = usersData =
             "password": "123456",
             "role": "customer",
             "phone": "0528888888",
-            "address": "mail@dom.co"
+            "address": "mail@dom.co",
+            "gender": "Male"
         },
         {
             "username": "hana shlomovich",
@@ -98,7 +101,8 @@ module.exports = usersData =
             "password": "123456",
             "role": "customer",
             "phone": "0524856582",
-            "address": "mail@dom.co"
+            "address": "mail@dom.co",
+            "gender": "Female"
         },
         {
             "username": "moshe rabinu",
@@ -106,7 +110,8 @@ module.exports = usersData =
             "password": "123456",
             "role": "customer",
             "phone": "2566885684",
-            "address": "mail@dom.co"
+            "address": "mail@dom.co",
+            "gender": "Male"
         },
         {
             "username": "dvora haneviah",
@@ -114,6 +119,7 @@ module.exports = usersData =
             "password": "123456",
             "role": "customer",
             "phone": "0524856582",
-            "address": "mail@dom.co"
+            "address": "mail@dom.co",
+            "gender": "Female"
         }
     ]

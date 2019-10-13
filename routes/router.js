@@ -24,6 +24,14 @@ router.get('/about', (req, res, next) => {
     res.render('mains/about');
 });
 
+router.get('/flowers', (req, res) => {
+    console.log('Received get flowers request');
+    let flowers = helper.getAllFlowers();
+    user = helper.getUser(req.query.username, req.query.password);
+    res.status(200);
+    res.render('mains/flowers', {flowers: flowers, userRole: user && user.role});
+});
+
 router.get('/contact', (req, res) => {
     console.log('Received get contact page request');
     res.status(200);

@@ -1,4 +1,5 @@
 let users = require('../mock_db/usersData');
+let flowers = require('../mock_db/flowers');
 
 module.exports.getUser = (userName, pass) => {
     let user = users.find( (user) => user.username === userName && user.password === pass);
@@ -63,8 +64,13 @@ module.exports.updateCustomer = (customer) => {
     if (user) {
         user.phone = customer.phone;
         user.address = customer.address;
+        user.gender = customer.gender;
         userUpdatedSuccessfully = true;
     }
     console.log(users);
     return userUpdatedSuccessfully;
+}
+
+module.exports.getAllFlowers = () => {
+    return flowers;
 }

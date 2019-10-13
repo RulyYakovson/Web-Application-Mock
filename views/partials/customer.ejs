@@ -1,5 +1,10 @@
-<div class="card" style="width: fit-content">
+<div class="card" style="width: fit-content; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
     <% include modals/update_customer_modal %>
+    <% if (customers[i].gender === 'Male') { %>
+        <img class="card-img-top" src="/images/user_male.png" alt="Card image" style="width:100%">
+    <% } else if (customers[i].gender === 'Female') { %>
+        <img class="card-img-top" src="/images/user_female.png" alt="Card image" style="width:100%">
+    <% } %>
     <div class="card-body">
         <h5 class="card-title"><%= customers[i].username %></h5>
         <% if (userRole && userRole === 'admin') { %>
@@ -9,9 +14,11 @@
         <p class="card-subtitle"><%= 'Phone: ' + customers[i].phone %></p>
         <p class="card-text"><%= 'Address: ' + customers[i].address %></p>
         <% if (userRole && userRole === 'admin') { %>
-            <a id="remove-customer" href="#" class="card-link" style="color: red"
-            onclick="removeCustomer(<%= customers[i].id %>)">Remove</a>
-            <a href="#" class="card-link" data-toggle="modal" data-target=<%='#' + customers[i].id %> >Update</a>
+            <div style="text-align: center;">
+                <a id="remove-customer" href="#" class="card-link" style="color: red"
+                onclick="removeCustomer(<%= customers[i].id %>)">Remove</a>
+                <a onclick="selectCurrentGender('<%= customers[i].id %>', '<%= customers[i].gender %>')" href="#" class="card-link" data-toggle="modal" data-target=<%='#' + customers[i].id %> >Update</a>
+            </div>
         <% } %>
     </div>
 </div>
