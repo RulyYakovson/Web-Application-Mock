@@ -1,0 +1,20 @@
+<div class="jumbotron text-center">
+    <h1>Branches</h1>
+</div>
+<div style="margin: 0px 130px 50px 130px">
+<table class="table">
+    <tbody>
+        <% for(let i = 0; i < branches.length; i++) { %>
+            <% if(i % 1 === 0) { %>
+                <tr>
+            <% } %>
+            <td style="text-align: center;">
+                <% include ../partials/branch %>
+            </td>
+            <% if(i % 1 === 0) { %>
+                </tr>
+            <% } %>
+        <% } %>
+    </tbody>
+</table>
+</div>

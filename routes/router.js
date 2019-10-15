@@ -32,6 +32,14 @@ router.get('/flowers', (req, res) => {
     res.render('mains/flowers', {flowers: flowers, userRole: user && user.role});
 });
 
+router.get('/branches', (req, res) => {
+    console.log('Received get branches request');
+    let branches = helper.getAllBranches();
+    user = helper.getUser(req.query.username, req.query.password);
+    res.status(200);
+    res.render('mains/branches', {branches: branches, userRole: user && user.role});
+});
+
 router.get('/contact', (req, res) => {
     console.log('Received get contact page request');
     res.status(200);

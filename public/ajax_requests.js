@@ -17,6 +17,9 @@ $(document).ready(function() {
         case 'flowers':
             $('#flowers').trigger('click');
             break;
+        case 'branches':
+            $('#branches').trigger('click');
+            break;
         case '':
             $('#home').trigger('click');
     }
@@ -60,6 +63,18 @@ $('#flowers').click(function() {
             $('#main-body').html(data);
             removeActive();
             $('#flowers').addClass('active');
+        }
+    }});
+});
+
+$('#branches').click(function() {
+    $.ajax({url:'/branches' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
+        console.log('Status: ' + status);
+        if (status == 'success') {
+            console.log('result is 200');
+            $('#main-body').html(data);
+            removeActive();
+            $('#branches').addClass('active');
         }
     }});
 });
