@@ -325,3 +325,7 @@ const colorChecked = (colorBoxName) => {
     let color = document.getElementById(colorBoxName);
     color.style.boxShadow = "0 7px 14px 0 rgba(0, 0, 0, 4)";
 }
+
+const messageSent = () => {
+    $('#home').trigger('click');
+}
