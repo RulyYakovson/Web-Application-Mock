@@ -19,10 +19,21 @@
                         <input id="add-emp-id" type="number" class="form-control" placeholder="ID" required="required">
                     </div>
                     <div class="md-form mb-4">
-                        <input id="add-emp-role" type="text" class="form-control" placeholder="Role" required="required">					
+                        <select class="form-control" id="add-emp-role">
+                            <option hidden>Role</option>
+                            <option label="Admin" value = "Admin" />
+                            <option label="Employee" value = "Employee" />
+                        </select>					
                     </div>
                     <div class="md-form mb-4">
                         <input id="add-emp-branch" type="number" class="form-control" placeholder="Branch number" required="required">					
+                    </div>
+                    <div class="md-form mb-4">
+                        <select class="form-control" id="add-emp-gender">
+                            <option hidden>Gender</option>
+                            <option label="Male" value = "Male" />
+                            <option label="Female" value = "Female" />
+                        </select>					
                     </div>
                     <div class="form-group">
                         <button id="add-emp-button" class="btn btn-primary btn-block btn-lg">Add</button>

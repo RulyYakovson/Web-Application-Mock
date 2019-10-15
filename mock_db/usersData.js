@@ -6,21 +6,24 @@ module.exports = usersData =
             "id": "508068457",
             "branch": 100,
             "password": "123456",
-            "role": "admin"
+            "role": "Admin",
+            "gender": "Male"
         },
         {
             "username": "shy shmuly",
             "id": "362498524",
             "branch": 101,
             "password": "123456",
-            "role": "admin"
+            "role": "Admin",
+            "gender": "Male"
         },
         {
             "username": "guy gby",
             "id": "967458524",
             "branch": 102,
             "password": "123456",
-            "role": "admin"
+            "role": "Admin",
+            "gender": "Male"
         },
        
         // Employees
@@ -29,42 +32,48 @@ module.exports = usersData =
             "id": "963521458",
             "branch": 100,
             "password": "123456",
-            "role": "employee"
+            "role": "Employee",
+            "gender": "Male"
         },
         {
             "username": "yochy ochi",
             "id": "632784569",
             "branch": 100,
             "password": "123456",
-            "role": "employee"
+            "role": "Employee",
+            "gender": "Male"
         },
         {
             "username": "dan zilber",
             "id": "589125473",
             "branch": 101,
             "password": "123456",
-            "role": "employee"
+            "role": "Employee",
+            "gender": "Male"
         },
         {
             "username": "sari ariel",
             "id": "583124569",
             "branch": 101,
             "password": "123456",
-            "role": "employee"
+            "role": "Employee",
+            "gender": "Female"
         },
         {
             "username": "rachi riche",
             "id": "25968741",
             "branch": 102,
             "password": "123456",
-            "role": "employee"
+            "role": "Employee",
+            "gender": "Female"
         },
         {
             "username": "riki levi",
             "id": "967325648",
             "branch": 102,
             "password": "123456",
-            "role": "employee"
+            "role": "Employee",
+            "gender": "Female"
         },
 
         // Customers

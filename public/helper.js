@@ -32,6 +32,7 @@ module.exports.updateEmployee = (emp) => {
     if (user) {
         user.role = emp.role;
         user.branch = emp.branch;
+        user.gender = emp.gender;
         userUpdatedSuccessfully = true;
     }
     console.log(users);

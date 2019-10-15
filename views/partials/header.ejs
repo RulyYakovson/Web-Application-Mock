@@ -15,7 +15,7 @@
             <% } %>
             <li class="nav-item" id="contact"><a href="#contact" class="nav-link">Contact Us</a></li>
             
-            <% if (userRole && (userRole === 'admin' || userRole === 'employee')) { %>
+            <% if (userRole && (userRole === 'Admin' || userRole === 'Employee')) { %>
                 <li class="nav-item dropdown" id="customers-menu">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" >
@@ -43,7 +43,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a id="employees" class="dropdown-item" href="#employees">All</a>
-                        <% if (userRole && userRole === 'admin') { %>
+                        <% if (userRole && userRole === 'Admin') { %>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-emp-modal">Add</a>
                         <% } %>
                     </div>

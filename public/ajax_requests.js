@@ -94,7 +94,8 @@ $('#add-emp-button').click(async function() {
     let id = $('#add-emp-id').val();
     let role = $('#add-emp-role').val();
     let branch = $('#add-emp-branch').val();
-    console.log(`ajax_requests:add-emp:: Username: ${username}, Passward: ${password}, ID: ${id}, Role: ${role}, Branch: ${branch}`);
+    let gender = $('#add-emp-gender').val();
+    console.log(`ajax_requests:add-emp:: Username: ${username}, Passward: ${password}, ID: ${id}, Role: ${role}, Branch: ${branch}, Gender: ${gender}`);
     let response = await fetch("/add/emp",
     {
         method: 'POST',
@@ -106,7 +107,8 @@ $('#add-emp-button').click(async function() {
             password : password,
             id: id,
             role: role,
-            branch: branch
+            branch: branch,
+            gender: gender
         })
     });
     if (response.status === 200){
@@ -122,7 +124,8 @@ $('#add-emp-button').click(async function() {
 const update_emp = async (id) => {
     let role = $('#update-emp-role' + id).val();
     let branch = $('#update-emp-branch' + id).val();
-    console.log(`ajax_requests:update-emp::  ID: ${id}, Role: ${role}, Branch: ${branch}`);
+    let gender = $('#update-emp-gender' + id).val();
+    console.log(`ajax_requests:update-emp::  ID: ${id}, Role: ${role}, Branch: ${branch}, Gender: ${gender}`);
     let response = await fetch("/update/emp",
     {
         method: 'POST',
@@ -132,7 +135,8 @@ const update_emp = async (id) => {
         body: JSON.stringify({
             id: id,
             role: role,
-            branch: branch
+            branch: branch,
+            gender: gender
         })
     });
     if (response.status === 200){
@@ -273,6 +277,22 @@ const selectCurrentGender = (id, gender) => {
     }
 }
 
+const selectCurrentDetails = (id, gender, role) => {
+    if (gender === 'Male') { 
+        $('#update-emp-gender' + id + ' option[value=Male]').attr('selected', 'selected');
+    }
+    else if (gender === 'Female') {
+        $('#update-emp-gender' + id + ' option[value=Female]').attr('selected', 'selected');
+    }
+
+    if (role === 'Admin') { 
+        $('#update-emp-role' + id + ' option[value=Admin]').attr('selected', 'selected');
+    }
+    else if (role === 'Employee') {
+        $('#update-emp-role' + id + ' option[value=Employee]').attr('selected', 'selected');
+    }
+}
+
 const removeMsg = () => {
     $('#add-emp-err-msg').text('');
     $('#add-customer-err-msg').text('');
@@ -280,4 +300,13 @@ const removeMsg = () => {
 
 const removeActive = () => {
     $('.nav-item').removeClass('active');
+}
+
+const colorChecked = (colorBoxName) => {
+    let colors = document.getElementsByClassName('select-color ' + colorBoxName.substr(1));
+    for (let i = 0; i < colors.length; i++) {
+      colors[i].style.boxShadow = "none";
+    }
+    let color = document.getElementById(colorBoxName);
+    color.style.boxShadow = "0 7px 14px 0 rgba(0, 0, 0, 4)";
 }

@@ -10,10 +10,19 @@
                         <h5 class="modal-dialog"> <%='ID: '+ employees[i].id %> </h5>
                     </div>
                     <div class="md-form mb-4">
-                        <input value=<%= employees[i].role %> id=<%="update-emp-role" + employees[i].id %> type="text" class="form-control" placeholder="Role" required="required">					
+                        <select class="form-control" id=<%="update-emp-role" + employees[i].id %>>
+                            <option label="Admin" value = "Admin" />
+                            <option label="Employee" value = "Employee" />
+                        </select>					
                     </div>
                     <div class="md-form mb-4">
                         <input value=<%= employees[i].branch %> id=<%="update-emp-branch" + employees[i].id %> type="number" class="form-control" placeholder="Branch number" required="required">					
+                    </div>
+                    <div class="md-form mb-4">
+                        <select class="form-control" id=<%="update-emp-gender" + employees[i].id %> >
+                            <option label="Male" value = "Male" />
+                            <option label="Female" value = "Female" />
+                        </select>					
                     </div>
                     <div class="form-group">
                         <button onclick="update_emp(<%= employees[i].id %>)" id="update-emp-button" class="btn btn-primary btn-block btn-lg">Update</button>
