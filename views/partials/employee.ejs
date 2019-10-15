@@ -20,10 +20,12 @@
         <p class="card-subtitle"><%= 'Branch: ' + employees[i].branch %></p>
         <p class="card-text"><%= 'ID: ' + employees[i].id %></p>
         <% if (userRole && userRole === 'Admin') { %>
-            <a id="remove-employee" href="#" class="card-link" style="color: red"
-            onclick="removeEmployee(<%= employees[i].id %>)">Remove</a>
-            <a onclick="selectCurrentDetails('<%= employees[i].id %>', '<%= employees[i].gender %>', '<%= employees[i].role %>')"
-                href="#" class="card-link" data-toggle="modal" data-target=<%='#' + employees[i].id %> >Update</a>
+            <div style="text-align: center;">
+                <a id="remove-employee" href="#" class="card-link" style="color: red"
+                onclick="removeEmployee(<%= employees[i].id %>)">Remove</a>
+                <a onclick="selectCurrentDetails('<%= employees[i].id %>', '<%= employees[i].gender %>', '<%= employees[i].role %>')"
+                    href="#" class="card-link" data-toggle="modal" data-target=<%='#' + employees[i].id %> >Update</a>
+            </div>
         <% } %>
     </div>
 </div>

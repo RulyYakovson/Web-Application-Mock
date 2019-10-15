@@ -24,6 +24,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a id="customers" class="dropdown-item" href="#customers">All</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-customer-modal">Add</a>
                     </div>
                 </li>
@@ -35,12 +36,15 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a id="employees" class="dropdown-item" href="#employees">All</a>
                         <% if (userRole && userRole === 'Admin') { %>
+                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-emp-modal">Add</a>
                         <% } %>
                     </div>
                 </li>
             <% } %>
         </ul>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav mr-2 my-2 my-lg-0">
             <% if (!userRole) { %>
                 <li class="nav-item" id="sign-in"><a href="#" class="nav-link" data-toggle="modal" data-target="#login-modal">

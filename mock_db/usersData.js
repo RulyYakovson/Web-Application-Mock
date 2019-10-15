@@ -72,7 +72,7 @@ module.exports = usersData =
             "id": "967325648",
             "branch": 102,
             "password": "123456",
-            "role": "Employee",
+            "role": "Admin",
             "gender": "Female"
         },
 

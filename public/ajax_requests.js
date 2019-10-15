@@ -3,11 +3,11 @@ $(document).ready(function() {
     let relativeUrl = window.location.hash.slice(1);
     switch (relativeUrl) {
         case 'about':
-                $('#about').trigger('click');
-                break;
+            $('#about').trigger('click');
+            break;
         case 'contact':
-                $('#contact').trigger('click');
-                break;
+            $('#contact').trigger('click');
+            break;
         case 'employees':
             $('#employees').trigger('click');
             break;
