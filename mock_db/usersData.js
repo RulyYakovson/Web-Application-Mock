@@ -2,7 +2,7 @@ module.exports = usersData =
     [
         // Admins
         {
-            "username": "israel israeli",
+            "username": "Israel israeli",
             "id": "508068457",
             "branch": 100,
             "password": "123456",
@@ -10,7 +10,7 @@ module.exports = usersData =
             "gender": "Male"
         },
         {
-            "username": "shy shmuly",
+            "username": "Shy shmuly",
             "id": "362498524",
             "branch": 101,
             "password": "123456",
@@ -18,7 +18,7 @@ module.exports = usersData =
             "gender": "Male"
         },
         {
-            "username": "guy gby",
+            "username": "Guy gby",
             "id": "967458524",
             "branch": 102,
             "password": "123456",
@@ -28,7 +28,7 @@ module.exports = usersData =
        
         // Employees
         {
-            "username": "roy ariel",
+            "username": "Roy ariel",
             "id": "963521458",
             "branch": 100,
             "password": "123456",
@@ -36,7 +36,7 @@ module.exports = usersData =
             "gender": "Male"
         },
         {
-            "username": "yochy ochi",
+            "username": "Yochy ochi",
             "id": "632784569",
             "branch": 100,
             "password": "123456",
@@ -44,7 +44,7 @@ module.exports = usersData =
             "gender": "Male"
         },
         {
-            "username": "dan zilber",
+            "username": "Dan zilber",
             "id": "589125473",
             "branch": 101,
             "password": "123456",
@@ -52,7 +52,7 @@ module.exports = usersData =
             "gender": "Male"
         },
         {
-            "username": "sari ariel",
+            "username": "Sari ariel",
             "id": "583124569",
             "branch": 101,
             "password": "123456",
@@ -60,7 +60,7 @@ module.exports = usersData =
             "gender": "Female"
         },
         {
-            "username": "rachi riche",
+            "username": "Rachi riche",
             "id": "25968741",
             "branch": 102,
             "password": "123456",
@@ -68,7 +68,7 @@ module.exports = usersData =
             "gender": "Female"
         },
         {
-            "username": "riki levi",
+            "username": "Riki levi",
             "id": "967325648",
             "branch": 102,
             "password": "123456",
@@ -78,7 +78,7 @@ module.exports = usersData =
 
         // Customers
         {
-            "username": "ari cohen",
+            "username": "Ari cohen",
             "id": "98653214",
             "password": "123456",
             "role": "customer",
@@ -87,7 +87,7 @@ module.exports = usersData =
             "gender": "Male"
         },
         {
-            "username": "hana levi",
+            "username": "Hana levi",
             "id": "63528741",
             "password": "123456",
             "role": "customer",
@@ -96,7 +96,7 @@ module.exports = usersData =
             "gender": "Female"
         },
         {
-            "username": "ari levi",
+            "username": "Ari levi",
             "id": "98653564",
             "password": "123456",
             "role": "customer",
@@ -105,7 +105,7 @@ module.exports = usersData =
             "gender": "Male"
         },
         {
-            "username": "hana shlomovich",
+            "username": "Hana shlomovich",
             "id": "635287777",
             "password": "123456",
             "role": "customer",
@@ -114,7 +114,7 @@ module.exports = usersData =
             "gender": "Female"
         },
         {
-            "username": "moshe rabinu",
+            "username": "Moshe rabinu",
             "id": "1151515",
             "password": "123456",
             "role": "customer",
@@ -123,7 +123,7 @@ module.exports = usersData =
             "gender": "Male"
         },
         {
-            "username": "dvora haneviah",
+            "username": "Dvora haneviah",
             "id": "63528555",
             "password": "123456",
             "role": "customer",
