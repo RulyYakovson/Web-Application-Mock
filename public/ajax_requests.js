@@ -32,6 +32,7 @@ $(document).ready(function(){
 });
 
 $('#home').click(function() {
+    $(".cover").show();
     $.ajax({url:'/home' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
         console.log('Status: ' + status);
         if (status == 'success') {
@@ -39,11 +40,13 @@ $('#home').click(function() {
             $('#main-body').html(data);
             removeActive();
             $('#home').addClass('active');
+            $(".cover").hide();
         }
     }});
 });
 
 $('#about').click(function() {
+    $(".cover").show();
     $.ajax({url:'/about', type:'GET', contentType:'text/html', success: function(data, status) {
         console.log('Status: ' + status);
         if (status == 'success') {
@@ -51,11 +54,13 @@ $('#about').click(function() {
             $('#main-body').html(data);
             removeActive();
             $('#about').addClass('active');
+            $(".cover").hide();
         }
     }});
 });
 
 $('#flowers').click(function() {
+    $(".cover").show();
     $.ajax({url:'/flowers' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
         console.log('Status: ' + status);
         if (status == 'success') {
@@ -63,11 +68,13 @@ $('#flowers').click(function() {
             $('#main-body').html(data);
             removeActive();
             $('#flowers').addClass('active');
+            $(".cover").hide();
         }
     }});
 });
 
 $('#branches').click(function() {
+    $(".cover").show();
     $.ajax({url:'/branches' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
         console.log('Status: ' + status);
         if (status == 'success') {
@@ -75,11 +82,13 @@ $('#branches').click(function() {
             $('#main-body').html(data);
             removeActive();
             $('#branches').addClass('active');
+            $(".cover").hide();
         }
     }});
 });
 
 $('#contact').click(function() {
+    $(".cover").show();
     $.ajax({url:'/contact', type:'GET', contentType:'text/html', success: function(data, status) {
         console.log('Status: ' + status);
         if (status == 'success') {
@@ -87,11 +96,13 @@ $('#contact').click(function() {
             $('#main-body').html(data);
             removeActive();
             $('#contact').addClass('active');
+            $(".cover").hide();
         }
     }});
 });
 
 $('#employees').click(function() {
+    $(".cover").show();
     $.ajax({url:'/all/employees' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
         console.log('Status: ' + status);
         if (status == 'success') {
@@ -99,11 +110,13 @@ $('#employees').click(function() {
             removeActive();
             $('#main-body').html(data);
             $('#employees-menu').addClass('active');
+            $(".cover").hide();
         }
     }});
 });
 
 $('#add-emp-button').click(async function() {
+    $(".cover").show();
     let username = $('#add-emp-username').val();
     let password = $('#add-emp-password').val();
     let id = $('#add-emp-id').val();
@@ -134,9 +147,11 @@ $('#add-emp-button').click(async function() {
     } else {
         $('#add-emp-err-msg').text('An error occurred while trying to add the user');
     }
+    $(".cover").hide();
 });
 
 const update_emp = async (id) => {
+    $(".cover").show();
     let role = $('#update-emp-role' + id).val();
     let branch = $('#update-emp-branch' + id).val();
     let gender = $('#update-emp-gender' + id).val();
@@ -162,9 +177,11 @@ const update_emp = async (id) => {
     } else {
         $('#update-emp-err-msg' + id).text('An error occurred while trying to updating the user');
     }
+    $(".cover").hide();
 };
 
 $('#customers').click(function() {
+    $(".cover").show();
     $.ajax({url:'/all/customers' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
         console.log('Status: ' + status);
         if (status == 'success') {
@@ -172,11 +189,13 @@ $('#customers').click(function() {
             $('#main-body').html(data);
             removeActive();
             $('#customers-menu').addClass('active');
+            $(".cover").hide();
         }
     }});
 });
 
 $('#add-customer-button').click(async function() {
+    $(".cover").show();
     let username = $('#add-customer-username').val();
     let password = $('#add-customer-password').val();
     let id = $('#add-customer-id').val();
@@ -208,9 +227,11 @@ $('#add-customer-button').click(async function() {
     } else {
         $('#add-customer-err-msg').text('An error occurred while trying to add the user');
     }
+    $(".cover").hide();
 });
 
 const update_customer = async (id) => {
+    $(".cover").show();
     let phone = $('#update-customer-phone' + id).val();
     let address = $('#update-customer-address' + id).val();
     let gender = $('#update-customer-gender' + id).val();
@@ -236,9 +257,11 @@ const update_customer = async (id) => {
     } else {
         $('#update-customer-err-msg').text('An error occurred while trying to updating the user');
     }
+    $(".cover").hide();
 };
 
 $('#login-button').click(async function() {
+    $(".cover").show();
     let username = $('#login-username').val();
     let password = $('#login-password').val();
     console.log(`ajax_requests:login:: Username: ${username}, Passward: ${password}`);
@@ -250,18 +273,22 @@ $('#login-button').click(async function() {
     } else if (response.status === 401) {
         $('#login-err-msg').text('Username or password incorrect. Please try again')
     }
+    $(".cover").hide();
 });
 
 $('#logout').click(function() {
+    $(".cover").show();
     let url = location.href.toString();
     if (url.indexOf("?") > 0) {
         let clean_url = url.substring(0, url.indexOf("?"));
         history.replaceState({}, document.title, clean_url);
         location = clean_url;
     }
+    $(".cover").hide();
 });
 
 const removeEmployee = (id) => {
+    $(".cover").show();
     console.log(`ajax_requests:remove-employee:: ID: ${id}`);
     $.ajax({url:`/remove/employee/${id}` + window.location.search, type:'DELETE', contentType:'text/html', success: function(data, status) {
         console.log('Status: ' + status);
@@ -270,9 +297,11 @@ const removeEmployee = (id) => {
             $('#main-body').html(data);
         }
     }});
+    $(".cover").hide();
 }
 
 const removeCustomer = (id) => {
+    $(".cover").show();
     console.log(`ajax_requests:remove-customer:: ID: ${id}`);
     $.ajax({url:`/remove/customer/${id}` + window.location.search, type:'DELETE', contentType:'text/html', success: function(data, status) {
         console.log('Status: ' + status);
@@ -281,6 +310,7 @@ const removeCustomer = (id) => {
             $('#main-body').html(data);
         }
     }});
+    $(".cover").hide();
 }
 
 const selectCurrentGender = (id, gender) => {

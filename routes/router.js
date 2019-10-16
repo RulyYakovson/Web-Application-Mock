@@ -1,57 +1,72 @@
 let express = require('express');
 let router = express.Router();
 let helper = require('../public/helper');
+let timeout = 1500;
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
     console.log('Received get index page request');
     user = helper.getUser(req.query.username, req.query.password);
     user && console.log(`router.js:: User: Name: ${user.username}, Role: ${user.role}`);
     res.status(200);
-    res.render('index', {userRole: user && user.role});
+    await setTimeout(function () {
+        res.render('index', {userRole: user && user.role});
+    }, timeout);
 });
 
-router.get('/home', (req, res, next) => {
+router.get('/home', async (req, res, next) => {
     console.log('Received get home page request');
     user = helper.getUser(req.query.username, req.query.password);
     user && console.log(`router.js:home::: User: Name: ${user.username}, Role: ${user.role}`);
     res.status(200);
-    res.render('mains/home');
+    await setTimeout(function () {
+        res.render('mains/home');
+    }, timeout);
 });
 
-router.get('/about', (req, res, next) => {
+router.get('/about', async (req, res, next) => {
     console.log('Received get about page request');
     res.status(200);
-    res.render('mains/about');
+    await setTimeout(function () {
+        res.render('mains/about');
+    }, timeout);
 });
 
-router.get('/flowers', (req, res) => {
+router.get('/flowers', async (req, res) => {
     console.log('Received get flowers request');
     let flowers = helper.getAllFlowers();
     user = helper.getUser(req.query.username, req.query.password);
     res.status(200);
-    res.render('mains/flowers', {flowers: flowers, userRole: user && user.role});
+    await setTimeout(function () {
+        res.render('mains/flowers', {flowers: flowers, userRole: user && user.role});
+    }, timeout);
 });
 
-router.get('/branches', (req, res) => {
+router.get('/branches', async (req, res) => {
     console.log('Received get branches request');
     let branches = helper.getAllBranches();
     user = helper.getUser(req.query.username, req.query.password);
     res.status(200);
-    res.render('mains/branches', {branches: branches, userRole: user && user.role});
+    await setTimeout(function () {
+        res.render('mains/branches', {branches: branches, userRole: user && user.role});
+    }, timeout);
 });
 
-router.get('/contact', (req, res) => {
+router.get('/contact', async (req, res) => {
     console.log('Received get contact page request');
     res.status(200);
-    res.render('mains/contact');
+    await setTimeout(function () {
+        res.render('mains/contact');
+    }, timeout);
 });
 
-router.get('/all/employees', (req, res) => {
+router.get('/all/employees', async (req, res) => {
     console.log('Received get all employees request');
     let employees = helper.getAllEmployees();
     user = helper.getUser(req.query.username, req.query.password);
     res.status(200);
-    res.render('mains/employees', {employees: employees, userRole: user && user.role});
+    await setTimeout(function () {
+        res.render('mains/employees', {employees: employees, userRole: user && user.role});
+    }, timeout);
 });
 
 router.delete('/remove/employee/:id', (req, res, next) => {
@@ -75,12 +90,14 @@ router.post('/update/emp', (req, res) => {
     res.status(500).send('ERROR');
 });
 
-router.get('/all/customers', (req, res) => {
+router.get('/all/customers', async (req, res) => {
     console.log('Received get all customers request');
     let customers = helper.getAllCustomers();
     user = helper.getUser(req.query.username, req.query.password);
     res.status(200);
-    res.render('mains/customers', {customers: customers, userRole: user && user.role});
+    await setTimeout(function () {
+        res.render('mains/customers', {customers: customers, userRole: user && user.role});
+    }, timeout);
 });
 
 router.delete('/remove/customer/:id', (req, res, next) => {

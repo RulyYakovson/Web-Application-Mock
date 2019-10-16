@@ -1,8 +1,7 @@
 .home-page {
-    background-color: #138496;
     width: 100%;
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 4rem 6rem;
 }
 
 .col-sm-3 {
@@ -33,11 +32,11 @@
 .ligth-blue {
     background: #13b4ff;
 }
-  
+
 .purple {
     background: #ab3fdd;
 }
-  
+
 .wine {
     background: #ae163e;
 }
@@ -60,7 +59,7 @@
 
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 section{
-	padding: 60px 0;
+    padding: 60px 0;
 }
 section .section-title{
 	text-align:center;
@@ -69,10 +68,10 @@ section .section-title{
 	text-transform:uppercase;
 }
 #what-we-do{
-	background:#ffffff;
+    background:#ffffff;
 }
 #what-we-do .card{
-	padding: 1rem!important;
+    padding: 1rem!important;
 	border: none;
 	margin-bottom:1rem;
 	-webkit-transition: .5s all ease;
@@ -80,21 +79,21 @@ section .section-title{
 	transition: .5s all ease;
 }
 #what-we-do .card:hover{
-	-webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+    -webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
 	-moz-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
 	box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
 }
 #what-we-do .card .card-block{
-	padding-left: 50px;
+    padding-left: 50px;
     position: relative;
 }
 #what-we-do .card .card-block a{
-	color: #138496 !important;
+    color: #138496 !important;
 	font-weight:700;
 	text-decoration:none;
 }
 #what-we-do .card .card-block a i{
-	display:none;
+    display:none;
 	
 }
 #what-we-do .card:hover .card-block a i{
@@ -103,7 +102,7 @@ section .section-title{
 	
 }
 #what-we-do .card .card-block:before{
-	font-family: FontAwesome;
+    font-family: FontAwesome;
     position: absolute;
     font-size: 39px;
     color: #138496;
@@ -136,3 +135,98 @@ section .section-title{
 	-moz-transition: .5s all ease;
 	transition: .5s all ease;
 }
+
+.cover {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.sk-folding-cube {
+    margin-left: -50px;
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: rotateZ(45deg);
+    transform: rotateZ(45deg); }
+  
+  .sk-folding-cube .sk-cube {
+    float: left;
+    width: 50%;
+    height: 50%;
+    position: relative;
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1); }
+  
+  .sk-folding-cube .sk-cube:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #305c65;
+    -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
+    animation: sk-foldCubeAngle 2.4s infinite linear both;
+    -webkit-transform-origin: 100% 100%;
+    -ms-transform-origin: 100% 100%;
+    transform-origin: 100% 100%; }
+  
+  .sk-folding-cube .sk-cube2 {
+    -webkit-transform: scale(1.1) rotateZ(90deg);
+    transform: scale(1.1) rotateZ(90deg); }
+  
+  .sk-folding-cube .sk-cube3 {
+    -webkit-transform: scale(1.1) rotateZ(180deg);
+    transform: scale(1.1) rotateZ(180deg); }
+  
+  .sk-folding-cube .sk-cube4 {
+    -webkit-transform: scale(1.1) rotateZ(270deg);
+    transform: scale(1.1) rotateZ(270deg); }
+  
+  .sk-folding-cube .sk-cube2:before {
+    -webkit-animation-delay: 0.3s;
+    animation-delay: 0.3s; }
+  
+  .sk-folding-cube .sk-cube3:before {
+    -webkit-animation-delay: 0.6s;
+    animation-delay: 0.6s; }
+  
+  .sk-folding-cube .sk-cube4:before {
+    -webkit-animation-delay: 0.9s;
+    animation-delay: 0.9s; }
+  
+  @-webkit-keyframes sk-foldCubeAngle {
+    0%, 10% {
+      -webkit-transform: perspective(140px) rotateX(-180deg);
+      transform: perspective(140px) rotateX(-180deg);
+      opacity: 0; }
+    25%, 75% {
+      -webkit-transform: perspective(140px) rotateX(0deg);
+      transform: perspective(140px) rotateX(0deg);
+      opacity: 1; }
+    90%, 100% {
+      -webkit-transform: perspective(140px) rotateY(180deg);
+      transform: perspective(140px) rotateY(180deg);
+      opacity: 0; } }
+  @keyframes sk-foldCubeAngle {
+    0%, 10% {
+      -webkit-transform: perspective(140px) rotateX(-180deg);
+      transform: perspective(140px) rotateX(-180deg);
+      opacity: 0; }
+    25%, 75% {
+      -webkit-transform: perspective(140px) rotateX(0deg);
+      transform: perspective(140px) rotateX(0deg);
+      opacity: 1; }
+    90%, 100% {
+      -webkit-transform: perspective(140px) rotateY(180deg);
+      transform: perspective(140px) rotateY(180deg);
+      opacity: 0; } }
