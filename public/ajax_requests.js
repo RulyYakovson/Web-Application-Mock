@@ -59,19 +59,6 @@ $('#about').click(function() {
     }});
 });
 
-$('#flowers').click(function() {
-    $(".cover").show();
-    $.ajax({url:'/flowers' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
-        console.log('Status: ' + status);
-        if (status == 'success') {
-            console.log('result is 200');
-            $('#main-body').html(data);
-            removeActive();
-            $('#flowers').addClass('active');
-            $(".cover").hide();
-        }
-    }});
-});
 
 $('#branches').click(function() {
     $(".cover").show();
@@ -345,15 +332,6 @@ const removeMsg = () => {
 
 const removeActive = () => {
     $('.nav-item').removeClass('active');
-}
-
-const colorChecked = (colorBoxName) => {
-    let colors = document.getElementsByClassName('select-color ' + colorBoxName.substr(1));
-    for (let i = 0; i < colors.length; i++) {
-      colors[i].style.boxShadow = "none";
-    }
-    let color = document.getElementById(colorBoxName);
-    color.style.boxShadow = "0 7px 14px 0 rgba(0, 0, 0, 4)";
 }
 
 const messageSent = () => {
