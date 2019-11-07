@@ -35,11 +35,18 @@ router.get('/flowers', async (req, res) => {
     console.log('Received get flowers request');
     let flowers = helper.getAllFlowers();
     user = helper.getUser(req.query.username, req.query.password);
-    data = {};
-    data.flowers = flowers;
-    res.status(200);
     await setTimeout(function () {
-        res.json(data);
+        data = {};
+        if (user) {
+            data.flowers = flowers;
+            res.status(200);
+            res.json(data);
+        } else {
+            res.status(401);
+            data.status = 401;
+            data.message = 'not authorized';
+            res.json(data);
+        }
     }, timeout);
 });
 
