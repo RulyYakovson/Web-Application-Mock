@@ -44,7 +44,6 @@ router.get('/flowers', async (req, res) => {
         } else {
             res.status(401);
             data.status = 401;
-            data.message = 'not authorized';
             res.json(data);
         }
     }, timeout);
@@ -56,7 +55,16 @@ router.get('/branches', async (req, res) => {
     user = helper.getUser(req.query.username, req.query.password);
     res.status(200);
     await setTimeout(function () {
-        res.render('mains/branches', {branches: branches, userRole: user && user.role});
+        data = {};
+        if (user) {
+            data.branches = branches;
+            res.status(200);
+            res.json(data);
+        } else {
+            res.status(401);
+            data.status = 401;
+            res.json(data);
+        }
     }, timeout);
 });
 

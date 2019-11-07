@@ -59,21 +59,6 @@ $('#about').click(function() {
     }});
 });
 
-
-$('#branches').click(function() {
-    $(".cover").show();
-    $.ajax({url:'/branches' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
-        console.log('Status: ' + status);
-        if (status == 'success') {
-            console.log('result is 200');
-            $('#main-body').html(data);
-            removeActive();
-            $('#branches').addClass('active');
-            $(".cover").hide();
-        }
-    }});
-});
-
 $('#contact').click(function() {
     $(".cover").show();
     $.ajax({url:'/contact', type:'GET', contentType:'text/html', success: function(data, status) {
