@@ -110,10 +110,20 @@ router.post('/update/emp', (req, res) => {
 router.get('/all/customers', async (req, res) => {
     console.log('Received get all customers request');
     let customers = helper.getAllCustomers();
-    user = helper.getUser(req.query.username, req.query.password);
+    let user = helper.getUser(req.query.username, req.query.password);
     res.status(200);
     await setTimeout(function () {
-        res.render('mains/customers', {customers: customers, userRole: user && user.role});
+        data = {};
+        if (user) {
+            data.userRole = user && user.role;
+            data.customers = customers;
+            res.status(200);
+            res.json(data);
+        } else {
+            res.status(401);
+            data.status = 401;
+            res.json(data);
+        }
     }, timeout);
 });
 
@@ -121,9 +131,18 @@ router.delete('/remove/customer/:id', (req, res, next) => {
     console.log(`Received remove customer request for ID: ${req.params.id}`);
     helper.removeCustomer(req.params.id);
     let customers = helper.getAllCustomers();
-    user = helper.getUser(req.query.username, req.query.password);
-    res.status(200);
-    res.render('mains/customers', {customers: customers, userRole: user && user.role});
+    let user = helper.getUser(req.query.username, req.query.password);
+    data = {};
+    if (user) {
+        data.userRole = user && user.role;
+        data.customers = customers;
+        res.status(200);
+        res.json(data);
+    } else {
+        res.status(401);
+        data.status = 401;
+        res.json(data);
+    }
 });
 
 router.post('/add/customer', (req, res) => {

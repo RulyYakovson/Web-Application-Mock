@@ -3,7 +3,7 @@ $('#branches').click(function() {
     $.ajax({
         url:'/branches' + window.location.search,
         type:'GET',
-        contentType:'text/html',
+        contentType:'application/json',
         success: (data, status) => {
             console.log('Status: ' + status);
             if (status == 'success') {

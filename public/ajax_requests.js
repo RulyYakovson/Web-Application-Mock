@@ -152,86 +152,6 @@ const update_emp = async (id) => {
     $(".cover").hide();
 };
 
-$('#customers').click(function() {
-    $(".cover").show();
-    $.ajax({url:'/all/customers' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
-        console.log('Status: ' + status);
-        if (status == 'success') {
-            console.log('result is 200');
-            $('#main-body').html(data);
-            removeActive();
-            $('#customers-menu').addClass('active');
-            $(".cover").hide();
-        }
-    }});
-});
-
-$('#add-customer-button').click(async function() {
-    $(".cover").show();
-    let username = $('#add-customer-username').val();
-    let password = $('#add-customer-password').val();
-    let id = $('#add-customer-id').val();
-    let phone = $('#add-customer-phone').val();
-    let address = $('#add-customer-address').val();
-    let gender = $('#add-customer-gender').val();
-    console.log(`ajax_requests:add-customer:: Username: ${username}, Passward: ${password}, ID: ${id}, Phone: ${phone}, Gender: ${gender}`);
-    let response = await fetch("/add/customer",
-    {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username : username,
-            password : password,
-            id: id,
-            role: 'customer',
-            phone: phone,
-            address: address,
-            gender: gender
-        })
-    });
-    if (response.status === 200){
-        console.log(`ajax_requests:add-customer:: Adding user: ${username} finished successfully`);
-        jQuery.noConflict();
-        $('#add-customer-modal').modal('hide');
-        location.reload();
-    } else {
-        $('#add-customer-err-msg').text('An error occurred while trying to add the user');
-    }
-    $(".cover").hide();
-});
-
-const update_customer = async (id) => {
-    $(".cover").show();
-    let phone = $('#update-customer-phone' + id).val();
-    let address = $('#update-customer-address' + id).val();
-    let gender = $('#update-customer-gender' + id).val();
-    console.log(`ajax_requests:update-emp::  ID: ${id}, Phone: ${phone}, Address: ${address}, Gender: ${gender}`);
-    let response = await fetch("/update/customer",
-    {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id: id,
-            phone: phone,
-            address: address,
-            gender: gender
-        })
-    });
-    if (response.status === 200){
-        console.log(`ajax_requests:add-customer:: Adding user: ${id} finished successfully`);
-        jQuery.noConflict();
-        $('#' + id).modal('hide');
-        location.reload();
-    } else {
-        $('#update-customer-err-msg').text('An error occurred while trying to updating the user');
-    }
-    $(".cover").hide();
-};
-
 $('#login-button').click(async function() {
     $(".cover").show();
     let username = $('#login-username').val();
@@ -270,28 +190,6 @@ const removeEmployee = (id) => {
         }
     }});
     $(".cover").hide();
-}
-
-const removeCustomer = (id) => {
-    $(".cover").show();
-    console.log(`ajax_requests:remove-customer:: ID: ${id}`);
-    $.ajax({url:`/remove/customer/${id}` + window.location.search, type:'DELETE', contentType:'text/html', success: function(data, status) {
-        console.log('Status: ' + status);
-        if (status == 'success') {
-            console.log('result is 200');
-            $('#main-body').html(data);
-        }
-    }});
-    $(".cover").hide();
-}
-
-const selectCurrentGender = (id, gender) => {
-    if (gender === 'Male') { 
-        $('#update-customer-gender' + id + ' option[value=Male]').attr('selected', 'selected');
-    }
-    else if (gender === 'Female') {
-        $('#update-customer-gender' + id + ' option[value=Female]').attr('selected', 'selected');
-    }
 }
 
 const selectCurrentDetails = (id, gender, role) => {
