@@ -67,7 +67,7 @@ $('#customers').click( () => {
                                             }
                                 html += `<p class="card-text">${'ID: ' + customers[i].id}</p>
                                             <p class="card-subtitle">${'Phone: ' + customers[i].phone}</p>
-                                            <p class="card-text">${'Address: ' + customers[i].address}</p>`;
+                                            <p class="card-text">${'Mail: ' + customers[i].address}</p>`;
                                             if (userRole === 'Admin') {
                                     html += `<div style="text-align: center;">
                                                     <a id="remove-customer" href="#" class="card-link" style="color: red"
@@ -146,7 +146,6 @@ $('#add-customer-button').click(async function() {
 });
 
 const update_customer = async (id) => {
-    $(".cover").show();
     let phone = $('#update-customer-phone' + id).val();
     let address = $('#update-customer-address' + id).val();
     let gender = $('#update-customer-gender' + id).val();
@@ -172,7 +171,6 @@ const update_customer = async (id) => {
     } else {
         $('#update-customer-err-msg').text('An error occurred while trying to updating the user');
     }
-    $(".cover").hide();
 };
 
 const removeCustomer = (id) => {

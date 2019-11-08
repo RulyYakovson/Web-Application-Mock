@@ -5,7 +5,7 @@ let timeout = 1500;
 
 router.get('/', async (req, res, next) => {
     console.log('Received get index page request');
-    user = helper.getUser(req.query.username, req.query.password);
+    let user = helper.getUser(req.query.username, req.query.password);
     user && console.log(`router.js:: User: Name: ${user.username}, Role: ${user.role}`);
     res.status(200);
     await setTimeout(function () {
@@ -15,7 +15,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/home', async (req, res, next) => {
     console.log('Received get home page request');
-    user = helper.getUser(req.query.username, req.query.password);
+    let user = helper.getUser(req.query.username, req.query.password);
     user && console.log(`router.js:home::: User: Name: ${user.username}, Role: ${user.role}`);
     res.status(200);
     await setTimeout(function () {
@@ -34,7 +34,7 @@ router.get('/about', async (req, res, next) => {
 router.get('/flowers', async (req, res) => {
     console.log('Received get flowers request');
     let flowers = helper.getAllFlowers();
-    user = helper.getUser(req.query.username, req.query.password);
+    let user = helper.getUser(req.query.username, req.query.password);
     await setTimeout(function () {
         data = {};
         if (user) {
@@ -43,6 +43,7 @@ router.get('/flowers', async (req, res) => {
             res.json(data);
         } else {
             res.status(401);
+            data.message = 'not authorized';
             data.status = 401;
             res.json(data);
         }
@@ -52,7 +53,7 @@ router.get('/flowers', async (req, res) => {
 router.get('/branches', async (req, res) => {
     console.log('Received get branches request');
     let branches = helper.getAllBranches();
-    user = helper.getUser(req.query.username, req.query.password);
+    let user = helper.getUser(req.query.username, req.query.password);
     res.status(200);
     await setTimeout(function () {
         data = {};
@@ -62,6 +63,7 @@ router.get('/branches', async (req, res) => {
             res.json(data);
         } else {
             res.status(401);
+            data.message = 'not authorized';
             data.status = 401;
             res.json(data);
         }
@@ -79,10 +81,21 @@ router.get('/contact', async (req, res) => {
 router.get('/all/employees', async (req, res) => {
     console.log('Received get all employees request');
     let employees = helper.getAllEmployees();
-    user = helper.getUser(req.query.username, req.query.password);
+    let user = helper.getUser(req.query.username, req.query.password);
     res.status(200);
     await setTimeout(function () {
-        res.render('mains/employees', {employees: employees, userRole: user && user.role});
+        data = {};
+        if (user) {
+            data.userRole = user && user.role;
+            data.employees = employees;
+            res.status(200);
+            res.json(data);
+        } else {
+            res.status(401);
+            data.message = 'not authorized';
+            data.status = 401;
+            res.json(data);
+        }
     }, timeout);
 });
 
@@ -90,7 +103,7 @@ router.delete('/remove/employee/:id', (req, res, next) => {
     console.log(`Received remove employee request for ID: ${req.params.id}`);
     helper.removeEmployee(req.params.id);
     let employees = helper.getAllEmployees();
-    user = helper.getUser(req.query.username, req.query.password);
+    let user = helper.getUser(req.query.username, req.query.password);
     res.status(200);
     res.render('mains/employees', {employees: employees, userRole: user && user.role});
 });
