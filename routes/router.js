@@ -141,7 +141,7 @@ router.get('/all/customers', async (req, res) => {
         if (user) {
             data.userRole = user && user.role;
             data.customers = customers;
-            res.status(400);
+            res.status(200);
             res.json(data);
         } else {
             res.status(401);
