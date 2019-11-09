@@ -21,6 +21,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', router);
 
-app.listen(8080, function () {
+app.listen(8080, () => {
   console.log('App listening on http://localhost:8080')
 });
