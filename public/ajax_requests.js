@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready( () => {
     console.log("URL: " + location);
     let relativeUrl = window.location.hash.slice(1);
     switch (relativeUrl) {
@@ -25,55 +25,94 @@ $(document).ready(function() {
     }
 });
 
-$(document).ready(function(){
-    $(".form-control").focus(function() {
+$(document).ready( () => {
+    $(".form-control").focus( () => {
         removeMsg()
     });
 });
 
-$('#home').click(function() {
+$('#home').click( () => {
     $(".cover").show();
-    $.ajax({url:'/home' + window.location.search, type:'GET', contentType:'text/html', success: function(data, status) {
-        console.log('Status: ' + status);
-        if (status == 'success') {
-            console.log('result is 200');
-            $('#main-body').html(data);
+    $.ajax({
+        url:'/home' + window.location.search,
+        type:'GET',
+        contentType:'text/html',
+        success: (data, status) => {
+            console.log('Status: ' + status);
+            if (status == 'success') {
+                console.log('result is 200');
+                $('#main-body').html(data);
+                removeActive();
+                $('#home').addClass('active');
+                $(".cover").hide();
+            }
+        },
+        error: (data, status) => {
+            console.log('Status: ' + status);
+            let html = generateErrorHtml(data);
+            $('#main-body').html(html);
             removeActive();
             $('#home').addClass('active');
             $(".cover").hide();
         }
-    }});
+    });
 });
 
-$('#about').click(function() {
+$('#about').click( () => {
     $(".cover").show();
-    $.ajax({url:'/about', type:'GET', contentType:'text/html', success: function(data, status) {
-        console.log('Status: ' + status);
-        if (status == 'success') {
-            console.log('result is 200');
-            $('#main-body').html(data);
+    $.ajax({
+        url:'/about',
+        type:'GET',
+        contentType:'text/html',
+        success: (data, status) => {
+            console.log('Status: ' + status);
+            if (status == 'success') {
+                console.log('result is 200');
+                $('#main-body').html(data);
+                removeActive();
+                $('#about').addClass('active');
+                $(".cover").hide();
+            }
+        },
+        error: (data, status) => {
+            console.log('Status: ' + status);
+            let html = generateErrorHtml(data);
+            $('#main-body').html(html);
             removeActive();
             $('#about').addClass('active');
             $(".cover").hide();
         }
-    }});
+    });
 });
 
-$('#contact').click(function() {
+$('#contact').click( () => {
     $(".cover").show();
-    $.ajax({url:'/contact', type:'GET', contentType:'text/html', success: function(data, status) {
-        console.log('Status: ' + status);
-        if (status == 'success') {
-            console.log('result is 200');
-            $('#main-body').html(data);
+    $.ajax({
+        url:'/contact',
+        type:'GET',
+        contentType:'text/html',
+        success: (data, status) => {
+            console.log('Status: ' + status);
+            if (status == 'success') {
+                console.log('result is 200');
+                $('#main-body').html(data);
+                removeActive();
+                $('#contact').addClass('active');
+                $(".cover").hide();
+            }
+        },
+        error: (data, status) => {
+            console.log('Status: ' + status);
+            let html = generateErrorHtml(data);
+            $('#main-body').html(html);
             removeActive();
             $('#contact').addClass('active');
             $(".cover").hide();
         }
-    }});
+    });
 });
 
-$('#login-button').click(async function() {
+$('#login-button').click(async () => {
     $(".cover").show();
     let username = $('#login-username').val();
     let password = $('#login-password').val();
@@ -89,7 +128,7 @@ $('#login-button').click(async function() {
     $(".cover").hide();
 });
 
-$('#logout').click(function() {
+$('#logout').click( () => {
     $(".cover").show();
     let url = location.href.toString();
     if (url.indexOf("?") > 0) {
@@ -111,4 +150,14 @@ const removeActive = () => {
 
 const messageSent = () => {
     $('#home').trigger('click');
+}
+
+const generateErrorHtml = (data) => {
+    let html = `<div class="home-page" style="height: 420px;">
+                    <div class="home-page">
+                        <h1 style="color: #138496">Can't reach the page !!! </h1>
+                        <h1 style="color: #138496">${"Status code:   " + data.status} </h1>
+                    </div>
+                </div>`;
+    return html;
 }

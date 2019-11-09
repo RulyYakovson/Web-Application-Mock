@@ -1,4 +1,4 @@
-$('#employees').click(function() {
+$('#employees').click( () => {
     $(".cover").show();
     $.ajax({
         url:'/all/employees' + window.location.search,
@@ -7,9 +7,122 @@ $('#employees').click(function() {
         success: (data, status) => {
             console.log('Status: ' + status);
             if (status == 'success') {
-                let employees = data.employees;
-                let userRole = data.userRole;
-                let html = `<div class="jumbotron text-center">
+                removeActive();
+                let html = generateEmployeesHtml(data);
+                $('#main-body').html(html);
+                $('#employees-menu').addClass('active');
+                $(".cover").hide();
+            }
+        },
+        error: (data, status) => {
+            console.log('Status: ' + status);
+            let html = generateErrorHtml(data);
+            $('#main-body').html(html);
+            removeActive();
+            $('#employees-menu').addClass('active');
+            $(".cover").hide();
+        }
+    });
+});
+
+$('#add-emp-button').click(async () => {
+    $(".cover").show();
+    let username = $('#add-emp-username').val();
+    let password = $('#add-emp-password').val();
+    let id = $('#add-emp-id').val();
+    let role = $('#add-emp-role').val();
+    let branch = $('#add-emp-branch').val();
+    let gender = $('#add-emp-gender').val();
+    console.log(`ajax_requests:add-emp:: Username: ${username}, Passward: ${password}, ID: ${id}, Role: ${role}, Branch: ${branch}, Gender: ${gender}`);
+    let response = await fetch("/add/emp",
+    {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username : username,
+            password : password,
+            id: id,
+            role: role,
+            branch: branch,
+            gender: gender
+        })
+    });
+    if (response.status === 200){
+        console.log(`ajax_requests:add-emp:: Adding user: ${username} finished successfully`);
+        jQuery.noConflict();
+        $('#add-emp-modal').modal('hide');
+        location.reload();
+    } else {
+        $('#add-emp-err-msg').text('An error occurred while trying to add the user');
+    }
+    $(".cover").hide();
+});
+
+const update_emp = async (id) => {
+    let role = $('#update-emp-role' + id).val();
+    let branch = $('#update-emp-branch' + id).val();
+    let gender = $('#update-emp-gender' + id).val();
+    console.log(`ajax_requests:update-emp::  ID: ${id}, Role: ${role}, Branch: ${branch}, Gender: ${gender}`);
+    let response = await fetch("/update/emp",
+    {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,
+            role: role,
+            branch: branch,
+            gender: gender
+        })
+    });
+    if (response.status === 200){
+        console.log(`ajax_requests:update-emp:: Updating user: ${id} finished successfully`);
+        jQuery.noConflict();
+        $('#' + id).modal('hide');
+        location.reload();
+    } else {
+        $('#update-emp-err-msg' + id).text('An error occurred while trying to updating the user');
+    }
+};
+
+const removeEmployee = (id) => {
+    console.log(`ajax_requests:remove-employee:: ID: ${id}`);
+    $.ajax({
+        url:`/remove/employee/${id}` + window.location.search,
+        type:'DELETE',
+        contentType:'application/json',
+        success: (data, status) => {
+            console.log('Status: ' + status);
+            if (status == 'success') {
+                let html = generateEmployeesHtml(data);
+                $('#main-body').html(html);
+        }
+    }});
+};
+
+const selectCurrentDetails = (id, gender, role) => {
+    if (gender === 'Male') { 
+        $('#update-emp-gender' + id + ' option[value=Male]').attr('selected', 'selected');
+    }
+    else if (gender === 'Female') {
+        $('#update-emp-gender' + id + ' option[value=Female]').attr('selected', 'selected');
+    }
+
+    if (role === 'Admin') { 
+        $('#update-emp-role' + id + ' option[value=Admin]').attr('selected', 'selected');
+    }
+    else if (role === 'Employee') {
+        $('#update-emp-role' + id + ' option[value=Employee]').attr('selected', 'selected');
+    }
+};
+
+const generateEmployeesHtml = (data) => {
+    let employees = data.employees;
+    let userRole = data.userRole;
+    let html = `<div class="jumbotron text-center">
                                 <h1>Employees</h1>
                             </div>
                             <div style="margin: 0px 130px 50px 130px">
@@ -94,116 +207,5 @@ $('#employees').click(function() {
                 html += `   </tbody>
                         </table>
                     </div>`;
-                removeActive();
-                $('#main-body').html(html);
-                $('#employees-menu').addClass('active');
-                $(".cover").hide();
-            }
-        },
-        error: (data, status) => {
-            console.log('Status: ' + status);
-            let html = `<div class="home-page" style="height: 420px;">
-                            <div class="home-page">
-                                <h1 style="color: #138496">Can't reach the page !!! </h1>
-                                <h1 style="color: #138496">${"Status code:   " + data.status} </h1>
-                            </div>
-                        </div>`;
-            $('#main-body').html(html);
-            removeActive();
-            $('#employees-menu').addClass('active');
-            $(".cover").hide();
-        }
-    });
-});
-
-$('#add-emp-button').click(async function() {
-    $(".cover").show();
-    let username = $('#add-emp-username').val();
-    let password = $('#add-emp-password').val();
-    let id = $('#add-emp-id').val();
-    let role = $('#add-emp-role').val();
-    let branch = $('#add-emp-branch').val();
-    let gender = $('#add-emp-gender').val();
-    console.log(`ajax_requests:add-emp:: Username: ${username}, Passward: ${password}, ID: ${id}, Role: ${role}, Branch: ${branch}, Gender: ${gender}`);
-    let response = await fetch("/add/emp",
-    {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username : username,
-            password : password,
-            id: id,
-            role: role,
-            branch: branch,
-            gender: gender
-        })
-    });
-    if (response.status === 200){
-        console.log(`ajax_requests:add-emp:: Adding user: ${username} finished successfully`);
-        jQuery.noConflict();
-        $('#add-emp-modal').modal('hide');
-        location.reload();
-    } else {
-        $('#add-emp-err-msg').text('An error occurred while trying to add the user');
-    }
-    $(".cover").hide();
-});
-
-const update_emp = async (id) => {
-    let role = $('#update-emp-role' + id).val();
-    let branch = $('#update-emp-branch' + id).val();
-    let gender = $('#update-emp-gender' + id).val();
-    console.log(`ajax_requests:update-emp::  ID: ${id}, Role: ${role}, Branch: ${branch}, Gender: ${gender}`);
-    let response = await fetch("/update/emp",
-    {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id: id,
-            role: role,
-            branch: branch,
-            gender: gender
-        })
-    });
-    if (response.status === 200){
-        console.log(`ajax_requests:update-emp:: Updating user: ${id} finished successfully`);
-        jQuery.noConflict();
-        $('#' + id).modal('hide');
-        location.reload();
-    } else {
-        $('#update-emp-err-msg' + id).text('An error occurred while trying to updating the user');
-    }
-};
-
-const removeEmployee = (id) => {
-    $(".cover").show();
-    console.log(`ajax_requests:remove-employee:: ID: ${id}`);
-    $.ajax({url:`/remove/employee/${id}` + window.location.search, type:'DELETE', contentType:'text/html', success: function(data, status) {
-        console.log('Status: ' + status);
-        if (status == 'success') {
-            console.log('result is 200');
-            $('#main-body').html(data);
-        }
-    }});
-    $(".cover").hide();
-};
-
-const selectCurrentDetails = (id, gender, role) => {
-    if (gender === 'Male') { 
-        $('#update-emp-gender' + id + ' option[value=Male]').attr('selected', 'selected');
-    }
-    else if (gender === 'Female') {
-        $('#update-emp-gender' + id + ' option[value=Female]').attr('selected', 'selected');
-    }
-
-    if (role === 'Admin') { 
-        $('#update-emp-role' + id + ' option[value=Admin]').attr('selected', 'selected');
-    }
-    else if (role === 'Employee') {
-        $('#update-emp-role' + id + ' option[value=Employee]').attr('selected', 'selected');
-    }
+    return html;
 };

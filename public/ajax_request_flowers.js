@@ -1,4 +1,4 @@
-$('#flowers').click(function() {
+$('#flowers').click( () => {
     $(".cover").show();
     $.ajax({
         url:'/flowers' + window.location.search,
@@ -7,7 +7,35 @@ $('#flowers').click(function() {
         success: (data, status) => {
         console.log('Status: ' + status);
         if (status == 'success') {
-                let flowers = data.flowers;
+                let html = generateFlowersHtml(data);
+                $('#main-body').html(html);
+                removeActive();
+                $('#flowers').addClass('active');
+                $(".cover").hide();
+            }
+        },
+        error: (data, status) => {
+            console.log('Status: ' + status);
+            let html = generateErrorHtml(data);
+            $('#main-body').html(html);
+            removeActive();
+            $('#flowers').addClass('active');
+            $(".cover").hide();
+        }
+    });
+});
+
+const colorChecked = (colorBoxName) => {
+    let colors = document.getElementsByClassName('select-color ' + colorBoxName.substr(1));
+    for (let i = 0; i < colors.length; i++) {
+      colors[i].style.boxShadow = "none";
+    }
+    let color = document.getElementById(colorBoxName);
+    color.style.boxShadow = "0 7px 14px 0 rgba(0, 0, 0, 4)";
+}
+
+const generateFlowersHtml = (data) => {
+    let flowers = data.flowers;
                 let html = `<div class="jumbotron text-center">
                                 <h1>Flowers Catalog</h1>
                             </div>
@@ -50,34 +78,5 @@ $('#flowers').click(function() {
                 html +=     `</tbody>
                         </table>
                     </div>`;
-                    
-                $('#main-body').html(html);
-                removeActive();
-                $('#flowers').addClass('active');
-                $(".cover").hide();
-            }
-        },
-        error: (data, status) => {
-            console.log('Status: ' + status);
-            let html = `<div class="home-page" style="height: 420px;">
-                            <div class="home-page">
-                                <h1 style="color: #138496">Can't reach the page !!! </h1>
-                                <h1 style="color: #138496">${"Status code:   " + data.status} </h1>
-                            </div>
-                        </div>`;
-            $('#main-body').html(html);
-            removeActive();
-            $('#flowers').addClass('active');
-            $(".cover").hide();
-        }
-    });
-});
-
-const colorChecked = (colorBoxName) => {
-    let colors = document.getElementsByClassName('select-color ' + colorBoxName.substr(1));
-    for (let i = 0; i < colors.length; i++) {
-      colors[i].style.boxShadow = "none";
-    }
-    let color = document.getElementById(colorBoxName);
-    color.style.boxShadow = "0 7px 14px 0 rgba(0, 0, 0, 4)";
+    return html;
 }

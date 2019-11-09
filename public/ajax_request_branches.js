@@ -1,4 +1,4 @@
-$('#branches').click(function() {
+$('#branches').click( () => {
     $(".cover").show();
     $.ajax({
         url:'/branches' + window.location.search,
@@ -7,7 +7,26 @@ $('#branches').click(function() {
         success: (data, status) => {
             console.log('Status: ' + status);
             if (status == 'success') {
-                let branches = data.branches;
+                let html = generateBranchesHtml(data);
+                $('#main-body').html(html);
+                removeActive();
+                $('#branches').addClass('active');
+                $(".cover").hide();
+            }
+        },
+        error: (data, status) => {
+            console.log('Status: ' + status);
+            let html = generateErrorHtml(data);
+            $('#main-body').html(html);
+            removeActive();
+            $('#branches').addClass('active');
+            $(".cover").hide();
+        }
+    });
+});
+
+const generateBranchesHtml = (data) => {
+    let branches = data.branches;
                 let html = `<div class="jumbotron text-center">
                                 <h1>Branches</h1>
                             </div>
@@ -40,24 +59,5 @@ $('#branches').click(function() {
                 html +=     `</tbody>
                         </table>
                     </div>`;
-                $('#main-body').html(html);
-                removeActive();
-                $('#branches').addClass('active');
-                $(".cover").hide();
-            }
-        },
-        error: (data, status) => {
-            console.log('Status: ' + status);
-            let html = `<div class="home-page" style="height: 420px;">
-                            <div class="home-page">
-                                <h1 style="color: #138496">Can't reach the page !!! </h1>
-                                <h1 style="color: #138496">${"Status code:   " + data.status} </h1>
-                            </div>
-                        </div>`;
-            $('#main-body').html(html);
-            removeActive();
-            $('#branches').addClass('active');
-            $(".cover").hide();
-        }
-    });
-});
+    return html;
+}
