@@ -1,6 +1,7 @@
 const debug = require("debug")("mongo:model");
 const mongo = require('mongoose');
 let customer = require('./customer');
+let employee = require('./employee');
 
 let db = mongo.createConnection();
 (async () => {
@@ -11,5 +12,8 @@ let db = mongo.createConnection();
     }
 })();
 debug('Pending to DB connection');
+
 customer(db);
+employee(db);
+
 module.exports = model => db.model(model);

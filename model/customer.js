@@ -7,9 +7,9 @@ module.exports = function(db) {
         {
             id: { type: String, required: true, unique: true},
             username: { type: String, required: true, unique: true },
-            password: { type: String, required: true, maxlength: [8, 'Too long password'], minlength: [4, 'Too short password'] },
+            password: { type: String, required: true, maxlength: [8, 'Too long password'], minlength: [3, 'Too short password'] },
             phone: { type: String, maxlength: [10, 'Invalid phone number'], minlength: [9, 'Invalid phone number'] },
-            gender: { type: String, enum: ['Male', 'Female'] },
+            gender: { type: String, enum: ['Male', 'Female', 'Gender'] },
             role: { type: String, enum: ['Employee', 'Admin', 'customer'] },
             address: String,
             lastUpdate: Date,
