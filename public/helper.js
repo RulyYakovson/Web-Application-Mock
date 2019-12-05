@@ -1,6 +1,7 @@
 let users = require('../mock_db/usersData');
 let flowers = require('../mock_db/flowers');
 let branches = require('../mock_db/branches');
+let customerRepository = require('../model')('Customer');
 
 module.exports.getUser = (userName, pass) => {
     let user = users.find( (user) => user.username === userName && user.password === pass);
@@ -40,37 +41,36 @@ module.exports.updateEmployee = (emp) => {
     return userUpdatedSuccessfully;
 }
 
-module.exports.getAllCustomers = () => {
-    return users.filter( (user) => user.role === 'customer');
+module.exports.getAllCustomers = async () => {
+   let success = false;
+   let result = null;
+   await customerRepository.find({}, (err, customers) => {
+       if (!err) {
+            result = customers;
+            success = true;
+        }
+    });
+    return { success: success, data: result };
+};
+
+module.exports.removeCustomer = async (id) => {
+    let user = await customerRepository.findOneAndDelete({ id: id });
+    !!user ? console.log(`User: ${user} \nsuccessfully deleted !!`)
+    : console.log(`ERROR: User with ID: ${id} not found !!`);
 }
 
-module.exports.removeCustomer = (id) => {
-    users = users.filter( (user) => user.id !== id );
-    console.log(users);
+module.exports.addCustomer = async (customer) => {
+    let createdCustomer = await customerRepository.CREATE(customer);
+    console.log(`A new customer created: ${createdCustomer}`);
 }
 
-module.exports.addCustomer = (customer) => {
-    let userAddesSuccessfully = false;
-    if (!users.find( (user) => user.id === customer.id || user.username === customer.username)) {
-        users.push(customer);
-        userAddesSuccessfully = true;
-    }
-    console.log(users);
-    return userAddesSuccessfully;
-}
+module.exports.updateCustomer = async (customer) => {
+    let user = null;
+    let fieldsToUpdate = { phone: customer.phone, address: customer.address, gender: customer.gender };
+    user = await customerRepository.findOneAndUpdate({ id: customer.id }, fieldsToUpdate, { new: true });
 
-module.exports.updateCustomer = (customer) => {
-    let userUpdatedSuccessfully = false;
-    let user = users.find( (user) =>  user.id == customer.id ); // Important - Do not change to '===' since customer.id is a number
-    console.log(user);
-    if (user) {
-        user.phone = customer.phone;
-        user.address = customer.address;
-        user.gender = customer.gender;
-        userUpdatedSuccessfully = true;
-    }
-    console.log(users);
-    return userUpdatedSuccessfully;
+    !!user ? console.log(`User: ${user} \nsuccessfully updeted !!`)
+    : console.log(`Error while trying to update user with ID: ${customer.id}`);
 }
 
 module.exports.getAllFlowers = () => {
