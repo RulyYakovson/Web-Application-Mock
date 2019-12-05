@@ -5,7 +5,7 @@ let timeout = 1500;
 
 router.get('/', async (req, res, next) => {
     console.log('Received get index page request');
-    let user = helper.getUser(req.query.username, req.query.password);
+    let user = await helper.getUser(req.query.username, req.query.password);
     user && console.log(`router.js:: User: Name: ${user.username}, Role: ${user.role}`);
     res.status(200);
     await setTimeout( () => {
@@ -15,7 +15,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/home', async (req, res, next) => {
     console.log('Received get home page request');
-    let user = helper.getUser(req.query.username, req.query.password);
+    let user = await helper.getUser(req.query.username, req.query.password);
     user && console.log(`router.js:home::: User: Name: ${user.username}, Role: ${user.role}`);
     res.status(200);
     await setTimeout( () => {
@@ -34,7 +34,7 @@ router.get('/about', async (req, res, next) => {
 router.get('/flowers', async (req, res) => {
     console.log('Received get flowers request');
     let flowers = helper.getAllFlowers();
-    let user = helper.getUser(req.query.username, req.query.password);
+    let user = await helper.getUser(req.query.username, req.query.password);
     await setTimeout( () => {
         data = {};
         if (user) {
@@ -53,7 +53,7 @@ router.get('/flowers', async (req, res) => {
 router.get('/branches', async (req, res) => {
     console.log('Received get branches request');
     let branches = helper.getAllBranches();
-    let user = helper.getUser(req.query.username, req.query.password);
+    let user = await helper.getUser(req.query.username, req.query.password);
     res.status(200);
     await setTimeout( () => {
         data = {};
@@ -80,7 +80,7 @@ router.get('/contact', async (req, res) => {
 
 router.get('/all/employees', async (req, res) => {
     console.log('Received get all employees request');
-    let user = helper.getUser(req.query.username, req.query.password);
+    let user = await helper.getUser(req.query.username, req.query.password);
     await setTimeout(async () => {
         data = {};
         if (user) {
@@ -106,7 +106,7 @@ router.delete('/remove/employee/:id', async (req, res, next) => {
     data = {};
     try {
         await helper.removeEmployee(req.params.id);
-        let user = helper.getUser(req.query.username, req.query.password);
+        let user = await helper.getUser(req.query.username, req.query.password);
         if (user) {
             data.userRole = user && user.role;
             let result = await helper.getAllEmployees();
@@ -150,7 +150,7 @@ router.post('/update/emp', async (req, res) => {
 
 router.get('/all/customers', async (req, res) => {
     console.log('Received get all customers request');
-    let user = helper.getUser(req.query.username, req.query.password);
+    let user = await helper.getUser(req.query.username, req.query.password);
     await setTimeout(async () => {
         data = {};
         if (user) {
@@ -176,7 +176,7 @@ router.delete('/remove/customer/:id', async (req, res, next) => {
     data = {};
     try {
         await helper.removeCustomer(req.params.id);
-        let user = helper.getUser(req.query.username, req.query.password);
+        let user = await helper.getUser(req.query.username, req.query.password);
         if (user) {
             data.userRole = user && user.role;
             let result = await helper.getAllCustomers();
@@ -218,9 +218,9 @@ router.post('/update/customer', async (req, res) => {
     }
 });
 
-router.post('/login/:username/:password', (req, res, next) => {
+router.post('/login/:username/:password', async (req, res, next) => {
     console.log(`Received login request for user: ${req.params.username}`);
-    let user = helper.getUser(req.params.username, req.params.password);
+    let user = await helper.getUser(req.params.username, req.params.password);
     user && console.log(`router.js:login:: User: Name: ${user.username}, Role: ${user.role}`);
     user && res.status(200).send('OK');
     !user && res.status(401).send('ERROR');

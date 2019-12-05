@@ -4,10 +4,20 @@ let branches = require('../mock_db/branches');
 let customerRepository = require('../model')('Customer');
 let employeeRepository = require('../model')('Employee');
 
-module.exports.getUser = (userName, pass) => {
-    let user = users.find( (user) => user.username === userName && user.password === pass);
-    return user;
-}
+module.exports.getUser = async (userName, pass) => {
+    let result = await customerRepository.findOne({ username: userName, password: pass });
+    if (result) {
+        console.log(`Customer: ${result} \nsuccessfully authenticated.`);
+    } else {
+        result = await employeeRepository.findOne({ username: userName, password: pass });
+        if (result) {
+            console.log(`Employee: ${result} \nsuccessfully authenticated.`);
+        } else {
+            console.log(`Cannot authenticate user: ${userName}.`);
+        }
+    }
+    return result;
+};
 
 module.exports.getAllEmployees = async () => {
     let success = false;
@@ -58,12 +68,12 @@ module.exports.removeCustomer = async (id) => {
     let user = await customerRepository.findOneAndDelete({ id: id });
     !!user ? console.log(`User: ${user} \nsuccessfully deleted !!`)
     : console.log(`ERROR: User with ID: ${id} not found !!`);
-}
+};
 
 module.exports.addCustomer = async (customer) => {
     let createdCustomer = await customerRepository.CREATE(customer);
     console.log(`A new customer created: ${createdCustomer}`);
-}
+};
 
 module.exports.updateCustomer = async (customer) => {
     let user = null;
@@ -72,12 +82,12 @@ module.exports.updateCustomer = async (customer) => {
 
     !!user ? console.log(`User: ${user} \nsuccessfully updeted !!`)
     : console.log(`Error while trying to update user with ID: ${customer.id}`);
-}
+};
 
 module.exports.getAllFlowers = () => {
     return flowers;
-}
+};
 
 module.exports.getAllBranches = () => {
     return branches;
-}
+};
