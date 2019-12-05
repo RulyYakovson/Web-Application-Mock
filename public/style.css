@@ -19,8 +19,13 @@
 }
 
 .footer-icon {
-    width: 10em;
-    height: 10em;
+    width: 4em;
+    height: 4em;
+}
+
+.footer-icon-margin {
+    margin-left: 80px;
+    margin-right: 80px;
 }
 
 .select-color {
