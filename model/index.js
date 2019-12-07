@@ -2,8 +2,10 @@ const debug = require("debug")("mongo:model");
 const mongo = require('mongoose');
 let customer = require('./customer');
 let employee = require('./employee');
+let branch = require('./branch');
 
 let db = mongo.createConnection();
+
 (async () => {
     try {
         await db.openUri('mongodb://localhost/flower-shop-web-demo', { useFindAndModify: false });
@@ -11,9 +13,11 @@ let db = mongo.createConnection();
         debug(`Error while trying connecting to mongo DB: ${err}`);
     }
 })();
+
 debug('Pending to DB connection');
 
 customer(db);
 employee(db);
+branch(db);
 
 module.exports = model => db.model(model);

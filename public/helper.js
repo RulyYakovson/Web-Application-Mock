@@ -3,6 +3,7 @@ let flowers = require('../mock_db/flowers');
 let branches = require('../mock_db/branches');
 let customerRepository = require('../model')('Customer');
 let employeeRepository = require('../model')('Employee');
+let brancheRepository = require('../model')('Branch');
 
 module.exports.getUser = async (userName, pass) => {
     let result = await customerRepository.findOne({ username: userName, password: pass });
@@ -88,6 +89,14 @@ module.exports.getAllFlowers = () => {
     return flowers;
 };
 
-module.exports.getAllBranches = () => {
-    return branches;
+module.exports.getAllBranches = async () => {
+    let success = false;
+    let result = null;
+    await brancheRepository.find({}, (err, branches) => {
+        if (!err) {
+            result = branches;
+            success = true;
+        }
+    });
+    return { success: success, data: result };
 };

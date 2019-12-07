@@ -38,7 +38,7 @@ const generateBranchesHtml = (data) => {
                         html += `<tr>`;
                     }
                     html += `<td style="text-align: center;">
-                                <div class="card" style="width: 65em; height: 40em; display: inline-block;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
+                                <div class="card" style="width: 65em; display: inline-block;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
                                     <div class="card-body">
                                         <div class="card-header text-white badge-primary" style="text-align: center; margin-bottom: 7px;">
                                             <h4 class="mb-1">${branches[i].name}</h4>
@@ -48,6 +48,9 @@ const generateBranchesHtml = (data) => {
                                         </div>
                                         <h1 style="text-align: center; margin-top: 20px;">
                                             <span class="badge badge-primary">${branches[i].address}</span>
+                                        </h1>
+                                        <h1 style="text-align: center; margin-top: 20px;">
+                                            <span class="badge badge-primary">${'Tel: ' + branches[i].phone}</span>
                                         </h1>
                                     </div>
                                 </div>

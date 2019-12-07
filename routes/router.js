@@ -52,21 +52,24 @@ router.get('/flowers', async (req, res) => {
 
 router.get('/branches', async (req, res) => {
     console.log('Received get branches request');
-    let branches = helper.getAllBranches();
     let user = await helper.getUser(req.query.username, req.query.password);
-    res.status(200);
-    await setTimeout( () => {
+    await setTimeout(async () => {
         data = {};
         if (user) {
-            data.branches = branches;
-            res.status(200);
-            res.json(data);
+            data.userRole = user && user.role;
+            let result = await helper.getAllBranches();
+            console.log(`Fetch branches result: ${result.data}`);
+            if (result.success) {
+                data.branches = result && result.data;
+                res.status(200);
+            } else {
+                console.log('An error occured while trying to fetch branches');
+                res.status(400);
+            }
         } else {
             res.status(401);
-            data.message = 'not authorized';
-            data.status = 401;
-            res.json(data);
         }
+        res.json(data);
     }, timeout);
 });
 
