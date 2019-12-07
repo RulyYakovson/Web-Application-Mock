@@ -1,6 +1,6 @@
 let users = require('../mock_db/usersData');
-let flowers = require('../mock_db/flowers');
-let branches = require('../mock_db/branches');
+let flowersMock = require('../mock_db/flowers');
+let branchesMock = require('../mock_db/branches');
 let customerRepository = require('../model')('Customer');
 let employeeRepository = require('../model')('Employee');
 let brancheRepository = require('../model')('Branch');
@@ -86,7 +86,7 @@ module.exports.updateCustomer = async (customer) => {
 };
 
 module.exports.getAllFlowers = () => {
-    return flowers;
+    return flowersMock;
 };
 
 module.exports.getAllBranches = async () => {
@@ -100,3 +100,36 @@ module.exports.getAllBranches = async () => {
     });
     return { success: success, data: result };
 };
+
+module.exports.initDB = async () => {
+    try {
+        let branches = await this.getAllBranches();
+        if (branches.data.length === 0) {
+            await this.initBranchesDB();
+        }
+
+            // -----  TODO -----
+        // let flowers = this.getAllFlowers().data;
+        // if (!flowers || flowers.length === 0) {
+        //     this.initFlowersDB();
+        // }
+
+        let customers = await this.getAllCustomers();
+        if (customers.data.length === 0) {
+            await this.initCustomersDB();
+        }
+
+        let employees = await this.getAllEmployees();
+        if (employees.data.length === 0) {
+            await this.initEmployeesDB();
+        }
+    } catch(err) {
+        console.log(err);
+    }
+};
+
+module.exports.initBranchesDB = async () => {
+    branchesMock.forEach(async branch => {
+        await brancheRepository.CREATE(branch);
+    });
+}

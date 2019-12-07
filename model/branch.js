@@ -19,10 +19,10 @@ module.exports = function(db) {
     branchSchema.statics.CREATE = async function(branch) {
         return this.create(
             {
-                name: branch.username,
+                name: branch.name,
                 branchesID: branch.branchesID,
                 phone: branch.phone,
-                address: customer.address,
+                address: branch.address,
                 map: branch.map,
             }
         );

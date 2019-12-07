@@ -3,6 +3,17 @@ let router = express.Router();
 let helper = require('../public/helper');
 let timeout = 1500;
 
+router.put('/init_db', async (req, res, next) => {
+    console.log('Received init db request');
+    let user = await helper.getUser(req.query.username, req.query.password);
+    user && console.log(`router.js:home::: User: Name: ${user.username}, Role: ${user.role}`);
+    res.status(200);
+    await setTimeout(async () => {
+        await helper.initDB();
+        res.status(200).send('OK');
+    }, timeout);
+});
+
 router.get('/', async (req, res, next) => {
     console.log('Received get index page request');
     let user = await helper.getUser(req.query.username, req.query.password);
