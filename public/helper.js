@@ -1,4 +1,4 @@
-let users = require('../mock_db/usersData');
+let usersMock = require('../mock_db/usersData');
 let flowersMock = require('../mock_db/flowers');
 let branchesMock = require('../mock_db/branches');
 let customerRepository = require('../model')('Customer');
@@ -132,4 +132,18 @@ module.exports.initBranchesDB = async () => {
     branchesMock.forEach(async branch => {
         await brancheRepository.CREATE(branch);
     });
-}
+};
+
+module.exports.initCustomersDB = async () => {
+    customers = usersMock.filter( (user) => user.role === 'customer');
+    customers.forEach(async customer => {
+        await customerRepository.CREATE(customer);
+    });
+};
+
+module.exports.initEmployeesDB = async () => {
+    employees = usersMock.filter( (user) => user.role !== 'customer');
+    employees.forEach(async employee => {
+        await employeeRepository.CREATE(employee);
+    });
+};
