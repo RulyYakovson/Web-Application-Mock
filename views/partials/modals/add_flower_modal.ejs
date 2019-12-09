@@ -6,15 +6,24 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <input id="add-flower-name" type="text" class="form-control" placeholder="Flower name" required="required">
-                </div>
-                <div class="md-form mb-4">
-                    <input id="add-flower-price" type="number" step="0.01" class="form-control" placeholder="Price" required="required">					
-                </div>
-                <div class="form-group">
-                    <button id="add-flower-button" class="btn btn-primary btn-block btn-lg">Add</button>
-                </div>
+                <form action="/add/flower" method="post" enctype="multipart/form-data">
+                    <div class="md-form mb-4">
+                        <input id="add-flower-name" name="name" type="text" class="form-control" placeholder="Flower name" required="required">
+                    </div>
+                    <div class="md-form mb-4">
+                        <input id="add-flower-price" name="price" type="number" step="0.1" class="form-control" placeholder="Price" required="required">					
+                    </div>
+                    <div class="md-form mb-4">
+                        <textarea class="form-control" id="add-flower-description" maxlength="100" name="description" placeholder="Description" ></textarea>
+                        <!-- <input id="add-flower-description" name="description" type="text" class="form-control" placeholder="Description"> -->
+                    </div>
+                    <div class="md-form mb-4">
+                        <input type="file" id="add-flower-img" name="flower-img" class="form-data" />
+                    </div>
+                    <div class="form-group">
+                        <input id="add-flower-button" type="submit" value="Add" class="btn btn-primary btn-block btn-lg" />
+                    </div>
+                </form>
                 <p id="add-flower-err-msg" style="color: red"></p>
             </div>
         </div>

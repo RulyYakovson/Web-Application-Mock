@@ -89,6 +89,11 @@ module.exports.getAllFlowers = () => {
     return flowersMock;
 };
 
+module.exports.addFlower = flower => {
+    console.log(flower);
+    flowersMock;
+};
+
 module.exports.getAllBranches = async () => {
     let success = false;
     let result = null;

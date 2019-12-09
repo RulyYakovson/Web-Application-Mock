@@ -1,5 +1,7 @@
 let express = require('express');
 let router = express.Router();
+var multer  = require('multer')
+var upload = multer({ dest: 'images/' })
 let helper = require('../public/helper');
 let timeout = 1500;
 
@@ -59,6 +61,12 @@ router.get('/flowers', async (req, res) => {
             res.json(data);
         }
     }, timeout);
+});
+
+router.post('/add/flower', upload.single('flower-img'), function (req, res, next) {
+    helper.addFlower({name: req.body.name, description: req.body.description, price: req.body.price});
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
 });
 
 router.get('/branches', async (req, res) => {
