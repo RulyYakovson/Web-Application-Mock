@@ -1,7 +1,7 @@
 $('#branches').click( () => {
     $(".cover").show();
     $.ajax({
-        url:'/branches' + window.location.search,
+        url:'branch/all' + window.location.search,
         type:'GET',
         contentType:'application/json',
         success: (data, status) => {

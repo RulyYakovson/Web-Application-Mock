@@ -1,7 +1,7 @@
 $('#customers').click( () => {
     $(".cover").show();
     $.ajax({
-        url:'/all/customers' + window.location.search,
+        url:'customer/all' + window.location.search,
         type:'GET',
         contentType:'application/json',
         success: (data, status) => {
@@ -34,7 +34,7 @@ $('#add-customer-button').click(async () => {
     let address = $('#add-customer-address').val();
     let gender = $('#add-customer-gender').val();
     console.log(`ajax_requests:add-customer:: Username: ${username}, Passward: ${password}, ID: ${id}, Phone: ${phone}, Gender: ${gender}`);
-    let response = await fetch("/add/customer",
+    let response = await fetch("customer/add",
     {
         method: 'POST',
         headers: {
@@ -66,7 +66,7 @@ const update_customer = async (id) => {
     let address = $('#update-customer-address' + id).val();
     let gender = $('#update-customer-gender' + id).val();
     console.log(`ajax_requests:update-emp::  ID: ${id}, Phone: ${phone}, Address: ${address}, Gender: ${gender}`);
-    let response = await fetch("/update/customer",
+    let response = await fetch("customer/update",
     {
         method: 'POST',
         headers: {
@@ -92,7 +92,7 @@ const update_customer = async (id) => {
 const removeCustomer = (id) => {
     console.log(`ajax_requests:remove-customer:: ID: ${id}`);
     $.ajax({
-        url:`/remove/customer/${id}` + window.location.search,
+        url:`customer/remove/${id}` + window.location.search,
         type:'DELETE',
         contentType:'application/json',
         success: (data, status) => {

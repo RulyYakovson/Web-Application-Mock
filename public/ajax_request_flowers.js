@@ -1,7 +1,7 @@
 $('#flowers').click( () => {
     $(".cover").show();
     $.ajax({
-        url:'/flowers' + window.location.search,
+        url:'flower/all' + window.location.search,
         type:'GET',
         contentType:'application/json',
         success: (data, status) => {
