@@ -1,3 +1,4 @@
+var fs = require("fs");
 let usersMock = require('../mock_db/usersData');
 let flowersMock = require('../mock_db/flowers');
 let branchesMock = require('../mock_db/branches');
@@ -86,8 +87,23 @@ module.exports.updateCustomer = async (customer) => {
     : console.log(`Error while trying to update user with ID: ${customer.id}`);
 };
 
-module.exports.getAllFlowers = () => {
-    return flowersMock;
+module.exports.getAllFlowers = async () => {
+    let success = false;
+    let result = null;
+    await flowerRepository.find({}, (err, flowers) => {
+        if (!err) {
+            success = true;
+            result = flowers.map( flower => {
+                return {
+                    name: flower.name,
+                    price: flower.price,
+                    description: flower.description,
+                    src: flower.src.data.toString('base64')
+                }
+            });
+        }
+    });
+    return { success: success, data: result };
 };
 
 module.exports.addFlower = async flower => {
@@ -114,11 +130,10 @@ module.exports.initDB = async () => {
             await this.initBranchesDB();
         }
 
-            // -----  TODO -----
-        // let flowers = this.getAllFlowers().data;
-        // if (!flowers || flowers.length === 0) {
-        //     this.initFlowersDB();
-        // }
+        let flowers = await this.getAllFlowers();
+        if (flowers.data.length === 0) {
+            this.initFlowersDB();
+        }
 
         let customers = await this.getAllCustomers();
         if (customers.data.length === 0) {
@@ -141,15 +156,34 @@ module.exports.initBranchesDB = async () => {
 };
 
 module.exports.initCustomersDB = async () => {
-    customers = usersMock.filter( (user) => user.role === 'customer');
+    let customers = usersMock.filter( (user) => user.role === 'customer');
     customers.forEach(async customer => {
         await customerRepository.CREATE(customer);
     });
 };
 
 module.exports.initEmployeesDB = async () => {
-    employees = usersMock.filter( (user) => user.role !== 'customer');
+    let employees = usersMock.filter( (user) => user.role !== 'customer');
     employees.forEach(async employee => {
         await employeeRepository.CREATE(employee);
+    });
+};
+
+module.exports.initFlowersDB = async () => {
+    flowersMock.forEach(async elem => {
+    let fileContent = fs.readFileSync(elem.src);
+    let encodeFile = fileContent.toString('base64');
+    let src = {
+        contentType: 'image/png',
+        data :new Buffer(encodeFile, 'base64')
+    };
+
+    let flower = {
+        name: elem.name,
+        price: elem.price,
+        src: src,
+        description: elem.description
+    };
+        await flowerRepository.CREATE(flower);
     });
 };

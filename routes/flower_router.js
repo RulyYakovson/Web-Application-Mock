@@ -17,29 +17,26 @@ var uploadImgHandler = multer({ storage: multer.diskStorage
     })
 }).single('flower-img');
 
-const handleError = (err, res) => {
-    res
-      .status(500)
-      .contentType("text/plain")
-      .end("Oops! Something went wrong!");
-};
-
 router.get('/all', async (req, res) => {
     console.log('Received get flowers request');
-    let flowers = helper.getAllFlowers();
     let user = await helper.getUser(req.query.username, req.query.password);
-    await setTimeout( () => {
+    await setTimeout(async () => {
         data = {};
         if (user) {
-            data.flowers = flowers;
-            res.status(200);
-            res.json(data);
+            data.userRole = user && user.role;
+            let result = await helper.getAllFlowers();
+            console.log(`Fetch flowers result: ${result.data}`);
+            if (result.success) {
+                data.flowers = result && result.data;
+                res.status(200);
+            } else {
+                console.log('An error occured while trying to fetch flowers');
+                res.status(400);
+            }
         } else {
             res.status(401);
-            data.message = 'not authorized';
-            data.status = 401;
-            res.json(data);
         }
+        res.json(data);
     }, timeout);
 });
 
@@ -51,19 +48,19 @@ router.post('/add', uploadImgHandler, async (req, res) => {
         Source: ${req.file.originalname}.`
     );
 
-    let img = fs.readFileSync(req.file.path);
-    let encode_image = img.toString('base64');
-    src = {
+    let fileContent = fs.readFileSync(req.file.path);
+    let encodeFile = fileContent.toString('base64');
+    let src = {
         contentType: req.file.mimetype,
-        data :new Buffer(encode_image, 'base64')
-    }
+        data :new Buffer(encodeFile, 'base64')
+    };
 
     let flower = {
         name: req.body.name,
         price: req.body.price,
         src: src,
         description: req.body.description
-    }
+    };
 
     try {
         await helper.addFlower(flower);

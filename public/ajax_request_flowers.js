@@ -63,13 +63,13 @@ const generateFlowersHtml = (data) => {
                         html += `<tr>`;
                     }
                     html += `<td>
-                                <div class="card" style="width: 22rem;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
+                                <div class="card" style="width: 22rem; height: 520px;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
                                     <div class="card-body">
                                         <div class="card-header text-white badge-primary" style="text-align: center; margin-bottom: 7px;">
                                             <h4 class="mb-1">${flowers[i].name}</h4>
                                         </div>
-                                        <img class="card-img-top" alt="Card image cap" style="height: 17em;" src=${flowers[i].src} >
-                                        <p class="card-text">Here supposed to come a detailed, nice explanation about the flower.</p>
+                                        <img class="card-img-top" alt="Card image cap" style="height: 17em;" src="data:image/png;base64, ${flowers[i].src}" >
+                                        <p class="card-text">${flowers[i].description}</p>
                                         <h4 style="text-align: center;">
                                             <span class="badge badge-primary">${flowers[i].price}  &#8362; </span>
                                         </h4>
