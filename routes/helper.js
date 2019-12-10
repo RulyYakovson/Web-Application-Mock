@@ -4,6 +4,7 @@ let branchesMock = require('../mock_db/branches');
 let customerRepository = require('../model')('Customer');
 let employeeRepository = require('../model')('Employee');
 let brancheRepository = require('../model')('Branch');
+let flowerRepository = require('../model')('Flower');
 
 module.exports.getUser = async (userName, pass) => {
     let result = await customerRepository.findOne({ username: userName, password: pass });
@@ -89,9 +90,9 @@ module.exports.getAllFlowers = () => {
     return flowersMock;
 };
 
-module.exports.addFlower = flower => {
-    console.log(flower);
-    flowersMock;
+module.exports.addFlower = async flower => {
+    let createdFlower = await flowerRepository.CREATE(flower);
+    console.log(`A new flower created: ${createdFlower}`);
 };
 
 module.exports.getAllBranches = async () => {

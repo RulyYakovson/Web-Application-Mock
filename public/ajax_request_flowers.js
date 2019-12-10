@@ -25,6 +25,22 @@ $('#flowers').click( () => {
     });
 });
 
+$(document).on("click","#add-flower-button", event => {
+    $("#add-flower-modal").removeClass('show');
+});
+
+// function ajaxCall() {
+//    $.ajax({
+//        url : 'example.com',
+//        type: 'GET',
+//        success : resData
+//    })
+//  }
+
+// function resData(data){
+//     $("#taxesModal").modal('hide');
+// }
+
 const colorChecked = (colorBoxName) => {
     let colors = document.getElementsByClassName('select-color ' + colorBoxName.substr(1));
     for (let i = 0; i < colors.length; i++) {

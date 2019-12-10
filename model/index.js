@@ -3,6 +3,7 @@ const mongo = require('mongoose');
 let customer = require('./customer');
 let employee = require('./employee');
 let branch = require('./branch');
+let flower = require('./flower');
 
 let db = mongo.createConnection();
 
@@ -19,5 +20,6 @@ debug('Pending to DB connection');
 customer(db);
 employee(db);
 branch(db);
+flower(db);
 
 module.exports = model => db.model(model);
