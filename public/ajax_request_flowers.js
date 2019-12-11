@@ -25,11 +25,11 @@ $('#flowers').click( () => {
     });
 });
 
-$(document).on("click","#add-flower-button", event => {
-    jQuery.noConflict();
-    $("#add-flower-modal").modal('hide'); // .removeClass('show');
-    $('#flowers').trigger('click');
-});
+// $(document).on("click","#add-flower-button", event => {
+//     jQuery.noConflict();
+//     $("#add-flower-modal").modal('hide'); // .removeClass('show');
+//     $('#flowers').trigger('click');
+// });
 
 const colorChecked = (colorBoxName) => {
     let colors = document.getElementsByClassName('select-color ' + colorBoxName.substr(1));
