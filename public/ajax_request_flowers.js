@@ -26,20 +26,10 @@ $('#flowers').click( () => {
 });
 
 $(document).on("click","#add-flower-button", event => {
-    $("#add-flower-modal").removeClass('show');
+    jQuery.noConflict();
+    $("#add-flower-modal").modal('hide'); // .removeClass('show');
+    $('#flowers').trigger('click');
 });
-
-// function ajaxCall() {
-//    $.ajax({
-//        url : 'example.com',
-//        type: 'GET',
-//        success : resData
-//    })
-//  }
-
-// function resData(data){
-//     $("#taxesModal").modal('hide');
-// }
 
 const colorChecked = (colorBoxName) => {
     let colors = document.getElementsByClassName('select-color ' + colorBoxName.substr(1));
@@ -48,7 +38,22 @@ const colorChecked = (colorBoxName) => {
     }
     let color = document.getElementById(colorBoxName);
     color.style.boxShadow = "0 7px 14px 0 rgba(0, 0, 0, 4)";
-}
+};
+
+const removeFlower = id => {
+    console.log(`ajax_requests:remove-flower:: ID: ${id}`);
+    $.ajax({
+        url:`flower/remove/${id}` + window.location.search,
+        type:'DELETE',
+        contentType:'application/json',
+        success: (data, status) => {
+            console.log('Status: ' + status);
+            if (status == 'success') {
+                let html = generateFlowersHtml(data);
+                $('#main-body').html(html);
+        }
+    }});
+};
 
 const generateFlowersHtml = (data) => {
     let flowers = data.flowers;
@@ -63,7 +68,7 @@ const generateFlowersHtml = (data) => {
                         html += `<tr>`;
                     }
                     html += `<td>
-                                <div class="card" style="width: 22rem; height: 520px;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
+                                <div class="card" style="width: 22rem; height: 530px;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
                                     <div class="card-body">
                                         <div class="card-header text-white badge-primary" style="text-align: center; margin-bottom: 7px;">
                                             <h4 class="mb-1">${flowers[i].name}</h4>
@@ -83,6 +88,11 @@ const generateFlowersHtml = (data) => {
                                                 <div class="select-color ${flowers[i].name} green" onclick="colorChecked('${'6' + flowers[i].name}')" id=${'6' + flowers[i].name} ></div>
                                                 <div class="select-color ${flowers[i].name} purple" onclick="colorChecked('${'7' + flowers[i].name}')" id=${'7' + flowers[i].name} ></div>
                                             </div>
+                                        </div>
+                                        <div class="row justify-content-end">
+                                            <button style="height:27px" class="btn-danger align-self-end" onclick="removeFlower('${flowers[i].id}')">
+                                                <i class="fas fa-remove" ></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

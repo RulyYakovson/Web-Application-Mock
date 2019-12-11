@@ -95,6 +95,7 @@ module.exports.getAllFlowers = async () => {
             success = true;
             result = flowers.map( flower => {
                 return {
+                    id: flower._id,
                     name: flower.name,
                     price: flower.price,
                     description: flower.description,
@@ -109,6 +110,12 @@ module.exports.getAllFlowers = async () => {
 module.exports.addFlower = async flower => {
     let createdFlower = await flowerRepository.CREATE(flower);
     console.log(`A new flower created: ${createdFlower}`);
+};
+
+module.exports.removeFlower = async id => {
+    let flower = await flowerRepository.findOneAndDelete({ id: id });
+    !!flower ? console.log(`Flower: ${flower} \nsuccessfully deleted !!`)
+    : console.log(`ERROR: Flower with ID: ${id} not found !!`);
 };
 
 module.exports.getAllBranches = async () => {

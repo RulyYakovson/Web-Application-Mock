@@ -40,6 +40,33 @@ router.get('/all', async (req, res) => {
     }, timeout);
 });
 
+router.delete('/remove/:id', async (req, res) => {
+    console.log(`Received remove flower request for ID: ${req.params.id}`);
+    data = {};
+    try {
+        let user = await helper.getUser(req.query.username, req.query.password);
+        if (user) {
+            await helper.removeFlower(req.params.id);
+            data.userRole = user && user.role;
+            let result = await helper.getAllFlowers();
+            console.log(`Fetch flowers result: ${result.data}`);
+            if (result.success) {
+                data.flowers = result && result.data;
+                res.status(200);
+            } else {
+                console.log('An error occured while trying to fetch flowers');
+                res.status(400);
+            }
+        } else {
+            res.status(401);
+        }
+    } catch(err) {
+        res.status(500);
+        console.log(`Failed to delete employee with ID: ${req.params.id}`);
+    }
+    res.json(data);
+});
+
 router.post('/add', uploadImgHandler, async (req, res) => {
     console.log(`Received add flower request,
         Name: ${req.body.name},
