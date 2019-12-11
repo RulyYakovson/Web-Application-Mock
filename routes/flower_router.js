@@ -3,7 +3,8 @@ let router = express.Router();
 var path = require('path');
 var fs = require("fs");
 var multer  = require('multer');
-let helper = require('./helper');
+let repository = require('../repositories/flower_repository');
+let repository_helper = require('../repositories/repository_helper');
 let timeout = 1500;
 
 var uploadImgHandler = multer({ storage: multer.diskStorage
@@ -19,12 +20,12 @@ var uploadImgHandler = multer({ storage: multer.diskStorage
 
 router.get('/all', async (req, res) => {
     console.log('Received get flowers request');
-    let user = await helper.getUser(req.query.username, req.query.password);
+    let user = await repository_helper.getUser(req.query.username, req.query.password);
     await setTimeout(async () => {
         data = {};
         if (user) {
             data.userRole = user && user.role;
-            let result = await helper.getAllFlowers();
+            let result = await repository.getAllFlowers();
             console.log(`Fetch flowers result: ${result.data}`);
             if (result.success) {
                 data.flowers = result && result.data;
@@ -44,11 +45,11 @@ router.delete('/remove/:id', async (req, res) => {
     console.log(`Received remove flower request for ID: ${req.params.id}`);
     data = {};
     try {
-        let user = await helper.getUser(req.query.username, req.query.password);
+        let user = await repository_helper.getUser(req.query.username, req.query.password);
         if (user) {
-            await helper.removeFlower(req.params.id);
+            await repository.removeFlower(req.params.id);
             data.userRole = user && user.role;
-            let result = await helper.getAllFlowers();
+            let result = await repository.getAllFlowers();
             console.log(`Fetch flowers result: ${result.data}`);
             if (result.success) {
                 data.flowers = result && result.data;
@@ -90,7 +91,7 @@ router.post('/add', uploadImgHandler, async (req, res) => {
     };
 
     try {
-        await helper.addFlower(flower);
+        await repository.addFlower(flower);
         res.status(200).send('OK');
     } catch(err) { // TODO: send the error message and show it to the user...
         console.log(err.message)

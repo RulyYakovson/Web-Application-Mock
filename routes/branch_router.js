@@ -1,16 +1,17 @@
 let express = require('express');
 let router = express.Router();
-let helper = require('./helper');
+let repository = require('../repositories/branches_repository');
+let repository_helper = require('../repositories/repository_helper');
 let timeout = 1500;
 
 router.get('/all', async (req, res) => {
     console.log('Received get branches request');
-    let user = await helper.getUser(req.query.username, req.query.password);
+    let user = await repository_helper.getUser(req.query.username, req.query.password);
     await setTimeout(async () => {
         data = {};
         if (user) {
             data.userRole = user && user.role;
-            let result = await helper.getAllBranches();
+            let result = await repository.getAllBranches();
             console.log(`Fetch branches result: ${result.data}`);
             if (result.success) {
                 data.branches = result && result.data;

@@ -1,16 +1,17 @@
 let express = require('express');
 let router = express.Router();
-let helper = require('./helper');
+let repository = require('../repositories/employee_repository');
+let repository_helper = require('../repositories/repository_helper');
 let timeout = 1500;
 
 router.get('/all', async (req, res) => {
     console.log('Received get all employees request');
-    let user = await helper.getUser(req.query.username, req.query.password);
+    let user = await repository_helper.getUser(req.query.username, req.query.password);
     await setTimeout(async () => {
         data = {};
         if (user) {
             data.userRole = user && user.role;
-            let result = await helper.getAllEmployees();
+            let result = await repository.getAllEmployees();
             console.log(`Fetch employees result: ${result.data}`);
             if (result.success) {
                 data.employees = result && result.data;
@@ -30,11 +31,11 @@ router.delete('/remove/:id', async (req, res, next) => {
     console.log(`Received remove employee request for ID: ${req.params.id}`);
     data = {};
     try {
-        await helper.removeEmployee(req.params.id);
-        let user = await helper.getUser(req.query.username, req.query.password);
+        await repository.removeEmployee(req.params.id);
+        let user = await repository_helper.getUser(req.query.username, req.query.password);
         if (user) {
             data.userRole = user && user.role;
-            let result = await helper.getAllEmployees();
+            let result = await repository.getAllEmployees();
             console.log(`Fetch employees result: ${result.data}`);
             if (result.success) {
                 data.employees = result && result.data;
@@ -55,7 +56,7 @@ router.delete('/remove/:id', async (req, res, next) => {
 
 router.post('/add', async (req, res) => {
     try {
-        await helper.addEmployee(req.body);
+        await repository.addEmployee(req.body);
         res.status(200).send('OK');
     } catch(err) { // TODO: send the error message and show it to the user...
         console.log(err.message)
@@ -65,7 +66,7 @@ router.post('/add', async (req, res) => {
 
 router.post('/update', async (req, res) => {
     try {
-        await helper.updateEmployee(req.body);
+        await repository.updateEmployee(req.body);
         res.status(200).send('OK');
     } catch(err) {
         console.log(err.message)
