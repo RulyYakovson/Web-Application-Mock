@@ -25,8 +25,8 @@ module.exports.addFlower = async flower => {
     console.log(`A new flower created: ${createdFlower}`);
 };
 
-module.exports.removeFlower = async id => {
-    let flower = await flowerRepository.findOneAndDelete({ id: id });
+module.exports.removeFlower = async name => {
+    let flower = await flowerRepository.findOneAndDelete({ name: name });
     !!flower ? console.log(`Flower: ${flower} \nsuccessfully deleted !!`)
-    : console.log(`ERROR: Flower with ID: ${id} not found !!`);
+    : console.log(`ERROR: Flower: ${name} not found !!`);
 };

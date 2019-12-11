@@ -40,10 +40,10 @@ const colorChecked = (colorBoxName) => {
     color.style.boxShadow = "0 7px 14px 0 rgba(0, 0, 0, 4)";
 };
 
-const removeFlower = id => {
-    console.log(`ajax_requests:remove-flower:: ID: ${id}`);
+const removeFlower = name => {
+    console.log(`ajax_requests:remove-flower:: ID: ${name}`);
     $.ajax({
-        url:`flower/remove/${id}` + window.location.search,
+        url:`flower/remove/${name}` + window.location.search,
         type:'DELETE',
         contentType:'application/json',
         success: (data, status) => {
@@ -68,7 +68,7 @@ const generateFlowersHtml = (data) => {
                         html += `<tr>`;
                     }
                     html += `<td>
-                                <div class="card" style="width: 22rem; height: 530px;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
+                                <div class="card" style="width: 22rem; max-height: 535px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
                                     <div class="card-body">
                                         <div class="card-header text-white badge-primary" style="text-align: center; margin-bottom: 7px;">
                                             <h4 class="mb-1">${flowers[i].name}</h4>
@@ -90,7 +90,7 @@ const generateFlowersHtml = (data) => {
                                             </div>
                                         </div>
                                         <div class="row justify-content-end">
-                                            <button style="height:27px" class="btn-danger align-self-end" onclick="removeFlower('${flowers[i].id}')">
+                                            <button style="height:27px" class="btn-danger align-self-end" onclick="removeFlower('${flowers[i].name}')">
                                                 <i class="fas fa-remove" ></i>
                                             </button>
                                         </div>

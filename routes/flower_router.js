@@ -41,13 +41,13 @@ router.get('/all', async (req, res) => {
     }, timeout);
 });
 
-router.delete('/remove/:id', async (req, res) => {
-    console.log(`Received remove flower request for ID: ${req.params.id}`);
+router.delete('/remove/:name', async (req, res) => {
+    console.log(`Received remove flower request for: ${req.params.name}`);
     data = {};
     try {
         let user = await repository_helper.getUser(req.query.username, req.query.password);
         if (user) {
-            await repository.removeFlower(req.params.id);
+            await repository.removeFlower(req.params.name);
             data.userRole = user && user.role;
             let result = await repository.getAllFlowers();
             console.log(`Fetch flowers result: ${result.data}`);
@@ -63,7 +63,7 @@ router.delete('/remove/:id', async (req, res) => {
         }
     } catch(err) {
         res.status(500);
-        console.log(`Failed to delete employee with ID: ${req.params.id}`);
+        console.log(`Failed to delete flower: ${req.params.name}`);
     }
     res.json(data);
 });

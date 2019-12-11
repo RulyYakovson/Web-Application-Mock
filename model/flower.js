@@ -6,7 +6,7 @@ let Schema = mongoose.Schema;
 module.exports = function(db) {
     let flowerSchema = Schema(
         {
-            name: { type: String, required: true },
+            name: { type: String, required: true, unique: true },
             price: { type: Double, required: true },
             description: String,
             src: {
