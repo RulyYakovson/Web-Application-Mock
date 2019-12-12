@@ -34,7 +34,7 @@ $('#add-customer-button').click(async () => {
     let address = $('#add-customer-address').val();
     let gender = $('#add-customer-gender').val();
     console.log(`ajax_requests:add-customer:: Username: ${username}, Passward: ${password}, ID: ${id}, Phone: ${phone}, Gender: ${gender}`);
-    let response = await fetch("customer/add",
+    let response = await fetch('customer/add' + window.location.search,
     {
         method: 'POST',
         headers: {
@@ -66,7 +66,7 @@ const update_customer = async (id) => {
     let address = $('#update-customer-address' + id).val();
     let gender = $('#update-customer-gender' + id).val();
     console.log(`ajax_requests:update-emp::  ID: ${id}, Phone: ${phone}, Address: ${address}, Gender: ${gender}`);
-    let response = await fetch("customer/update",
+    let response = await fetch('customer/update' + window.location.search,
     {
         method: 'POST',
         headers: {

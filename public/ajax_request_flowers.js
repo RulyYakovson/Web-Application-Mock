@@ -31,7 +31,7 @@ $('#flowers').click( () => {
 //     $('#flowers').trigger('click');
 // });
 
-const colorChecked = (colorBoxName) => {
+const colorChecked = colorBoxName => {
     let colors = document.getElementsByClassName('select-color ' + colorBoxName.substr(1));
     for (let i = 0; i < colors.length; i++) {
       colors[i].style.boxShadow = "none";
@@ -57,6 +57,7 @@ const removeFlower = name => {
 
 const generateFlowersHtml = (data) => {
     let flowers = data.flowers;
+    let userRole = data.userRole;
                 let html = `<div class="jumbotron text-center">
                                 <h1>Flowers Catalog</h1>
                             </div>
@@ -88,13 +89,15 @@ const generateFlowersHtml = (data) => {
                                                 <div class="select-color ${flowers[i].name} green" onclick="colorChecked('${'6' + flowers[i].name}')" id=${'6' + flowers[i].name} ></div>
                                                 <div class="select-color ${flowers[i].name} purple" onclick="colorChecked('${'7' + flowers[i].name}')" id=${'7' + flowers[i].name} ></div>
                                             </div>
-                                        </div>
-                                        <div class="row justify-content-end">
-                                            <button style="height:27px" class="btn-danger align-self-end" onclick="removeFlower('${flowers[i].name}')">
-                                                <i class="fas fa-remove" ></i>
-                                            </button>
-                                        </div>
-                                    </div>
+                                        </div>`;
+                                        if (userRole && userRole === 'Admin') {
+                                            html += `<div class="row justify-content-end">
+                                                        <button style="height:27px" class="btn-danger align-self-end" onclick="removeFlower('${flowers[i].name}')">
+                                                            <i class="fas fa-remove" ></i>
+                                                        </button>
+                                                    </div>`;
+                                        }
+                            html += `</div>
                                 </div>
                             </td>`;
                     if (i % 3 === 2) {

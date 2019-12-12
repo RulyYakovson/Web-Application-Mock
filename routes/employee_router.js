@@ -1,51 +1,41 @@
 let express = require('express');
 let router = express.Router();
 let repository = require('../repositories/employee_repository');
-let repository_helper = require('../repositories/repository_helper');
+let auth = require('./auth_user');
 let timeout = 1500;
 
-router.get('/all', async (req, res) => {
+router.get('/all', auth.authEmployee, async (req, res) => {
     console.log('Received get all employees request');
-    let user = await repository_helper.getUser(req.query.username, req.query.password);
     await setTimeout(async () => {
         data = {};
-        if (user) {
-            data.userRole = user && user.role;
-            let result = await repository.getAllEmployees();
-            console.log(`Fetch employees result: ${result.data}`);
-            if (result.success) {
-                data.employees = result && result.data;
-                res.status(200);
-            } else {
-                console.log('An error occured while trying to fetch employees');
-                res.status(400);
-            }
+        data.userRole = req.userRole;
+        let result = await repository.getAllEmployees();
+        console.log(`Fetch employees result: ${result.data}`);
+        if (result.success) {
+            data.employees = result && result.data;
+            res.status(200);
         } else {
-            res.status(401);
+            console.log('An error occured while trying to fetch employees');
+            res.status(400);
         }
         res.json(data);
     }, timeout);
 });
 
-router.delete('/remove/:id', async (req, res, next) => {
+router.delete('/remove/:id', auth.authEmployee, async (req, res) => {
     console.log(`Received remove employee request for ID: ${req.params.id}`);
     data = {};
     try {
         await repository.removeEmployee(req.params.id);
-        let user = await repository_helper.getUser(req.query.username, req.query.password);
-        if (user) {
-            data.userRole = user && user.role;
-            let result = await repository.getAllEmployees();
-            console.log(`Fetch employees result: ${result.data}`);
-            if (result.success) {
-                data.employees = result && result.data;
-                res.status(200);
-            } else {
-                console.log('An error occured while trying to fetch employees');
-                res.status(400);
-            }
+        data.userRole = req.userRole;
+        let result = await repository.getAllEmployees();
+        console.log(`Fetch employees result: ${result.data}`);
+        if (result.success) {
+            data.employees = result && result.data;
+            res.status(200);
         } else {
-            res.status(401);
+            console.log('An error occured while trying to fetch employees');
+            res.status(400);
         }
     } catch(err) {
         res.status(500);
@@ -54,7 +44,7 @@ router.delete('/remove/:id', async (req, res, next) => {
     res.json(data);
 });
 
-router.post('/add', async (req, res) => {
+router.post('/add', auth.authEmployee, async (req, res) => {
     try {
         await repository.addEmployee(req.body);
         res.status(200).send('OK');
@@ -64,7 +54,7 @@ router.post('/add', async (req, res) => {
     }
 });
 
-router.post('/update', async (req, res) => {
+router.post('/update', auth.authEmployee, async (req, res) => {
     try {
         await repository.updateEmployee(req.body);
         res.status(200).send('OK');

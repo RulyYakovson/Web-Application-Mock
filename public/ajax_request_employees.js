@@ -34,7 +34,7 @@ $('#add-emp-button').click(async () => {
     let branch = $('#add-emp-branch').val();
     let gender = $('#add-emp-gender').val();
     console.log(`ajax_requests:add-emp:: Username: ${username}, Passward: ${password}, ID: ${id}, Role: ${role}, Branch: ${branch}, Gender: ${gender}`);
-    let response = await fetch("employee/add",
+    let response = await fetch('employee/add' + window.location.search,
     {
         method: 'POST',
         headers: {
@@ -65,7 +65,7 @@ const update_emp = async (id) => {
     let branch = $('#update-emp-branch' + id).val();
     let gender = $('#update-emp-gender' + id).val();
     console.log(`ajax_requests:update-emp::  ID: ${id}, Role: ${role}, Branch: ${branch}, Gender: ${gender}`);
-    let response = await fetch("employee/update",
+    let response = await fetch('employee/update' + window.location.search,
     {
         method: 'POST',
         headers: {

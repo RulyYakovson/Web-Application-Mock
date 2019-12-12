@@ -4,7 +4,7 @@ var fs = require("fs");
 var multer  = require('multer');
 const download = require('image-downloader')
 let repository = require('../repositories/flower_repository');
-let repository_helper = require('../repositories/repository_helper');
+let auth = require('./auth_user');
 let path = './public/images';
 let timeout = 1500;
 
@@ -19,48 +19,38 @@ var uploadImgHandler = multer({ storage: multer.diskStorage
     })
 }).single('flower-img');
 
-router.get('/all', async (req, res) => {
+router.get('/all', auth.authUser, async (req, res) => {
     console.log('Received get flowers request');
-    let user = await repository_helper.getUser(req.query.username, req.query.password);
     await setTimeout(async () => {
         data = {};
-        if (user) {
-            data.userRole = user && user.role;
-            let result = await repository.getAllFlowers();
-            console.log(`Fetch flowers result: ${result.data}`);
-            if (result.success) {
-                data.flowers = result && result.data;
-                res.status(200);
-            } else {
-                console.log('An error occured while trying to fetch flowers');
-                res.status(400);
-            }
+        data.userRole = req.userRole;
+        let result = await repository.getAllFlowers();
+        console.log(`Fetch flowers result: ${result.data}`);
+        if (result.success) {
+            data.flowers = result && result.data;
+            res.status(200);
         } else {
-            res.status(401);
+            console.log('An error occured while trying to fetch flowers');
+            res.status(400);
         }
         res.json(data);
     }, timeout);
 });
 
-router.delete('/remove/:name', async (req, res) => {
+router.delete('/remove/:name', auth.authEmployee, async (req, res) => {
     console.log(`Received remove flower request for: ${req.params.name}`);
     data = {};
     try {
-        let user = await repository_helper.getUser(req.query.username, req.query.password);
-        if (user) {
-            await repository.removeFlower(req.params.name);
-            data.userRole = user && user.role;
-            let result = await repository.getAllFlowers();
-            console.log(`Fetch flowers result: ${result.data}`);
-            if (result.success) {
-                data.flowers = result && result.data;
-                res.status(200);
-            } else {
-                console.log('An error occured while trying to fetch flowers');
-                res.status(400);
-            }
+        await repository.removeFlower(req.params.name);
+        data.userRole = req.userRole;
+        let result = await repository.getAllFlowers();
+        console.log(`Fetch flowers result: ${result.data}`);
+        if (result.success) {
+            data.flowers = result && result.data;
+            res.status(200);
         } else {
-            res.status(401);
+            console.log('An error occured while trying to fetch flowers');
+            res.status(400);
         }
     } catch(err) {
         res.status(500);
