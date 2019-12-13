@@ -6,6 +6,12 @@ let customerRepository = require('../model')('Customer');
 let employeeRepository = require('../model')('Employee');
 let brancheRepository = require('../model')('Branch');
 let flowerRepository = require('../model')('Flower');
+let brancHelper = require('./branches_repository');
+let customerHelper = require('./customers_repository');
+let employeeHelper = require('./employee_repository');
+let flowerHelper = require('./flower_repository');
+
+
 
 module.exports.getUser = async (userName, pass) => {
     let result = await customerRepository.findOne({ username: userName, password: pass });
@@ -24,23 +30,23 @@ module.exports.getUser = async (userName, pass) => {
 
 module.exports.initDB = async () => {
     try {
-        let branches = await this.getAllBranches();
-        if (branches.data.length === 0) {
+        let result = await brancHelper.getAllBranches();
+        if (this.initNeeded(result)) {
             await this.initBranchesDB();
         }
 
-        let flowers = await this.getAllFlowers();
-        if (flowers.data.length === 0) {
+        result = await flowerHelper.getAllFlowers();
+        if (this.initNeeded(result)) {
             this.initFlowersDB();
         }
 
-        let customers = await this.getAllCustomers();
-        if (customers.data.length === 0) {
+        result = await customerHelper.getAllCustomers();
+        if (this.initNeeded(result)) {
             await this.initCustomersDB();
         }
 
-        let employees = await this.getAllEmployees();
-        if (employees.data.length === 0) {
+        result = await employeeHelper.getAllEmployees();
+        if (this.initNeeded(result)) {
             await this.initEmployeesDB();
         }
     } catch(err) {
@@ -86,3 +92,5 @@ module.exports.initFlowersDB = async () => {
         await flowerRepository.CREATE(flower);
     });
 };
+
+module.exports.initNeeded = result => (!result.success || !result.data || result.data.length === 0);
