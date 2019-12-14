@@ -26,9 +26,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', router);
-app.use('/branch', branchRouter);
 app.use('/customer', customerRouter);
 app.use('/employee', employeeRouter);
+app.use('/branch', branchRouter);
 app.use('/flower', flowerRouter);
 
 module.exports = app;
