@@ -31,6 +31,8 @@ app.use('/customer', customerRouter);
 app.use('/employee', employeeRouter);
 app.use('/flower', flowerRouter);
 
-app.listen(8080, () => {
-  console.log('App listening on http://localhost:8080')
-});
+// app.listen(8080, () => {
+//   console.log('App listening on http://localhost:8080')
+// });
+
+module.exports = app;
