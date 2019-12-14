@@ -31,6 +31,30 @@ $(document).ready( () => {
     });
 });
 
+$('#init-db').click( () => {
+    $(".cover").show();
+    $.ajax({
+        url:'/init_db' + window.location.search,
+        type:'PUT',
+        contentType:'text/html',
+        success: (data, status) => {
+            console.log('Status: ' + status);
+            if (status == 'success') {
+                console.log('result is 200');
+                removeActive();
+                $('#init-db').addClass('active');
+                $(".cover").hide();
+            }
+        },
+        error: (data, status) => {
+            console.log('Status: ' + status);
+            removeActive();
+            $('#init-db').addClass('active');
+            $(".cover").hide();
+        }
+    });
+});
+
 $('#home').click( () => {
     $(".cover").show();
     $.ajax({

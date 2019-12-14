@@ -1,7 +1,7 @@
 $('#flowers').click( () => {
     $(".cover").show();
     $.ajax({
-        url:'/flowers' + window.location.search,
+        url:'flower/all' + window.location.search,
         type:'GET',
         contentType:'application/json',
         success: (data, status) => {
@@ -25,17 +25,39 @@ $('#flowers').click( () => {
     });
 });
 
-const colorChecked = (colorBoxName) => {
+// $(document).on("click","#add-flower-button", event => {
+//     jQuery.noConflict();
+//     $("#add-flower-modal").modal('hide'); // .removeClass('show');
+//     $('#flowers').trigger('click');
+// });
+
+const colorChecked = colorBoxName => {
     let colors = document.getElementsByClassName('select-color ' + colorBoxName.substr(1));
     for (let i = 0; i < colors.length; i++) {
       colors[i].style.boxShadow = "none";
     }
     let color = document.getElementById(colorBoxName);
     color.style.boxShadow = "0 7px 14px 0 rgba(0, 0, 0, 4)";
-}
+};
+
+const removeFlower = name => {
+    console.log(`ajax_requests:remove-flower:: ID: ${name}`);
+    $.ajax({
+        url:`flower/remove/${name}` + window.location.search,
+        type:'DELETE',
+        contentType:'application/json',
+        success: (data, status) => {
+            console.log('Status: ' + status);
+            if (status == 'success') {
+                let html = generateFlowersHtml(data);
+                $('#main-body').html(html);
+        }
+    }});
+};
 
 const generateFlowersHtml = (data) => {
     let flowers = data.flowers;
+    let userRole = data.userRole;
                 let html = `<div class="jumbotron text-center">
                                 <h1>Flowers Catalog</h1>
                             </div>
@@ -47,13 +69,13 @@ const generateFlowersHtml = (data) => {
                         html += `<tr>`;
                     }
                     html += `<td>
-                                <div class="card" style="width: 22rem;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
+                                <div class="card" style="width: 22rem; max-height: 535px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
                                     <div class="card-body">
                                         <div class="card-header text-white badge-primary" style="text-align: center; margin-bottom: 7px;">
                                             <h4 class="mb-1">${flowers[i].name}</h4>
                                         </div>
-                                        <img class="card-img-top" alt="Card image cap" style="height: 17em;" src=${flowers[i].src} >
-                                        <p class="card-text">Here supposed to come a detailed, nice explanation about the flower.</p>
+                                        <img class="card-img-top" alt="Card image cap" style="height: 17em;" src="data:image/png;base64, ${flowers[i].src}" >
+                                        <p class="card-text">${flowers[i].description}</p>
                                         <h4 style="text-align: center;">
                                             <span class="badge badge-primary">${flowers[i].price}  &#8362; </span>
                                         </h4>
@@ -67,8 +89,15 @@ const generateFlowersHtml = (data) => {
                                                 <div class="select-color ${flowers[i].name} green" onclick="colorChecked('${'6' + flowers[i].name}')" id=${'6' + flowers[i].name} ></div>
                                                 <div class="select-color ${flowers[i].name} purple" onclick="colorChecked('${'7' + flowers[i].name}')" id=${'7' + flowers[i].name} ></div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </div>`;
+                                        if (userRole && userRole === 'Admin') {
+                                            html += `<div class="row justify-content-end">
+                                                        <button style="height:27px" class="btn-danger align-self-end" onclick="removeFlower('${flowers[i].name}')">
+                                                            <i class="fas fa-remove" ></i>
+                                                        </button>
+                                                    </div>`;
+                                        }
+                            html += `</div>
                                 </div>
                             </td>`;
                     if (i % 3 === 2) {
