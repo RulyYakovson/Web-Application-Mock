@@ -78,11 +78,17 @@ router.post('/add', uploadImgHandler, async (req, res) => {
         !file && (imageTempPath = await downloadImage({ url: url, dest: path }));
 
         let mimetype = file ? file.mimetype : 'image/jpeg';
-        await saveImage(imageTempPath, body, mimetype);
-        // Remove image from images folder
-        fs.unlinkSync(imageTempPath);
+        try {
+            await saveImage(imageTempPath, body, mimetype);
+            res.status(200).send('OK');
+        } catch(e) {
+            console.log('ERROR: ' + e.message);
+            res.status(500).send('ERROR');
+        } finally {
+            // Remove image from images folder
+            fs.unlinkSync(imageTempPath);
+        }
 
-        res.status(200).send('OK');
     } catch(err) { // TODO: send the error message and show it to the user...
         console.log(err.message)
         res.status(500).send(err.message);

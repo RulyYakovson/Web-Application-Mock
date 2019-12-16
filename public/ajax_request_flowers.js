@@ -25,11 +25,34 @@ $('#flowers').click( () => {
     });
 });
 
-// $(document).on("click","#add-flower-button", event => {
-//     jQuery.noConflict();
-//     $("#add-flower-modal").modal('hide'); // .removeClass('show');
-//     $('#flowers').trigger('click');
-// });
+$("form#add-flower-form-data").submit( e => {
+    $(".cover").show();
+    e.preventDefault();    
+    var formData = new FormData(document.getElementById('add-flower-form-data'));
+    console.log('ajax_requests::add-flower');
+    $.ajax({
+        url:'flower/add' + window.location.search,
+        type: 'POST',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (data, status) => {
+            console.log('Status: ' + status);
+            if (status == 'success') {
+                jQuery.noConflict();
+                $('#add-flower-modal').modal('hide');
+                location.reload();
+            }
+            $(".cover").hide();
+        },
+        error: (data, status) => {
+            console.log('Status: ' + status);
+            $('#add-flower-err-msg').text('An error occurred while trying to add the flower');
+            $(".cover").hide();
+        }
+    });
+});
 
 const colorChecked = colorBoxName => {
     let colors = document.getElementsByClassName('select-color ' + colorBoxName.substr(1));
