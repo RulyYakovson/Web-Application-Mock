@@ -10,6 +10,7 @@ $('#flowers').click( () => {
                 let html = generateFlowersHtml(data);
                 $('#main-body').html(html);
                 removeActive();
+                $('#flowers-menu').addClass('active');
                 $('#flowers').addClass('active');
                 $(".cover").hide();
             }
@@ -19,6 +20,7 @@ $('#flowers').click( () => {
             let html = generateErrorHtml(data);
             $('#main-body').html(html);
             removeActive();
+            $('#flowers-menu').addClass('active');
             $('#flowers').addClass('active');
             $(".cover").hide();
         }

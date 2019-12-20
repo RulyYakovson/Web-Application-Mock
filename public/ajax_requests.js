@@ -55,87 +55,6 @@ $('#init-db').click( () => {
     });
 });
 
-$('#home').click( () => {
-    $(".cover").show();
-    $.ajax({
-        url:'/home' + window.location.search,
-        type:'GET',
-        contentType:'text/html',
-        success: (data, status) => {
-            console.log('Status: ' + status);
-            if (status == 'success') {
-                console.log('result is 200');
-                $('#main-body').html(data);
-                removeActive();
-                $('#home').addClass('active');
-                $(".cover").hide();
-            }
-        },
-        error: (data, status) => {
-            console.log('Status: ' + status);
-            let html = generateErrorHtml(data);
-            $('#main-body').html(html);
-            removeActive();
-            $('#home').addClass('active');
-            $(".cover").hide();
-        }
-    });
-});
-
-$('#about').click( () => {
-    $(".cover").show();
-    $.ajax({
-        url:'/about',
-        type:'GET',
-        contentType:'text/html',
-        success: (data, status) => {
-            console.log('Status: ' + status);
-            if (status == 'success') {
-                console.log('result is 200');
-                $('#main-body').html(data);
-                removeActive();
-                $('#about').addClass('active');
-                $(".cover").hide();
-            }
-        },
-        error: (data, status) => {
-            console.log('Status: ' + status);
-            let html = generateErrorHtml(data);
-            $('#main-body').html(html);
-            removeActive();
-            $('#about').addClass('active');
-            $(".cover").hide();
-        }
-    });
-});
-
-$('#contact').click( () => {
-    $(".cover").show();
-    $.ajax({
-        url:'/contact',
-        type:'GET',
-        contentType:'text/html',
-        success: (data, status) => {
-            console.log('Status: ' + status);
-            if (status == 'success') {
-                console.log('result is 200');
-                $('#main-body').html(data);
-                removeActive();
-                $('#contact').addClass('active');
-                $(".cover").hide();
-            }
-        },
-        error: (data, status) => {
-            console.log('Status: ' + status);
-            let html = generateErrorHtml(data);
-            $('#main-body').html(html);
-            removeActive();
-            $('#contact').addClass('active');
-            $(".cover").hide();
-        }
-    });
-});
-
 $('#login-button').click(async () => {
     $(".cover").show();
     let username = $('#login-username').val();
@@ -166,17 +85,13 @@ $('#logout').click( () => {
 const removeMsg = () => {
     $('#add-emp-err-msg').text('');
     $('#add-customer-err-msg').text('');
-}
+};
 
 const removeActive = () => {
     $('.nav-item').removeClass('active');
-}
+};
 
-const messageSent = () => {
-    $('#home').trigger('click');
-}
-
-const generateErrorHtml = (data) => {
+const generateErrorHtml = data => {
     let html = `<div class="home-page" style="height: 420px;">
                     <div class="home-page">
                         <h1 style="color: #138496">Can't reach the page !!! </h1>
@@ -184,4 +99,5 @@ const generateErrorHtml = (data) => {
                     </div>
                 </div>`;
     return html;
-}
+};
+
