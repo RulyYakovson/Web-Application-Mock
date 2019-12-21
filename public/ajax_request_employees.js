@@ -25,8 +25,9 @@ $('#employees').click( () => {
     });
 });
 
-$('#add-emp-button').click(async () => {
+$("form#add-emp-form-data").submit(async e => {
     $(".cover").show();
+    e.preventDefault();    
     let username = $('#add-emp-username').val();
     let password = $('#add-emp-password').val();
     let id = $('#add-emp-id').val();
@@ -55,7 +56,7 @@ $('#add-emp-button').click(async () => {
         $('#add-emp-modal').modal('hide');
         location.reload();
     } else {
-        $('#add-emp-err-msg').text('An error occurred while trying to add the user');
+        $('#add-emp-err-msg').text('An error occurred while trying to add the employee');
     }
     $(".cover").hide();
 });
@@ -79,12 +80,12 @@ const update_emp = async (id) => {
         })
     });
     if (response.status === 200){
-        console.log(`ajax_requests:update-emp:: Updating user: ${id} finished successfully`);
+        console.log(`ajax_requests:update-emp:: Updating employee: ${id} finished successfully`);
         jQuery.noConflict();
         $('#' + id).modal('hide');
         location.reload();
     } else {
-        $('#update-emp-err-msg' + id).text('An error occurred while trying to updating the user');
+        $('#update-emp-err-msg' + id).text('An error occurred while trying to updating the employee');
     }
 };
 
@@ -119,7 +120,7 @@ const selectCurrentDetails = (id, gender, role) => {
     }
 };
 
-const generateEmployeesHtml = (data) => {
+const generateEmployeesHtml = data => {
     let employees = data.employees;
     let userRole = data.userRole;
     let html = `<div class="jumbotron text-center">
@@ -143,27 +144,29 @@ const generateEmployeesHtml = (data) => {
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <div class="form-group">
-                                                            <h5 class="modal-dialog">${'ID: '+ employees[i].id}</h5>
-                                                        </div>
-                                                        <div class="md-form mb-4">
-                                                            <select class="form-control" id=${"update-emp-role" + employees[i].id}>
-                                                                <option label="Admin" value = "Admin" />
-                                                                <option label="Employee" value = "Employee" />
-                                                            </select>					
-                                                        </div>
-                                                        <div class="md-form mb-4">
-                                                            <input value=${employees[i].branch} id=${"update-emp-branch" + employees[i].id} type="number" class="form-control" placeholder="Branch number" required="required">					
-                                                        </div>
-                                                        <div class="md-form mb-4">
-                                                            <select class="form-control" id=${"update-emp-gender" + employees[i].id}>
-                                                                <option label="Male" value = "Male" />
-                                                                <option label="Female" value = "Female" />
-                                                            </select>					
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <button onclick="update_emp(${employees[i].id})" id="update-emp-button" class="btn btn-primary btn-block btn-lg">Update</button>
-                                                        </div>
+                                                        <form id="update-emp-form-data" onsubmit="update_emp(${employees[i].id})">
+                                                            <div class="form-group">
+                                                                <h5 class="modal-dialog">${'ID: '+ employees[i].id}</h5>
+                                                            </div>
+                                                            <div class="md-form mb-4">
+                                                                <select class="form-control" id=${"update-emp-role" + employees[i].id}>
+                                                                    <option label="Admin" value = "Admin" />
+                                                                    <option label="Employee" value = "Employee" />
+                                                                </select>					
+                                                            </div>
+                                                            <div class="md-form mb-4">
+                                                                <input value=${employees[i].branch} id=${"update-emp-branch" + employees[i].id} type="number" class="form-control" placeholder="Branch number" required="required">					
+                                                            </div>
+                                                            <div class="md-form mb-4">
+                                                                <select class="form-control" id=${"update-emp-gender" + employees[i].id}>
+                                                                    <option label="Male" value = "Male" />
+                                                                    <option label="Female" value = "Female" />
+                                                                </select>					
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Update" class="btn btn-primary btn-block btn-lg">
+                                                            </div>
+                                                        </form>
                                                         <p id=${"update-emp-err-msg" + employees[i].id} style="color: red"></p>
                                                     </div>
                                                 </div>

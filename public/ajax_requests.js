@@ -55,8 +55,9 @@ $('#init-db').click( () => {
     });
 });
 
-$('#login-button').click(async () => {
+$("form#login-form-data").submit(async e => {
     $(".cover").show();
+    e.preventDefault();    
     let username = $('#login-username').val();
     let password = $('#login-password').val();
     console.log(`ajax_requests:login:: Username: ${username}, Passward: ${password}`);
@@ -66,7 +67,9 @@ $('#login-button').click(async () => {
         location = `?username=${username}&password=${password}`;
         $('#login-modal').modal('hide');
     } else if (response.status === 401) {
-        $('#login-err-msg').text('Username or password incorrect. Please try again')
+        $('#login-err-msg').text('Username or password incorrect. Please try again');
+    } else {
+        $('#login-err-msg').text('An error occurred during the login request');
     }
     $(".cover").hide();
 });

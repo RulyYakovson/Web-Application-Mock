@@ -25,8 +25,9 @@ $('#customers').click( () => {
     });
 });
 
-$('#add-customer-button').click(async () => {
+$("form#add-customer-form-data").submit(async e => {
     $(".cover").show();
+    e.preventDefault();    
     let username = $('#add-customer-username').val();
     let password = $('#add-customer-password').val();
     let id = $('#add-customer-id').val();
@@ -61,7 +62,7 @@ $('#add-customer-button').click(async () => {
     $(".cover").hide();
 });
 
-const update_customer = async (id) => {
+const update_customer = async id => {
     let phone = $('#update-customer-phone' + id).val();
     let address = $('#update-customer-address' + id).val();
     let gender = $('#update-customer-gender' + id).val();
@@ -89,7 +90,7 @@ const update_customer = async (id) => {
     }
 };
 
-const removeCustomer = (id) => {
+const removeCustomer = id => {
     console.log(`ajax_requests:remove-customer:: ID: ${id}`);
     $.ajax({
         url:`customer/remove/${id}` + window.location.search,
@@ -145,24 +146,26 @@ const generateCustomersHtml = (data) => {
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <h5 class="modal-dialog">${'ID: '+ customers[i].id}</h5>
-                                                    </div>
-                                                    <div class="md-form mb-4">
-                                                        <input value=${customers[i].phone} id=${"update-customer-phone" + customers[i].id} type="tel" class="form-control" placeholder="Phone" required="required">					
-                                                    </div>
-                                                    <div class="md-form mb-4">
-                                                        <input value=${customers[i].address} id=${"update-customer-address" + customers[i].id} type="email" class="form-control" placeholder="Address" required="required">					
-                                                    </div>
-                                                    <div class="md-form mb-4">
-                                                        <select class="form-control" id=${"update-customer-gender" + customers[i].id}>
-                                                            <option label="Male" value = "Male" />
-                                                            <option label="Female" value = "Female" />
-                                                        </select>					
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <button onclick="update_customer(${customers[i].id})" id="update-customer-button" class="btn btn-primary btn-block btn-lg">Update</button>
-                                                    </div>
+                                                    <form id="update-customer-form-data" onsubmit="update_customer(${customers[i].id})">
+                                                        <div class="form-group">
+                                                            <h5 class="modal-dialog">${'ID: '+ customers[i].id}</h5>
+                                                        </div>
+                                                        <div class="md-form mb-4">
+                                                            <input value=${customers[i].phone} id=${"update-customer-phone" + customers[i].id} type="tel" class="form-control" placeholder="Phone" required="required">					
+                                                        </div>
+                                                        <div class="md-form mb-4">
+                                                            <input value=${customers[i].address} id=${"update-customer-address" + customers[i].id} type="email" class="form-control" placeholder="Address" required="required">					
+                                                        </div>
+                                                        <div class="md-form mb-4">
+                                                            <select class="form-control" id=${"update-customer-gender" + customers[i].id}>
+                                                                <option label="Male" value = "Male" />
+                                                                <option label="Female" value = "Female" />
+                                                            </select>					
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="submit" value="Update" class="btn btn-primary btn-block btn-lg">
+                                                        </div>
+                                                    </form>
                                                     <p id=${"update-customer-err-msg" + customers[i].id} style="color: red"></p>
                                                 </div>
                                             </div>
