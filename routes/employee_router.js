@@ -2,7 +2,7 @@ let express = require('express');
 let router = express.Router();
 let repository = require('../repositories/employee_repository');
 let auth = require('./auth_user');
-let timeout = 1500;
+let timeout = 1000;
 
 router.get('/all', auth.authEmployee, async (req, res) => {
     console.log('Received get all employees request');

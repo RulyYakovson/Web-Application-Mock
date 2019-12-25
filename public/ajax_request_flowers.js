@@ -1,7 +1,7 @@
 $('#flowers').click( () => {
     $(".cover").show();
     $.ajax({
-        url:'flower/all' + window.location.search,
+        url:'flower/all',
         type:'GET',
         contentType:'application/json',
         success: (data, status) => {
@@ -33,7 +33,7 @@ $("form#add-flower-form-data").submit( e => {
     var formData = new FormData(document.getElementById('add-flower-form-data'));
     console.log('ajax_requests::add-flower');
     $.ajax({
-        url:'flower/add' + window.location.search,
+        url:'flower/add',
         type: 'POST',
         data: formData,
         cache: false,
@@ -68,7 +68,7 @@ const colorChecked = colorBoxName => {
 const removeFlower = name => {
     console.log(`ajax_requests:remove-flower:: ID: ${name}`);
     $.ajax({
-        url:`flower/remove/${name}` + window.location.search,
+        url:`flower/remove/${name}`,
         type:'DELETE',
         contentType:'application/json',
         success: (data, status) => {

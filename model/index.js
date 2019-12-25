@@ -6,10 +6,12 @@ let branch = require('./branch');
 let flower = require('./flower');
 
 let db = mongo.createConnection();
+const uri = 'mongodb://localhost/flower-shop-web-demo';
+const connectionOptions = { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true };
 
 (async () => {
     try {
-        await db.openUri('mongodb://localhost/flower-shop-web-demo', { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true });
+        await db.openUri(uri, connectionOptions);
     } catch (err) {
         debug(`Error while trying connecting to mongo DB: ${err}`);
     }

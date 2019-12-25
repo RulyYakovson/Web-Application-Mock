@@ -40,6 +40,10 @@
     box-shadow: 0 7px 14px 0 rgba(0, 0, 0, 0.6);
 }
 
+.login-icon-color {
+    color: #007bff!important;
+}
+
 .ligth-blue {
     background: #13b4ff;
 }

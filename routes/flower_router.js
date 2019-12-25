@@ -6,7 +6,7 @@ const download = require('image-downloader')
 let repository = require('../repositories/flower_repository');
 let auth = require('./auth_user');
 let path = './public/images';
-let timeout = 1500;
+let timeout = 1000;
 
 var uploadImgHandler = multer({ storage: multer.diskStorage
     ({

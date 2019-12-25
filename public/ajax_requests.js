@@ -34,7 +34,7 @@ $(document).ready( () => {
 $('#init-db').click( () => {
     $(".cover").show();
     $.ajax({
-        url:'/init_db' + window.location.search,
+        url:'/init_db',
         type:'PUT',
         contentType:'text/html',
         success: (data, status) => {
@@ -64,8 +64,8 @@ $("form#login-form-data").submit(async e => {
     let response = await fetch(`/login/${username}/${password}`, { method: 'post' });
     if (response.status === 200) {
         console.log(`ajax_requests:login:: Authentication for user: ${username} succeeded`);
-        location = `?username=${username}&password=${password}`;
-        $('#login-modal').modal('hide');
+       // $('#login-modal').modal('hide');  //TODO !!!!!
+        location.reload();
     } else if (response.status === 401) {
         $('#login-err-msg').text('Username or password incorrect. Please try again');
     } else {
@@ -74,16 +74,16 @@ $("form#login-form-data").submit(async e => {
     $(".cover").hide();
 });
 
-$('#logout').click( () => {
-    $(".cover").show();
-    let url = location.href.toString();
-    if (url.indexOf("?") > 0) {
-        let clean_url = url.substring(0, url.indexOf("?"));
-        history.replaceState({}, document.title, clean_url);
-        location = clean_url;
-    }
-    $(".cover").hide();
-});
+// $('#logout').click( () => {
+//     $(".cover").show();
+//     let url = location.href.toString();
+//     if (url.indexOf("?") > 0) {
+//         let clean_url = url.substring(0, url.indexOf("?"));
+//         history.replaceState({}, document.title, clean_url);
+//         location = clean_url;
+//     }
+//     $(".cover").hide();
+// });
 
 const removeMsg = () => {
     $('#add-emp-err-msg').text('');
