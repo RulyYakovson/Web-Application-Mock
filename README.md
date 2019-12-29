@@ -1,8 +1,7 @@
 # JQuery exercise
 ## Internet software engineering course
 
-### Install a development environment
-In order to run it you should have
+### In order to run it you should have
 
 ```bash
 git clone https://github.com/RulyYakovson/Web-Application-Mock.git
