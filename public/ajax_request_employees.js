@@ -1,7 +1,7 @@
 $('#employees').click( () => {
     $(".cover").show();
     $.ajax({
-        url:'employee/all' + window.location.search,
+        url:'employee/all',
         type:'GET',
         contentType:'application/json',
         success: (data, status) => {
@@ -35,7 +35,7 @@ $("form#add-emp-form-data").submit(async e => {
     let branch = $('#add-emp-branch').val();
     let gender = $('#add-emp-gender').val();
     console.log(`ajax_requests:add-emp:: Username: ${username}, Passward: ${password}, ID: ${id}, Role: ${role}, Branch: ${branch}, Gender: ${gender}`);
-    let response = await fetch('employee/add' + window.location.search,
+    let response = await fetch('employee/add',
     {
         method: 'POST',
         headers: {
@@ -66,7 +66,7 @@ const update_emp = async (id) => {
     let branch = $('#update-emp-branch' + id).val();
     let gender = $('#update-emp-gender' + id).val();
     console.log(`ajax_requests:update-emp::  ID: ${id}, Role: ${role}, Branch: ${branch}, Gender: ${gender}`);
-    let response = await fetch('employee/update' + window.location.search,
+    let response = await fetch('employee/update',
     {
         method: 'POST',
         headers: {
@@ -92,7 +92,7 @@ const update_emp = async (id) => {
 const removeEmployee = (id) => {
     console.log(`ajax_requests:remove-employee:: ID: ${id}`);
     $.ajax({
-        url:`employee/remove/${id}` + window.location.search,
+        url:`employee/remove/${id}`,
         type:'DELETE',
         contentType:'application/json',
         success: (data, status) => {

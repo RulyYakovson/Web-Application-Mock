@@ -22,7 +22,8 @@
     "multer-gridfs-storage": "^4.0.1",
     "nodemon": "^1.19.2",
     "serve-favicon": "^2.5.0",
-    "progress-stream": "^2.0.0"
+    "progress-stream": "^2.0.0",
+    "connect-mongo": "^2.0.3"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.10.2"

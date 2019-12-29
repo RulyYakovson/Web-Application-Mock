@@ -8,12 +8,20 @@
             <div class="modal-body">
                 <form id="login-form-data">
                     <div class="form-group">
-                        <i class="fa fa-user"></i>
-                        <input id="login-username" type="text" class="form-control" placeholder="Username" required="required">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-user login-icon-color"></i></div>
+                            </div>
+                            <input id="login-username" type="text" class="form-control" placeholder="Username" required="required">
+                        </div>
                     </div>
-                    <div class="md-form mb-4">
-                        <i class="fa fa-lock"></i>
-                        <input id="login-password" type="password" class="form-control" placeholder="Password" required="required">					
+                    <div class="form-group">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-lock login-icon-color"></i></div>
+                            </div>
+                            <input id="login-password" type="password" class="form-control" placeholder="Password" required="required">					
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="submit" id="login-button" value="Login" class="btn btn-primary btn-block btn-lg">
