@@ -60,8 +60,19 @@ $("form#login-form-data").submit(async e => {
     e.preventDefault();    
     let username = $('#login-username').val();
     let password = $('#login-password').val();
-    console.log(`ajax_requests:login:: Username: ${username}, Passward: ${password}`);
-    let response = await fetch(`/login/${username}/${password}`, { method: 'post' });
+    encryptedPass = encrypt(password);
+    console.log(`ajax_requests:login:: Username: ${username}, Encrypted passward: ${encryptedPass}`);
+    let response = await fetch('login',
+    {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: username,
+            password: encryptedPass,
+        })
+    });
     if (response.status === 200) {
         console.log(`ajax_requests:login:: Authentication for user: ${username} succeeded`);
        // $('#login-modal').modal('hide');  //TODO !!!!!
@@ -73,17 +84,6 @@ $("form#login-form-data").submit(async e => {
     }
     $(".cover").hide();
 });
-
-// $('#logout').click( () => {
-//     $(".cover").show();
-//     let url = location.href.toString();
-//     if (url.indexOf("?") > 0) {
-//         let clean_url = url.substring(0, url.indexOf("?"));
-//         history.replaceState({}, document.title, clean_url);
-//         location = clean_url;
-//     }
-//     $(".cover").hide();
-// });
 
 const removeMsg = () => {
     $('#add-emp-err-msg').text('');

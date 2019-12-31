@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let repository_helper = require('../repositories/repository_helper');
+const rsa = require('../rsa/node-rsa');
 let timeout = 1000;
 
 router.put('/init_db', async (req, res) => {
@@ -19,10 +20,13 @@ router.get('/', async (req, res) => {
     }, timeout);
 });
 
-router.post('/login/:username/:password', async (req, res) => {
-    console.log(`Received login request for user: ${req.params.username}`);
+router.post('/login', async (req, res) => {
+    const username = req.body.username;
+    console.log(`Received login request for user: ${username}`);
     try {
-        let user = await repository_helper.getUser(req.params.username, req.params.password);
+        const decryptedPass = rsa.decrypt(req.body.password);
+        console.log(`Decrypted password: '${decryptedPass}'`)
+        let user = await repository_helper.getUser(username, decryptedPass);
         if (user) {
             console.log(`router.js:login:: User: Name: ${user.username}, Role: ${user.role}`);
             req.session.userId = user.id;
