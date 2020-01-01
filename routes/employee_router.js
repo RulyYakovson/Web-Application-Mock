@@ -1,3 +1,4 @@
+let passport = require('passport');
 let express = require('express');
 let router = express.Router();
 let repository = require('../repositories/employee_repository');
@@ -46,7 +47,7 @@ router.delete('/remove/:id', auth.authEmployee, async (req, res) => {
 
 router.post('/add', auth.authEmployee, async (req, res) => {
     try {
-        await repository.addEmployee(req.body);
+        await repository.addEmployee(req, res);
         res.status(200).send('OK');
     } catch(err) { // TODO: send the error message and show it to the user...
         console.log(err.message)
