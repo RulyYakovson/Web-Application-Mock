@@ -1,10 +1,10 @@
 const debug = require("debug")("mongo:model-customer");
 const passportLocalMongoose = require('passport-local-mongoose');
 const mongoose = require("mongoose");
-let Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 module.exports = function (db) {
-    let customerSchema = Schema(
+    const customerSchema = Schema(
         {
             id: { type: String, required: true, unique: true },
             username: { type: String, required: true, unique: true },
@@ -48,7 +48,7 @@ module.exports = function (db) {
     };
 
     customerSchema.pre('save', function (next) {
-        let date = new Date();
+        const date = new Date();
         this.lastUpdate = date;
         if (!this.created) {
             this.created = date;

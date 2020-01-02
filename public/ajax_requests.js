@@ -1,4 +1,4 @@
-$(document).ready( () => {
+$(document).ready(() => {
     console.log("URL: " + location);
     const relativeUrl = window.location.hash.slice(1);
     switch (relativeUrl) {
@@ -25,18 +25,18 @@ $(document).ready( () => {
     }
 });
 
-$(document).ready( () => {
-    $(".form-control").focus( () => {
+$(document).ready(() => {
+    $(".form-control").focus(() => {
         removeMsg()
     });
 });
 
-$('#init-db').click( () => {
+$('#init-db').click(() => {
     $(".cover").show();
     $.ajax({
-        url:'/init_db',
-        type:'PUT',
-        contentType:'text/html',
+        url: '/init_db',
+        type: 'PUT',
+        contentType: 'text/html',
         success: (data, status) => {
             console.log('Status: ' + status);
             if (status == 'success') {
@@ -57,22 +57,22 @@ $('#init-db').click( () => {
 
 $("form#login-form-data").submit(async e => {
     $(".cover").show();
-    e.preventDefault();    
+    e.preventDefault();
     const username = $('#login-username').val();
     const password = $('#login-password').val();
     const encryptedPass = encrypt(password);
     console.log(`ajax_requests:login:: Username: ${username}, Encrypted passward: ${encryptedPass}`);
     const response = await fetch('login',
-    {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: username,
-            password: encryptedPass,
-        })
-    });
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                password: encryptedPass,
+            })
+        });
     if (response.ok) {
         console.log(`ajax_requests:login:: Authentication for user: ${username} succeeded`);
         jQuery.noConflict();

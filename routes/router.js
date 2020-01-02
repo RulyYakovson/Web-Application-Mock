@@ -1,9 +1,8 @@
-let express = require('express');
-let passport = require('passport');
-let router = express.Router();
-let repository_helper = require('../repositories/repository_helper');
-const rsa = require('../encryption/node-rsa');
-let timeout = 1000;
+const express = require('express');
+const passport = require('passport');
+const router = express.Router();
+const repository_helper = require('../repositories/repository_helper');
+const timeout = 1000;
 
 router.put('/init_db', async (req, res) => {
     console.log('Received init db request');

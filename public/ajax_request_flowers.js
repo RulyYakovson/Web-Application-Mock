@@ -1,12 +1,12 @@
-$('#flowers').click( () => {
+$('#flowers').click(() => {
     $(".cover").show();
     $.ajax({
-        url:'flower/all',
-        type:'GET',
-        contentType:'application/json',
+        url: 'flower/all',
+        type: 'GET',
+        contentType: 'application/json',
         success: (data, status) => {
-        console.log('Status: ' + status);
-        if (status == 'success') {
+            console.log('Status: ' + status);
+            if (status == 'success') {
                 let html = generateFlowersHtml(data);
                 $('#main-body').html(html);
                 removeActive();
@@ -27,13 +27,13 @@ $('#flowers').click( () => {
     });
 });
 
-$("form#add-flower-form-data").submit( e => {
+$("form#add-flower-form-data").submit(e => {
     $(".cover").show();
-    e.preventDefault();    
-    var formData = new FormData(document.getElementById('add-flower-form-data'));
+    e.preventDefault();
+    const formData = new FormData(document.getElementById('add-flower-form-data'));
     console.log('ajax_requests::add-flower');
     $.ajax({
-        url:'flower/add',
+        url: 'flower/add',
         type: 'POST',
         data: formData,
         cache: false,
@@ -57,43 +57,44 @@ $("form#add-flower-form-data").submit( e => {
 });
 
 const colorChecked = colorBoxName => {
-    let colors = document.getElementsByClassName('select-color ' + colorBoxName.substr(1));
+    const colors = document.getElementsByClassName('select-color ' + colorBoxName.substr(1));
     for (let i = 0; i < colors.length; i++) {
-      colors[i].style.boxShadow = "none";
+        colors[i].style.boxShadow = "none";
     }
-    let color = document.getElementById(colorBoxName);
+    const color = document.getElementById(colorBoxName);
     color.style.boxShadow = "0 7px 14px 0 rgba(0, 0, 0, 4)";
 };
 
 const removeFlower = name => {
     console.log(`ajax_requests:remove-flower:: ID: ${name}`);
     $.ajax({
-        url:`flower/remove/${name}`,
-        type:'DELETE',
-        contentType:'application/json',
+        url: `flower/remove/${name}`,
+        type: 'DELETE',
+        contentType: 'application/json',
         success: (data, status) => {
             console.log('Status: ' + status);
             if (status == 'success') {
                 let html = generateFlowersHtml(data);
                 $('#main-body').html(html);
+            }
         }
-    }});
+    });
 };
 
 const generateFlowersHtml = (data) => {
-    let flowers = data.flowers;
-    let userRole = data.userRole;
-                let html = `<div class="jumbotron text-center">
+    const flowers = data.flowers;
+    const userRole = data.userRole;
+    let html = `<div class="jumbotron text-center">
                                 <h1>Flowers Catalog</h1>
                             </div>
                             <div style="margin: 0px 130px 50px 130px">
                                 <table class="table">
                                     <tbody>`;
-                for (let i = 0; i < flowers.length; i++) {
-                    if(i % 3 === 0) {
-                        html += `<tr>`;
-                    }
-                    html += `<td>
+    for (let i = 0; i < flowers.length; i++) {
+        if (i % 3 === 0) {
+            html += `<tr>`;
+        }
+        html += `<td>
                                 <div class="card" style="width: 22rem; max-height: 535px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
                                     <div class="card-body">
                                         <div class="card-header text-white badge-primary" style="text-align: center; margin-bottom: 7px;">
@@ -115,21 +116,21 @@ const generateFlowersHtml = (data) => {
                                                 <div class="select-color ${flowers[i].name} purple" onclick="colorChecked('${'7' + flowers[i].name}')" id=${'7' + flowers[i].name} ></div>
                                             </div>
                                         </div>`;
-                                        if (userRole && userRole === 'Admin') {
-                                            html += `<div class="row justify-content-end">
+        if (userRole && userRole === 'Admin') {
+            html += `<div class="row justify-content-end">
                                                         <button style="height:27px" class="btn-danger align-self-end" onclick="removeFlower('${flowers[i].name}')">
                                                             <i class="fas fa-remove" ></i>
                                                         </button>
                                                     </div>`;
-                                        }
-                            html += `</div>
+        }
+        html += `</div>
                                 </div>
                             </td>`;
-                    if (i % 3 === 2) {
-                        html += `<tr>`;
-                    }
-                }
-                html +=     `</tbody>
+        if (i % 3 === 2) {
+            html += `<tr>`;
+        }
+    }
+    html += `</tbody>
                         </table>
                     </div>`;
     return html;

@@ -1,4 +1,4 @@
-let employeeRepository = require('../model')('Employee');
+const employeeRepository = require('../model')('Employee');
 
 module.exports.getAllEmployees = async () => {
     let success = false;
@@ -14,7 +14,7 @@ module.exports.getAllEmployees = async () => {
 };
 
 module.exports.removeEmployee = async (id) => {
-    let employee = await employeeRepository.findOneAndDelete({ id: id });
+    const employee = await employeeRepository.findOneAndDelete({ id: id });
     !!employee ? console.log(`Employee: ${employee} \nsuccessfully deleted !!`)
         : console.log(`ERROR: Employee with ID: ${id} not found !!`);
 };
@@ -25,7 +25,11 @@ module.exports.addEmployee = async (req, res) => {
 
 module.exports.updateEmployee = async (employee) => {
     let user = null;
-    let fieldsToUpdate = { role: employee.role, branch: employee.branch, gender: employee.gender };
+    const fieldsToUpdate = {
+        role: employee.role,
+        branch: employee.branch,
+        gender: employee.gender
+    };
     user = await employeeRepository.findOneAndUpdate({ id: employee.id }, fieldsToUpdate, { new: true });
 
     !!user ? console.log(`Employee: ${user} \nsuccessfully updeted !!`)

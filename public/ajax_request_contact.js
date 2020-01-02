@@ -1,6 +1,6 @@
 $('#contact').click(() => {
     $(".cover").show();
-    let data = generateContactHtml();
+    const data = generateContactHtml();
     console.log('result is 200');
     $('#main-body').html(data);
     removeActive();

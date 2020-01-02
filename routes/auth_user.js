@@ -5,7 +5,7 @@ module.exports.authEmployee = (req, res, next) => {
     }
     else {
         res.status(401);
-        res.json({status: 401});
+        res.json({ status: 401 });
     }
 };
 
@@ -15,7 +15,7 @@ module.exports.authUser = (req, res, next) => {
         next();
     } else {
         res.status(401);
-        res.json({status: 401});
+        res.json({ status: 401 });
     }
 };
 

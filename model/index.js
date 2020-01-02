@@ -1,11 +1,11 @@
 const debug = require("debug")("mongo:model");
 const mongo = require('mongoose');
-let customer = require('./customer');
-let employee = require('./employee');
-let branch = require('./branch');
-let flower = require('./flower');
+const customer = require('./customer');
+const employee = require('./employee');
+const branch = require('./branch');
+const flower = require('./flower');
 
-let db = mongo.createConnection();
+const db = mongo.createConnection();
 const uri = 'mongodb://localhost/flower-shop-web-demo';
 const connectionOptions = { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true };
 

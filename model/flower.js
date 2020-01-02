@@ -1,17 +1,17 @@
 const debug = require("debug")("mongo:model-flower");
 const mongoose = require("mongoose");
-let Double = require('@mongoosejs/double');
-let Schema = mongoose.Schema;
+const Double = require('@mongoosejs/double');
+const Schema = mongoose.Schema;
 
-module.exports = function(db) {
-    let flowerSchema = Schema(
+module.exports = function (db) {
+    const flowerSchema = Schema(
         {
             name: { type: String, required: true, unique: true },
             price: { type: Double, required: true },
             description: String,
             src: {
-                data: Buffer, 
-                contentType: String 
+                data: Buffer,
+                contentType: String
             },
             lastUpdate: Date,
             created: Date
@@ -19,7 +19,7 @@ module.exports = function(db) {
         { versionKey: false }
     );
 
-    flowerSchema.statics.CREATE = async function(flower) {
+    flowerSchema.statics.CREATE = async function (flower) {
         return this.create(
             {
                 name: flower.name,
@@ -30,16 +30,16 @@ module.exports = function(db) {
         );
     };
 
-    flowerSchema.pre('save', function(next) {
-            let date = new Date();
-            this.lastUpdate = date;
-            if (!this.created) {
-                this.created = date;
-            }
-            next();
-  });
+    flowerSchema.pre('save', function (next) {
+        const date = new Date();
+        this.lastUpdate = date;
+        if (!this.created) {
+            this.created = date;
+        }
+        next();
+    });
 
-  db.model("Flower", flowerSchema);
-  debug("Flower model created successfully");
+    db.model("Flower", flowerSchema);
+    debug("Flower model created successfully");
 };
 

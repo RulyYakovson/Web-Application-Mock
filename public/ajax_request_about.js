@@ -1,6 +1,6 @@
-$('#about').click( () => {
+$('#about').click(() => {
     $(".cover").show();
-    let data = generateAboutHtml();
+    const data = generateAboutHtml();
     console.log('result is 200');
     $('#main-body').html(data);
     removeActive();
@@ -8,8 +8,8 @@ $('#about').click( () => {
     $(".cover").hide();
 });
 
-const generateAboutHtml = () => 
-`<section id="what-we-do">
+const generateAboutHtml = () =>
+    `<section id="what-we-do">
     <div class="container-fluid">
         <h2 class="section-title mb-2 h1">What we do</h2>
         <p class="text-center text-muted h5">We will be glad to make your home or your celebration beautiful with the aid of flower design and a variety of plants.</p>
