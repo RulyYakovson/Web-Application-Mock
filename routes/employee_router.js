@@ -48,7 +48,6 @@ router.delete('/remove/:id', auth.authEmployee, async (req, res) => {
 router.post('/add', auth.authEmployee, async (req, res) => {
     try {
         await repository.addEmployee(req, res);
-        res.status(200).send('OK');
     } catch(err) { // TODO: send the error message and show it to the user...
         console.log(err.message)
         res.status(500).send('ERROR');

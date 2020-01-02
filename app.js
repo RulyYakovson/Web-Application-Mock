@@ -84,7 +84,7 @@ passport.use(
                 return done(null, false);
             }
             
-            console.log(`User: ${authentication.user}\nlogged in successfully !!`);
+            console.log(`User: '${authentication.user.username}' logged in successfully !!`);
             return done(null, user);
         });
     })

@@ -50,11 +50,13 @@ $("form#add-emp-form-data").submit(async e => {
             gender: gender
         })
     });
-    if (response.status === 200){
+    if (response.ok){
         console.log(`ajax_requests:add-emp:: Adding user: ${username} finished successfully`);
         jQuery.noConflict();
         $('#add-emp-modal').modal('hide');
         location.reload();
+    } else if (response.status === 400) {
+        $('#add-emp-err-msg').text('A user with the given username or ID is already exist');
     } else {
         $('#add-emp-err-msg').text('An error occurred while trying to add the employee');
     }
@@ -79,7 +81,7 @@ const update_emp = async (id) => {
             gender: gender
         })
     });
-    if (response.status === 200){
+    if (response.ok){
         console.log(`ajax_requests:update-emp:: Updating employee: ${id} finished successfully`);
         jQuery.noConflict();
         $('#' + id).modal('hide');

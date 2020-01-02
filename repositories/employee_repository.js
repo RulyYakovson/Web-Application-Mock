@@ -1,11 +1,10 @@
 let employeeRepository = require('../model')('Employee');
-let passport = require('passport');
 
 module.exports.getAllEmployees = async () => {
     let success = false;
     let result = null;
     await employeeRepository.find({}, (err, employees) => {
-        console.log(err);
+        err && console.log(err);
         if (!err) {
             result = employees;
             success = true;
@@ -21,11 +20,7 @@ module.exports.removeEmployee = async (id) => {
 };
 
 module.exports.addEmployee = async (req, res) => {
-    let createdEmployee = await employeeRepository.CREATE(req, res); // TODO: check if user added
-    console.log(`A new employee:\n${req}\nsuccessfully created !!`);
-    for(var a in req.body) {
-        console.log(a);
-    }
+    createdEmployee = await employeeRepository.CREATE(req, res); // TODO: check if user added
 };
 
 module.exports.updateEmployee = async (employee) => {

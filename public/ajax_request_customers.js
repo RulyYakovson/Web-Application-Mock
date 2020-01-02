@@ -51,7 +51,7 @@ $("form#add-customer-form-data").submit(async e => {
             gender: gender
         })
     });
-    if (response.status === 200){
+    if (response.ok){
         console.log(`ajax_requests:add-customer:: Adding user: ${username} finished successfully`);
         jQuery.noConflict();
         $('#add-customer-modal').modal('hide');
@@ -80,7 +80,7 @@ const update_customer = async id => {
             gender: gender
         })
     });
-    if (response.status === 200){
+    if (response.ok){
         console.log(`ajax_requests:add-customer:: Adding user: ${id} finished successfully`);
         jQuery.noConflict();
         $('#' + id).modal('hide');

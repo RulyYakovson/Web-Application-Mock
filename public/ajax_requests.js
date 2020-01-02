@@ -73,9 +73,10 @@ $("form#login-form-data").submit(async e => {
             password: encryptedPass,
         })
     });
-    if (response.status === 200) {
+    if (response.ok) {
         console.log(`ajax_requests:login:: Authentication for user: ${username} succeeded`);
-       // $('#login-modal').modal('hide');  //TODO !!!!!
+        jQuery.noConflict();
+        $('#login-modal').modal('hide');
         location.reload();
     } else if (response.status === 401) {
         $('#login-err-msg').text('Username or password incorrect. Please try again');

@@ -10,7 +10,7 @@ module.exports = function (db) {
         {
             id: { type: String, required: true, unique: true },
             username: { type: String, required: true, unique: true },
-            password: { type: String,/*required: true,*/ maxlength: [8, 'Too long password'], minlength: [4, 'Too short password'] },
+            password: { type: String, maxlength: [8, 'Too long password'], minlength: [4, 'Too short password'] },
             gender: { type: String, enum: ['Male', 'Female', 'Gender'] },
             role: { type: String, enum: ['Employee', 'Admin', 'customer', 'Role'] },
             branch: Number,
@@ -23,31 +23,29 @@ module.exports = function (db) {
     employeeSchema.plugin(passportLocalMongoose);
 
     employeeSchema.statics.CREATE = async function (req, res) {
-        const employee = req.body;
-        let newEmployee = null;
-        newEmployee = await this.register(
-            new this(
-                {
-                    username: employee.username,
-                    id: employee.id,
-                    role: employee.role,
-                    address: employee.address,
-                    branch: employee.branch,
-                    gender: employee.gender,
+        const newEmpDetails = req.body;
+        const newEmp = new this({
+            username: newEmpDetails.username,
+            id: newEmpDetails.id,
+            role: newEmpDetails.role,
+            address: newEmpDetails.address,
+            branch: newEmpDetails.branch,
+            gender: newEmpDetails.gender,
+        });
+        await this.register(newEmp, newEmpDetails.password, (err, createdEmployee) => {
+            if (err) {
+                const errMsg = err.message;
+                console.log(`ERROR: ${errMsg}`);
+                if (errMsg.includes('duplicate key error') || errMsg.includes('username is already registered')) {
+                    res.status(400).send(err.message);
+                } else {
+                    res.status(500).send(err.message);
                 }
-            ), employee.password, (err, createdEmployee) => {
-                if (err) {
-                    console.log(err.message);
-                    // return null;
-                }
-                // createdEmployee = createdEmployee;
-                //console.log(createdEmployee);
-                //newEmployee = createdEmployee;
-                // passport.authenticate('local')(req, res, () => {
-                //     console.log(`A new employee:\n${createdEmployee}\nsuccessfully created !!`);
-                // });
-            });
-            return newEmployee;
+            } else {
+                console.log(`A new employee:\n${createdEmployee}\nsuccessfully created !!`);
+                res.status(200).send('OK');
+            }
+        });
     };
 
     employeeSchema.pre('save', function (next) {
