@@ -45,7 +45,7 @@ router.delete('/remove/:id', auth.authEmployee, async (req, res) => {
     res.json(data);
 });
 
-router.post('/add', auth.authEmployee, async (req, res) => {
+router.post('/add', async (req, res) => {
     try {
         req.body.password = rsa.decrypt(req.body.password);
         await repository.addCustomer(req, res);

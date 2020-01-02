@@ -72,6 +72,19 @@
     background: red;
 }
 
+.sign-up {
+    outline: double;
+    outline-offset: -4px;
+}
+
+.inner-error-msg {
+    display: block;
+    font-size: .8em;
+    text-align: left;
+    color: #bd3200;
+    margin-bottom: -.6rem;
+}
+
 .files input {
     outline: 2px dashed #92b0b3;
     outline-offset: -10px;

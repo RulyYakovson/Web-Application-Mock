@@ -140,7 +140,7 @@ const generateEmployeesHtml = data => {
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">				
-                                                        <h4 class="modal-title">${'Update details for ' + employees[i].username}</h4>
+                                                        <h4 class="modal-title w-100 text-center">${'Update details for ' + employees[i].username}</h4>
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                     </div>
                                                     <div class="modal-body">

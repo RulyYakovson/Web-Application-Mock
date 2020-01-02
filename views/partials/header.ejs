@@ -69,11 +69,15 @@
             <% if (!userRole) { %>
             <li class="nav-item" id="sign-in"><a href="#" class="nav-link" data-toggle="modal"
                     data-target="#login-modal">
-                    <i class="fa fa-sign-in"></i> LogIn</a>
+                    <i class="fa fa-sign-in"></i> Log in</a>
+            </li>
+            <li class="nav-item" id="sign-up"><a href="#" class="nav-link sign-up" data-toggle="modal"
+                    data-target="#add-customer-modal">
+                    <i class="fas fa-user-plus"></i> Sign up</a>
             </li>
             <% } else { %>
-            <li class="nav-item" id="logout"><a href="#" class="nav-link" onclick="location = '/logout'">
-                    <i class="fa fa-sign-out"></i> LogOut</a>
+            <li class="nav-item" id="log-out"><a href="#" class="nav-link" onclick="location = '/logout'">
+                    <i class="fa fa-sign-out"></i> Sign out</a>
                 <% } %>
         </ul>
     </div>

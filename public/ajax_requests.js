@@ -29,6 +29,12 @@ $(document).ready(() => {
     $(".form-control").focus(() => {
         removeMsg()
     });
+    $('#add-customer-confirm').on('input', () => {
+        validatePassword()
+    });
+    $('#add-customer-password').on('input', () => {
+        validatePassword()
+    });
 });
 
 $('#init-db').click(() => {
@@ -93,6 +99,20 @@ const removeMsg = () => {
 
 const removeActive = () => {
     $('.nav-item').removeClass('active');
+};
+
+const validatePassword = () => {
+    const password = $('#add-customer-password').val();
+    const confirm = $('#add-customer-confirm').val();
+    if (password !== confirm) {
+        $('#password-err-msg').attr("hidden", false);
+        $('#password-err-msg').text(`* Password doesn't match.`);
+        $('#add-customer-button').prop('disabled', true);
+    } else {
+        $('#password-err-msg').attr("hidden", true);
+        $('#password-err-msg').text('');
+        $('#add-customer-button').prop('disabled', false);
+    }
 };
 
 const generateErrorHtml = data => {
