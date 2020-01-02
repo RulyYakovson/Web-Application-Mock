@@ -18,9 +18,8 @@ module.exports.getAllCustomers = async () => {
      : console.log(`ERROR: User with ID: ${id} not found !!`);
  };
  
- module.exports.addCustomer = async (customer) => {
-     let createdCustomer = await customerRepository.CREATE(customer);
-     console.log(`A new customer created: ${createdCustomer}`);
+ module.exports.addCustomer = async (req, res) => {
+     await customerRepository.CREATE(req, res);
  };
  
  module.exports.updateCustomer = async (customer) => {

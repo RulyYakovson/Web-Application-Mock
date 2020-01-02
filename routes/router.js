@@ -2,7 +2,7 @@ let express = require('express');
 let passport = require('passport');
 let router = express.Router();
 let repository_helper = require('../repositories/repository_helper');
-const rsa = require('../rsa/node-rsa');
+const rsa = require('../encryption/node-rsa');
 let timeout = 1000;
 
 router.put('/init_db', async (req, res) => {

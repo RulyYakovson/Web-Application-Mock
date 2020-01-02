@@ -1,14 +1,14 @@
-$('#employees').click( () => {
+$('#employees').click(() => {
     $(".cover").show();
     $.ajax({
-        url:'employee/all',
-        type:'GET',
-        contentType:'application/json',
+        url: 'employee/all',
+        type: 'GET',
+        contentType: 'application/json',
         success: (data, status) => {
             console.log('Status: ' + status);
             if (status == 'success') {
                 removeActive();
-                let html = generateEmployeesHtml(data);
+                const html = generateEmployeesHtml(data);
                 $('#main-body').html(html);
                 $('#employees-menu').addClass('active');
                 $(".cover").hide();
@@ -16,7 +16,7 @@ $('#employees').click( () => {
         },
         error: (data, status) => {
             console.log('Status: ' + status);
-            let html = generateErrorHtml(data);
+            const html = generateErrorHtml(data);
             $('#main-body').html(html);
             removeActive();
             $('#employees-menu').addClass('active');
@@ -27,31 +27,30 @@ $('#employees').click( () => {
 
 $("form#add-emp-form-data").submit(async e => {
     $(".cover").show();
-    e.preventDefault();    
-    let username = $('#add-emp-username').val();
-    let password = $('#add-emp-password').val();
-    let id = $('#add-emp-id').val();
-    let role = $('#add-emp-role').val();
-    let branch = $('#add-emp-branch').val();
-    let gender = $('#add-emp-gender').val();
-    console.log(`ajax_requests:add-emp:: Username: ${username}, Passward: ${password}, ID: ${id}, Role: ${role}, Branch: ${branch}, Gender: ${gender}`);
-    let response = await fetch('employee/add',
-    {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username : username,
-            password : password,
-            id: id,
-            role: role,
-            branch: branch,
-            gender: gender
-        })
-    });
-    if (response.ok){
-        console.log(`ajax_requests:add-emp:: Adding user: ${username} finished successfully`);
+    e.preventDefault();
+    const username = $('#add-emp-username').val();
+    const password = $('#add-emp-password').val();
+    const id = $('#add-emp-id').val();
+    const role = $('#add-emp-role').val();
+    const branch = $('#add-emp-branch').val();
+    const gender = $('#add-emp-gender').val();
+    const encryptedPass = encrypt(password);
+    const response = await fetch('employee/add',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                password: encryptedPass,
+                id: id,
+                role: role,
+                branch: branch,
+                gender: gender
+            })
+        });
+    if (response.ok) {
         jQuery.noConflict();
         $('#add-emp-modal').modal('hide');
         location.reload();
@@ -64,25 +63,23 @@ $("form#add-emp-form-data").submit(async e => {
 });
 
 const update_emp = async (id) => {
-    let role = $('#update-emp-role' + id).val();
-    let branch = $('#update-emp-branch' + id).val();
-    let gender = $('#update-emp-gender' + id).val();
-    console.log(`ajax_requests:update-emp::  ID: ${id}, Role: ${role}, Branch: ${branch}, Gender: ${gender}`);
-    let response = await fetch('employee/update',
-    {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id: id,
-            role: role,
-            branch: branch,
-            gender: gender
-        })
-    });
-    if (response.ok){
-        console.log(`ajax_requests:update-emp:: Updating employee: ${id} finished successfully`);
+    const role = $('#update-emp-role' + id).val();
+    const branch = $('#update-emp-branch' + id).val();
+    const gender = $('#update-emp-gender' + id).val();
+    const response = await fetch('employee/update',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: id,
+                role: role,
+                branch: branch,
+                gender: gender
+            })
+        });
+    if (response.ok) {
         jQuery.noConflict();
         $('#' + id).modal('hide');
         location.reload();
@@ -94,27 +91,28 @@ const update_emp = async (id) => {
 const removeEmployee = (id) => {
     console.log(`ajax_requests:remove-employee:: ID: ${id}`);
     $.ajax({
-        url:`employee/remove/${id}`,
-        type:'DELETE',
-        contentType:'application/json',
+        url: `employee/remove/${id}`,
+        type: 'DELETE',
+        contentType: 'application/json',
         success: (data, status) => {
             console.log('Status: ' + status);
             if (status == 'success') {
-                let html = generateEmployeesHtml(data);
+                const html = generateEmployeesHtml(data);
                 $('#main-body').html(html);
+            }
         }
-    }});
+    });
 };
 
 const selectCurrentDetails = (id, gender, role) => {
-    if (gender === 'Male') { 
+    if (gender === 'Male') {
         $('#update-emp-gender' + id + ' option[value=Male]').attr('selected', 'selected');
     }
     else if (gender === 'Female') {
         $('#update-emp-gender' + id + ' option[value=Female]').attr('selected', 'selected');
     }
 
-    if (role === 'Admin') { 
+    if (role === 'Admin') {
         $('#update-emp-role' + id + ' option[value=Admin]').attr('selected', 'selected');
     }
     else if (role === 'Employee') {
@@ -123,19 +121,19 @@ const selectCurrentDetails = (id, gender, role) => {
 };
 
 const generateEmployeesHtml = data => {
-    let employees = data.employees;
-    let userRole = data.userRole;
+    const employees = data.employees;
+    const userRole = data.userRole;
     let html = `<div class="jumbotron text-center">
                                 <h1>Employees</h1>
                             </div>
                             <div style="margin: 0px 130px 50px 130px">
                                 <table class="table">
                                     <tbody>`;
-                for (let i = 0; i < employees.length; i++) {
-                    if(i % 5 === 0) {
-                        html += `<tr>`;
-                    }
-                    html += `<td>
+    for (let i = 0; i < employees.length; i++) {
+        if (i % 5 === 0) {
+            html += `<tr>`;
+        }
+        html += `<td>
                                 <div class="user-td-style">
                                     <div class="card" style="min-width: 227px; min-height: 427.4px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
                                         <div class="modal fade" id=${employees[i].id} tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -148,7 +146,7 @@ const generateEmployeesHtml = data => {
                                                     <div class="modal-body">
                                                         <form id="update-emp-form-data" onsubmit="update_emp(${employees[i].id})">
                                                             <div class="form-group">
-                                                                <h5 class="modal-dialog">${'ID: '+ employees[i].id}</h5>
+                                                                <h5 class="modal-dialog">${'ID: ' + employees[i].id}</h5>
                                                             </div>
                                                             <div class="md-form mb-4">
                                                                 <select class="form-control" id=${"update-emp-role" + employees[i].id}>
@@ -174,42 +172,42 @@ const generateEmployeesHtml = data => {
                                                 </div>
                                             </div>
                                         </div>`;
-                                        if (employees[i].gender === 'Male' && employees[i].role === 'Admin') {
-                                            html += `<img class="card-img-top" src="/images/admin_male.png" alt="Card image" style="width:100%">`;
-                                        } else if (employees[i].gender === 'Male' && employees[i].role === 'Employee') {
-                                            html += `<img class="card-img-top" src="/images/user_male.png" alt="Card image" style="width:100%">`;
-                                        } else if (employees[i].gender === 'Female' && employees[i].role === 'Admin') {
-                                            html += `<img class="card-img-top" src="/images/admin_female.png" alt="Card image" style="width:100%">`;
-                                        } else if (employees[i].gender === 'Female' && employees[i].role === 'Employee') {
-                                            html += `<img class="card-img-top" src="/images/user_female.png" alt="Card image" style="width:100%">`;
-                                        } else {
-                                            html += `<img class="card-img-top" src="/images/template.jpg" alt="Card image" style="width:100%">`;
-                                        }
-                               html += `<div class="card-body">
+        if (employees[i].gender === 'Male' && employees[i].role === 'Admin') {
+            html += `<img class="card-img-top" src="/images/admin_male.png" alt="Card image" style="width:100%">`;
+        } else if (employees[i].gender === 'Male' && employees[i].role === 'Employee') {
+            html += `<img class="card-img-top" src="/images/user_male.png" alt="Card image" style="width:100%">`;
+        } else if (employees[i].gender === 'Female' && employees[i].role === 'Admin') {
+            html += `<img class="card-img-top" src="/images/admin_female.png" alt="Card image" style="width:100%">`;
+        } else if (employees[i].gender === 'Female' && employees[i].role === 'Employee') {
+            html += `<img class="card-img-top" src="/images/user_female.png" alt="Card image" style="width:100%">`;
+        } else {
+            html += `<img class="card-img-top" src="/images/template.jpg" alt="Card image" style="width:100%">`;
+        }
+        html += `<div class="card-body">
                                             <h5 class="card-title">${employees[i].username}</h5>
                                             <h6 class="card-subtitle mb-2 text-muted">${employees[i].role}</h6>`;
-                                            if (userRole === 'Admin') {
-                                                html += `<h6 class="card-subtitle mb-2 text-muted">${'Password: ' + employees[i].password}</h6>`;
-                                            }
-                                   html += `<p class="card-subtitle">${'Branch: ' + employees[i].branch}</p>
+        if (userRole === 'Admin') {
+            html += `<h6 class="card-subtitle mb-2 text-muted">${'Password: ' + employees[i].password}</h6>`;
+        }
+        html += `<p class="card-subtitle">${'Branch: ' + employees[i].branch}</p>
                                             <p class="card-text">${'ID: ' + employees[i].id}</p>`;
-                                            if (userRole === 'Admin') {
-                                       html += `<div style="text-align: center;">
+        if (userRole === 'Admin') {
+            html += `<div style="text-align: center;">
                                                     <a id="remove-employee" href="#" class="card-link" style="color: red"
                                                     onclick="removeEmployee(${employees[i].id})">Remove</a>
                                                     <a onclick="selectCurrentDetails('${employees[i].id}', '${employees[i].gender}', '${employees[i].role}')"
                                                         href="#" class="card-link" data-toggle="modal" data-target=${'#' + employees[i].id}>Update</a>
                                                 </div>`;
-                                            }
-                                        html += `</div>
+        }
+        html += `</div>
                                             </div>
                                         </div>
                                     </td>`;
-                    if(i % 5 === 4) {
-                        html += `</tr>`;
-                    }
-                }
-                html += `   </tbody>
+        if (i % 5 === 4) {
+            html += `</tr>`;
+        }
+    }
+    html += `   </tbody>
                         </table>
                     </div>`;
     return html;

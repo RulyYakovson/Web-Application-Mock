@@ -20,7 +20,7 @@ module.exports.removeEmployee = async (id) => {
 };
 
 module.exports.addEmployee = async (req, res) => {
-    createdEmployee = await employeeRepository.CREATE(req, res); // TODO: check if user added
+    await employeeRepository.CREATE(req, res);
 };
 
 module.exports.updateEmployee = async (employee) => {

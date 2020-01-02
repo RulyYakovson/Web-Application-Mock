@@ -1,36 +1,22 @@
-var fs = require("fs");
-let usersMock = require('../mock_db/usersData');
-let flowersMock = require('../mock_db/flowers');
-let branchesMock = require('../mock_db/branches');
-let customerRepository = require('../model')('Customer');
-let employeeRepository = require('../model')('Employee');
-let brancheRepository = require('../model')('Branch');
-let flowerRepository = require('../model')('Flower');
-let brancHelper = require('./branches_repository');
-let customerHelper = require('./customers_repository');
-let employeeHelper = require('./employee_repository');
-let flowerHelper = require('./flower_repository');
+const fs = require("fs");
+const usersMock = require('../mock_db/usersData');
+const flowersMock = require('../mock_db/flowers');
+const branchesMock = require('../mock_db/branches');
+const customerRepository = require('../model')('Customer');
+const employeeRepository = require('../model')('Employee');
+const brancheRepository = require('../model')('Branch');
+const flowerRepository = require('../model')('Flower');
+const brancHelper = require('./branches_repository');
+const customerHelper = require('./customers_repository');
+const employeeHelper = require('./employee_repository');
+const flowerHelper = require('./flower_repository');
 
-
-
-module.exports.getUser = async (userName, pass) => {
-    let result = await customerRepository.findOne({ username: userName, password: pass });
-    if (result) {
-        console.log(`Customer: ${result} \nsuccessfully authenticated.`);
-    } else {
-        result = await employeeRepository.findOne({ username: userName, password: pass });
-        if (result) {
-            console.log(`Employee: ${result} \nsuccessfully authenticated.`);
-        } else {
-            console.log(`Cannot authenticate user: ${userName}.`);
-        }
-    }
-    return result;
-};
+module.exports.isEmpUser = async userName =>
+    await employeeRepository.findOne({ username: userName }) ? true : false;
 
 module.exports.initDB = async () => {
     try {
-        let result = await brancHelper.getAllBranches();
+        const result = await brancHelper.getAllBranches();
         if (this.initNeeded(result)) {
             await this.initBranchesDB();
         }
@@ -49,7 +35,7 @@ module.exports.initDB = async () => {
         if (this.initNeeded(result)) {
             await this.initEmployeesDB();
         }
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 };
@@ -61,14 +47,14 @@ module.exports.initBranchesDB = async () => {
 };
 
 module.exports.initCustomersDB = async () => {
-    let customers = usersMock.filter( (user) => user.role === 'customer');
+    const customers = usersMock.filter((user) => user.role === 'customer');
     customers.forEach(async customer => {
         await customerRepository.CREATE(customer);
     });
 };
 
 module.exports.initEmployeesDB = async () => {
-    let employees = usersMock.filter( (user) => user.role !== 'customer');
+    const employees = usersMock.filter((user) => user.role !== 'customer');
     employees.forEach(async employee => {
         await employeeRepository.CREATE(employee);
     });
@@ -76,21 +62,22 @@ module.exports.initEmployeesDB = async () => {
 
 module.exports.initFlowersDB = async () => {
     flowersMock.forEach(async elem => {
-    let fileContent = fs.readFileSync(elem.src);
-    let encodeFile = fileContent.toString('base64');
-    let src = {
-        contentType: 'image/png',
-        data :new Buffer(encodeFile, 'base64')
-    };
+        const fileContent = fs.readFileSync(elem.src);
+        const encodeFile = fileContent.toString('base64');
+        const src = {
+            contentType: 'image/png',
+            data: new Buffer(encodeFile, 'base64')
+        };
 
-    let flower = {
-        name: elem.name,
-        price: elem.price,
-        src: src,
-        description: elem.description
-    };
+        const flower = {
+            name: elem.name,
+            price: elem.price,
+            src: src,
+            description: elem.description
+        };
         await flowerRepository.CREATE(flower);
     });
 };
 
-module.exports.initNeeded = result => (!result.success || !result.data || result.data.length === 0);
+module.exports.initNeeded = result =>
+    (!result.success || !result.data || result.data.length === 0);

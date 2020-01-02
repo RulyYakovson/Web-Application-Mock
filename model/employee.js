@@ -1,6 +1,5 @@
 const debug = require("debug")("mongo:model-employee");
 const passportLocalMongoose = require('passport-local-mongoose');
-let passport = require('passport');
 const mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 

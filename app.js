@@ -4,20 +4,20 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser')
 const logger = require('morgan');
 const favicon = require('serve-favicon');
+const session = require('express-session');
+const mongo = require('mongoose');
+const passport = require('passport');
+const connectMongo = require('connect-mongo');
 const router = require('./routes/router');
 const branchRouter = require('./routes/branch_router');
 const customerRouter = require('./routes/customer_router');
 const employeeRouter = require('./routes/employee_router');
 const flowerRouter = require('./routes/flower_router');
-const session = require('express-session');
-const mongo = require('mongoose');
-const connectMongo = require('connect-mongo');
-const MongoStore = connectMongo(session);
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const secret = 'web application mock secret';
-const rsa = require('./rsa/node-rsa');
+const passportStrategy = require('./encryption/passport');
 const employeeRepository = require('./model')('Employee');
+const customerRepository = require('./model')('Customer');
+const MongoStore = connectMongo(session);
+const secret = 'web application mock secret';
 const app = express();
 
 // view engine setup
@@ -62,33 +62,9 @@ app.use(
 app.use(passport.initialize());
 passport.serializeUser(employeeRepository.serializeUser());
 passport.deserializeUser(employeeRepository.deserializeUser());
-
-passport.use(
-    new LocalStrategy((username, password, done) => {
-        console.log(`Received login request for user: ${username}`);
-        employeeRepository.findOne({ username: username }, async (err, user) => {
-            if (err) {
-                console.log(err);
-                return done(err);
-            }
-            if (!user) {
-                console.log(`ERROR: User '${username}' not found`);
-                return done(null, false);
-            }
-            const decryptedPass = rsa.decrypt(password);
-            console.log(`Decrypted password: '${decryptedPass}'`)
-
-            const authentication = await user.authenticate(decryptedPass);
-            if (!authentication.user || !!authentication.error) {
-                console.log(`ERROR: ${authentication.error.message}`);
-                return done(null, false);
-            }
-            
-            console.log(`User: '${authentication.user.username}' logged in successfully !!`);
-            return done(null, user);
-        });
-    })
-);
+passport.serializeUser(customerRepository.serializeUser());
+passport.deserializeUser(customerRepository.deserializeUser());
+passport.use(passportStrategy);
 
 app.use('/', router);
 app.use('/customer', customerRouter);

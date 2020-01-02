@@ -1,4 +1,4 @@
-$('#contact').click( () => {
+$('#contact').click(() => {
     $(".cover").show();
     let data = generateContactHtml();
     console.log('result is 200');
@@ -17,7 +17,7 @@ const messageSent = async () => {
 };
 
 const generateContactHtml = () =>
-`<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    `<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <div class="container">
 	<div class="row justify-content-center" style="margin-top: 30px;">
 		<div class="col-12 col-md-8 col-lg-6 pb-5">
