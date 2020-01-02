@@ -1,8 +1,9 @@
-let express = require('express');
+const express = require('express');
+const repository = require('../repositories/employee_repository');
+const auth = require('./auth_user');
+const rsa = require('../encryption/node-rsa');
 let router = express.Router();
-let repository = require('../repositories/employee_repository');
-let auth = require('./auth_user');
-let timeout = 1000;
+const timeout = 1000;
 
 router.get('/all', auth.authEmployee, async (req, res) => {
     console.log('Received get all employees request');
@@ -46,9 +47,9 @@ router.delete('/remove/:id', auth.authEmployee, async (req, res) => {
 
 router.post('/add', auth.authEmployee, async (req, res) => {
     try {
-        await repository.addEmployee(req.body);
-        res.status(200).send('OK');
-    } catch(err) { // TODO: send the error message and show it to the user...
+        req.body.password = rsa.decrypt(req.body.password);
+        await repository.addEmployee(req, res);
+    } catch(err) {
         console.log(err.message)
         res.status(500).send('ERROR');
     }

@@ -1,6 +1,6 @@
 $(document).ready( () => {
     console.log("URL: " + location);
-    let relativeUrl = window.location.hash.slice(1);
+    const relativeUrl = window.location.hash.slice(1);
     switch (relativeUrl) {
         case 'about':
             $('#about').trigger('click');
@@ -58,11 +58,11 @@ $('#init-db').click( () => {
 $("form#login-form-data").submit(async e => {
     $(".cover").show();
     e.preventDefault();    
-    let username = $('#login-username').val();
-    let password = $('#login-password').val();
-    encryptedPass = encrypt(password);
+    const username = $('#login-username').val();
+    const password = $('#login-password').val();
+    const encryptedPass = encrypt(password);
     console.log(`ajax_requests:login:: Username: ${username}, Encrypted passward: ${encryptedPass}`);
-    let response = await fetch('login',
+    const response = await fetch('login',
     {
         method: 'POST',
         headers: {
@@ -73,9 +73,10 @@ $("form#login-form-data").submit(async e => {
             password: encryptedPass,
         })
     });
-    if (response.status === 200) {
+    if (response.ok) {
         console.log(`ajax_requests:login:: Authentication for user: ${username} succeeded`);
-       // $('#login-modal').modal('hide');  //TODO !!!!!
+        jQuery.noConflict();
+        $('#login-modal').modal('hide');
         location.reload();
     } else if (response.status === 401) {
         $('#login-err-msg').text('Username or password incorrect. Please try again');
@@ -95,7 +96,7 @@ const removeActive = () => {
 };
 
 const generateErrorHtml = data => {
-    let html = `<div class="home-page" style="height: 420px;">
+    const html = `<div class="home-page" style="height: 420px;">
                     <div class="home-page">
                         <h1 style="color: #138496">Can't reach the page !!! </h1>
                         <h1 style="color: #138496">${"Status code:   " + data.status} </h1>
