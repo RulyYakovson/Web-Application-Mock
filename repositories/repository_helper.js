@@ -36,7 +36,7 @@ module.exports.initDB = async () => {
             await this.initEmployeesDB();
         }
     } catch (err) {
-        console.log(err);
+        console.error(err.message);
     }
 };
 

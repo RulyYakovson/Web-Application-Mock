@@ -61,13 +61,36 @@ $('#init-db').click(() => {
     });
 });
 
+$("form#rest-pass-submit").submit(async e => {
+    $(".cover").show();
+    e.preventDefault();
+    $(".cover").hide();
+    const email = $('#rest-pass-email').val();
+    const response = await fetch('reset_pass',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email
+            })
+        });
+    if (response.ok) {
+        $('#reset-pass-msg').text('A new password was sent to your email');
+    } else if (response.status === 400) {
+        $('#reset-pass-msg').text('Email address is not registered');
+    } else {
+        $('#reset-pass-msg').text('An error occurred while trying to reset the password');
+    }
+});
+
 $("form#login-form-data").submit(async e => {
     $(".cover").show();
     e.preventDefault();
     const username = $('#login-username').val();
     const password = $('#login-password').val();
     const encryptedPass = encrypt(password);
-    console.log(`ajax_requests:login:: Username: ${username}, Encrypted passward: ${encryptedPass}`);
     const response = await fetch('login',
         {
             method: 'POST',
@@ -80,7 +103,6 @@ $("form#login-form-data").submit(async e => {
             })
         });
     if (response.ok) {
-        console.log(`ajax_requests:login:: Authentication for user: ${username} succeeded`);
         jQuery.noConflict();
         $('#login-modal').modal('hide');
         location.reload();

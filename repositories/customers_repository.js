@@ -30,3 +30,6 @@ module.exports.updateCustomer = async (customer) => {
     !!user ? console.log(`User: ${user} \nsuccessfully updeted !!`)
         : console.log(`Error while trying to update user with ID: ${customer.id}`);
 };
+
+module.exports.getCustomer = async (email) =>
+    await customerRepository.findOne({ address: email });

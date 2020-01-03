@@ -4,7 +4,7 @@ module.exports.getAllEmployees = async () => {
     let success = false;
     let result = null;
     await employeeRepository.find({}, (err, employees) => {
-        err && console.log(err);
+        err && console.error(err);
         if (!err) {
             result = employees;
             success = true;
@@ -16,7 +16,7 @@ module.exports.getAllEmployees = async () => {
 module.exports.removeEmployee = async (id) => {
     const employee = await employeeRepository.findOneAndDelete({ id: id });
     !!employee ? console.log(`Employee: ${employee} \nsuccessfully deleted !!`)
-        : console.log(`ERROR: Employee with ID: ${id} not found !!`);
+        : console.error(`ERROR: Employee with ID: ${id} not found !!`);
 };
 
 module.exports.addEmployee = async (req, res) => {

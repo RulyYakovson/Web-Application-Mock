@@ -13,7 +13,7 @@ const strategy = new LocalStrategy(async (username, password, done) => {
     }
     repository.findOne({ username: username }, async (err, user) => {
         if (err) {
-            console.log(err);
+            console.error(err);
             return done(err);
         }
         if (!user) {

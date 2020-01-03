@@ -50,7 +50,7 @@ router.post('/add', async (req, res) => {
         req.body.password = rsa.decrypt(req.body.password);
         await repository.addCustomer(req, res);
     } catch (err) {
-        console.log(err.message)
+        console.error(err.message);
         res.status(500).send('ERROR');
     }
 });
@@ -60,7 +60,7 @@ router.post('/update', auth.authEmployee, async (req, res) => {
         await repository.updateCustomer(req.body);
         res.status(200).send('OK');
     } catch (err) {
-        console.log(err.message)
+        console.error(err.message);
         res.status(500).send('ERROR');
     }
 });
