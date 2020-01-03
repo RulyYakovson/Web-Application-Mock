@@ -12,7 +12,9 @@ module.exports = function (db) {
             phone: { type: String, maxlength: [10, 'Invalid phone number'], minlength: [9, 'Invalid phone number'] },
             gender: { type: String, enum: ['Male', 'Female', 'Gender'] },
             role: { type: String, enum: ['Employee', 'Admin', 'customer'] },
-            address: String,
+            address: { type: String, required: true, unique: true },
+            tempPass: String,
+            expiresOn: Date,
             lastUpdate: Date,
             created: Date
         },
