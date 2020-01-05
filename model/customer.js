@@ -13,8 +13,8 @@ module.exports = function (db) {
             gender: { type: String, enum: ['Male', 'Female', 'Gender'] },
             role: { type: String, enum: ['Employee', 'Admin', 'customer'] },
             address: { type: String, required: true, unique: true },
-            tempPass: String,
-            expiresOn: Date,
+            token: String,
+            expiresOn: String,
             lastUpdate: Date,
             created: Date
         },

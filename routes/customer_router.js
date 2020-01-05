@@ -65,4 +65,15 @@ router.post('/update', auth.authEmployee, async (req, res) => {
     }
 });
 
+router.post('/new_pass', async (req, res) => {
+    try {
+        console.log(`Received set new password for user: ${req.body.username}`);
+        req.body.password = rsa.decrypt(req.body.password);
+        await repository.setNewPassword(req, res);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('ERROR');
+    }
+});
+
 module.exports = router;

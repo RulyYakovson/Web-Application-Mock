@@ -3,7 +3,7 @@ const passport = require('passport');
 const nodemailer = require('nodemailer');
 const router = express.Router();
 const repository_helper = require('../repositories/repository_helper');
-const { getCustomer, setTempPass } = require('../repositories/customers_repository');
+const { getCustomer, setToken } = require('../repositories/customers_repository');
 const expires = 10 * 60 * 1000; // min * sec * millis
 const timeout = 1000;
 
@@ -47,9 +47,9 @@ router.post('/reset_pass', async (req, res) => {
     try {
         const user = await getCustomer(email);
         if (user) {
-            const tempPass = generatePass()
-            resetPassword(user, tempPass, res);
-            sendEmail(email, user.username, tempPass, res);
+            const token = generateToken()
+            resetPassword(user, token, res);
+            sendEmail(email, user.username, token, res);
         } else if (user === null) {
             console.log(`User with email: '${email}' not found`);
             res.status(400).send('User not found');
@@ -60,19 +60,18 @@ router.post('/reset_pass', async (req, res) => {
     }
 });
 
-const resetPassword = async (user, tempPass, res) => {
-    user.tempPass = tempPass;
+const resetPassword = async (user, token, res) => {
+    user.token = token;
     user.expiresOn = Date.now() + expires;
     try {
-        await setTempPass(user);
-        return tempPass;
+        await setToken(user);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('ERROR');
     }
 };
 
-const sendEmail = (email, username, tempPass, res) => {
+const sendEmail = (email, username, token, res) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -84,7 +83,7 @@ const sendEmail = (email, username, tempPass, res) => {
         sender: "doNotReply@blabla", // ??????????
         to: email,
         subject: 'Password reset ✔',
-        html: generateEmailHtml(username, tempPass)
+        html: generateEmailHtml(username, token)
     };
     transporter.sendMail(mailOptions, function (err, info) {
         if (err) {
@@ -97,11 +96,11 @@ const sendEmail = (email, username, tempPass, res) => {
         }
     });
 };
-const generatePass = () => Math.random().toString(36).substring(2);
+const generateToken = () => Math.random().toString(36).substring(2);
 
-const generateEmailHtml = (username, tempPass) =>
+const generateEmailHtml = (username, token) =>  // TODO: update and add a text version
     `<h4 style="color: #500050;">Hello ${username},</h4>
-        <h4 style="color: #500050;">Your password has been reset and is now: <label style="color: brown"> ${tempPass}</label>.<br>
+        <h4 style="color: #500050;">Your password has been reset and is now: <label style="color: brown"> ${token}</label>.<br>
         Note ! This password is for one-time use and it expires in 10 minutes.<br>
         As soon as you enter the site you will be asked to update your password again.</h4>
         <h4 style="color: #500050;">Regards,<br>

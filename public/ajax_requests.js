@@ -27,13 +27,19 @@ $(document).ready(() => {
 
 $(document).ready(() => {
     $(".form-control").focus(() => {
-        removeMsg()
+        removeMsg();
     });
     $('#add-customer-confirm').on('input', () => {
-        validatePassword()
+        validatePassword();
     });
     $('#add-customer-password').on('input', () => {
-        validatePassword()
+        validatePassword();
+    });
+    $('#after-reset-password').on('input', () => {
+        validatePasswordForSet();
+    });
+    $('#after-reset-confirm').on('input', () => {
+        validatePasswordForSet();
     });
 });
 
@@ -61,10 +67,9 @@ $('#init-db').click(() => {
     });
 });
 
-$("form#rest-pass-submit").submit(async e => {
+$("form#reset-pass-submit").submit(async e => {
     $(".cover").show();
     e.preventDefault();
-    $(".cover").hide();
     const email = $('#rest-pass-email').val();
     const response = await fetch('reset_pass',
         {
@@ -77,12 +82,51 @@ $("form#rest-pass-submit").submit(async e => {
             })
         });
     if (response.ok) {
-        $('#reset-pass-msg').text('A new password was sent to your email');
+        jQuery.noConflict();
+        $('#reset-pass-modal').modal('hide');
+        jQuery.noConflict();
+        $('#after-reset-modal').modal('show');
     } else if (response.status === 400) {
         $('#reset-pass-msg').text('Email address is not registered');
     } else {
         $('#reset-pass-msg').text('An error occurred while trying to reset the password');
     }
+    $(".cover").hide();
+});
+
+$("form#after-reset-submit").submit(async e => {
+    $(".cover").show();
+    e.preventDefault();
+    const token = $('#after-reset-token').val();
+    const username = $('#after-reset-username').val();
+    const password = $('#after-reset-password').val();
+    const encryptedPass = encrypt(password);
+    const response = await fetch('customer/new_pass',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                token: token,
+                username: username,
+                password: encryptedPass,
+            })
+        });
+    if (response.ok) {
+        $('#after-reset-msg').css("color", "#bd3200");
+        $('#after-reset-msg').text('Password has been changed, you can now log in by using the new password.');
+    } else if (response.status === 400) {
+        $('#after-reset-msg').css("color", "red");
+        $('#after-reset-msg').text(`User ${username} doesn't exist.`);
+    } else if (response.status === 401) {
+        $('#after-reset-msg').css("color", "red");
+        $('#after-reset-msg').text('Token has incorrect or expired.');
+    } else {
+        $('#after-reset-msg').css("color", "red");
+        $('#after-reset-msg').text('An error occurred while trying to update the password.');
+    }
+    $(".cover").hide();
 });
 
 $("form#login-form-data").submit(async e => {
@@ -107,9 +151,9 @@ $("form#login-form-data").submit(async e => {
         $('#login-modal').modal('hide');
         location.reload();
     } else if (response.status === 401) {
-        $('#login-err-msg').text('Username or password incorrect. Please try again');
+        $('#login-err-msg').text('Username or password incorrect. Please try again.');
     } else {
-        $('#login-err-msg').text('An error occurred during the login request');
+        $('#login-err-msg').text('An error occurred during the login request.');
     }
     $(".cover").hide();
 });
@@ -134,6 +178,20 @@ const validatePassword = () => {
         $('#password-err-msg').attr("hidden", true);
         $('#password-err-msg').text('');
         $('#add-customer-button').prop('disabled', false);
+    }
+};
+
+const validatePasswordForSet = () => {
+    const password = $('#after-reset-password').val();
+    const confirm = $('#after-reset-confirm').val();
+    if (password !== confirm) {
+        $('#after-reset-password-err-msg').attr("hidden", false);
+        $('#after-reset-password-err-msg').text(`* Password doesn't match.`);
+        $('#after-reset-button').prop('disabled', true);
+    } else {
+        $('#after-reset-password-err-msg').attr("hidden", true);
+        $('#after-reset-password-err-msg').text('');
+        $('#after-reset-button').prop('disabled', false);
     }
 };
 
