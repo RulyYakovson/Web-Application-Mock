@@ -6,7 +6,7 @@ const customerRepository = require('../model')('Customer');
 const employeeRepository = require('../model')('Employee');
 const brancheRepository = require('../model')('Branch');
 const flowerRepository = require('../model')('Flower');
-const brancHelper = require('./branches_repository');
+const branchHelper = require('./branches_repository');
 const customerHelper = require('./customers_repository');
 const employeeHelper = require('./employee_repository');
 const flowerHelper = require('./flower_repository');
@@ -14,9 +14,15 @@ const flowerHelper = require('./flower_repository');
 module.exports.isEmpUser = async userName =>
     await employeeRepository.findOne({ username: userName }) ? true : false;
 
+module.exports.getUserByEmail = async email => {
+    let user = await customerRepository.findOne({ address: email });
+    !user && (user = await employeeRepository.findOne({ email: email }));
+    return user;
+};
+
 module.exports.initDB = async () => {
     try {
-        const result = await brancHelper.getAllBranches();
+        const result = await branchHelper.getAllBranches();
         if (this.initNeeded(result)) {
             await this.initBranchesDB();
         }

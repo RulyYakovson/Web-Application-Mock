@@ -92,9 +92,6 @@ module.exports.setNewPassword = async (req, res) => {
     });
 };
 
-module.exports.getCustomer = async email =>
-    await customerRepository.findOne({ address: email });
-
 const isValidToken = (token, user) =>
     (token === user.token) && (user.expiresOn >= Date.now());
 

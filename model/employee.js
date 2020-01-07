@@ -9,10 +9,15 @@ module.exports = function (db) {
         {
             id: { type: String, required: true, unique: true },
             username: { type: String, required: true, unique: true },
+            firstName: String,
+            lastName: String,
             password: { type: String, maxlength: [8, 'Too long password'], minlength: [4, 'Too short password'] },
             gender: { type: String, enum: ['Male', 'Female', 'Gender'] },
             role: { type: String, enum: ['Employee', 'Admin', 'customer', 'Role'] },
+            email: { type: String, required: true, unique: true },
             branch: Number,
+            token: String,
+            expiresOn: String,
             lastUpdate: Date,
             created: Date
         },
@@ -25,9 +30,11 @@ module.exports = function (db) {
         const newEmpDetails = req.body;
         const newEmp = new this({
             username: newEmpDetails.username,
+            firstName: newEmpDetails.firstName,
+            lastName: newEmpDetails.lastName,
             id: newEmpDetails.id,
             role: newEmpDetails.role,
-            address: newEmpDetails.address,
+            email: newEmpDetails.email,
             branch: newEmpDetails.branch,
             gender: newEmpDetails.gender,
         });

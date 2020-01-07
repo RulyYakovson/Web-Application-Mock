@@ -8,8 +8,10 @@ module.exports = function (db) {
         {
             id: { type: String, required: true, unique: true },
             username: { type: String, required: true, unique: true },
+            firstName: String,
+            lastName: String,
             password: { type: String, maxlength: [8, 'Too long password'], minlength: [3, 'Too short password'] },
-            phone: { type: String, maxlength: [10, 'Invalid phone number'], minlength: [9, 'Invalid phone number'] },
+            phone: { type: String, maxlength: [13, 'Invalid phone number'], minlength: [9, 'Invalid phone number'] },
             gender: { type: String, enum: ['Male', 'Female', 'Gender'] },
             role: { type: String, enum: ['Employee', 'Admin', 'customer'] },
             address: { type: String, required: true, unique: true },
@@ -27,6 +29,8 @@ module.exports = function (db) {
         const newCustomerDetails = req.body;
         const newCustomer = new this({
             username: newCustomerDetails.username,
+            firstName: newCustomerDetails.firstName,
+            lastName: newCustomerDetails.lastName,
             id: newCustomerDetails.id,
             role: newCustomerDetails.role,
             address: newCustomerDetails.address,

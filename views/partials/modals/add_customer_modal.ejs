@@ -9,40 +9,105 @@
             <div class="modal-body">
                 <form id="add-customer-form-data">
                     <div class="form-group">
-                        <input id="add-customer-username" type="text" class="form-control" placeholder="Username"
-                            required="required">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-user icon-color"></i>
+                                </div>
+                            </div>
+                            <input id="add-customer-first-name" type="text" class="form-control"
+                                placeholder="First name" required="required"
+                                style="border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem;">
+                            <div class="input-group-prepend" style="margin-left: .5rem;">
+                                <div class="input-group-text"
+                                    style="border-top-left-radius: .3rem; border-bottom-left-radius: .3rem"><i
+                                        class="fa fa-user icon-color"></i>
+                                </div>
+                            </div>
+                            <input id="add-customer-last-name" type="text" class="form-control" placeholder="Last name"
+                                required="required">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input id="add-customer-password" type="password" class="form-control" placeholder="Password"
-                            required="required">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-user icon-color"></i>
+                                </div>
+                            </div>
+                            <input id="add-customer-username" type="text" class="form-control" placeholder="Username"
+                                required="required">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input id="add-customer-confirm" type="password" class="form-control"
-                            placeholder="Confirm password" required="required">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text" style="width: 38.58px"><i class="fa fa-lock icon-color"
+                                        style="margin-left: 1px"></i>
+                                </div>
+                            </div>
+                            <input id="add-customer-password" type="password" class="form-control"
+                                placeholder="Password" required="required">
+                        </div>
                         <label id="password-err-msg" class="inner-error-msg" hidden="true" />
                     </div>
                     <div class="form-group">
-                        <input id="add-customer-id" type="number" class="form-control" placeholder="ID"
-                            required="required">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text" style="width: 38.58px"><i
+                                        class="fa fa-hand-o-right icon-color"></i>
+                                </div>
+                            </div>
+                            <input id="add-customer-confirm" type="password" class="form-control"
+                                placeholder="Confirm password" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text" style="width: 38.58px"><i
+                                        class="fa fa-id-card-o icon-color" style="margin-left: -4px;"></i>
+                                </div>
+                            </div>
+                            <input id="add-customer-id" type="number" class="form-control" placeholder="ID"
+                                required="required">
+                        </div>
                     </div>
                     <div class="md-form mb-4">
-                        <input id="add-customer-phone" type="tel" class="form-control" placeholder="Phone"
-                            required="required">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-phone icon-color"></i>
+                                </div>
+                            </div>
+                            <input id="add-customer-phone" type="tel" class="form-control" placeholder="Phone"
+                                required="required">
+                        </div>
                     </div>
                     <div class="md-form mb-4">
-                        <input id="add-customer-address" type="email" class="form-control" placeholder="Email"
-                            required="required">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-envelope icon-color"></i>
+                                </div>
+                            </div>
+                            <input id="add-customer-address" type="email" class="form-control" placeholder="Email"
+                                required="required">
+                        </div>
                     </div>
                     <div class="md-form mb-4">
-                        <select class="form-control" id="add-customer-gender">
-                            <option hidden>Gender</option>
-                            <option label="Male" value="Male" />
-                            <option label="Female" value="Female" />
-                        </select>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-male icon-color"
+                                        style="margin-left: -3px;"></i><i class="fa fa-female icon-color"></i>
+                                </div>
+                            </div>
+                            <select class="form-control" id="add-customer-gender">
+                                <option hidden>Gender</option>
+                                <option label="Male" value="Male" />
+                                <option label="Female" value="Female" />
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="submit" id="add-customer-button" class="btn btn-primary btn-block btn-lg"
-                            value="Add">
+                            value="Sign Up">
                     </div>
                 </form>
                 <p id="add-customer-err-msg" style="color: red"></p>

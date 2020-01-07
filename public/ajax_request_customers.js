@@ -29,6 +29,8 @@ $("form#add-customer-form-data").submit(async e => {
     $(".cover").show();
     e.preventDefault();
     const username = $('#add-customer-username').val();
+    const firstName = $('#add-customer-first-name').val();
+    const lastName = $('#add-customer-last-name').val();
     const password = $('#add-customer-password').val();
     const id = $('#add-customer-id').val();
     const phone = $('#add-customer-phone').val();
@@ -43,6 +45,8 @@ $("form#add-customer-form-data").submit(async e => {
             },
             body: JSON.stringify({
                 username: username,
+                firstName: firstName,
+                lastName: lastName,
                 password: encryptedPass,
                 id: id,
                 role: 'customer',
@@ -178,13 +182,13 @@ const generateCustomersHtml = (data) => {
             html += `<img class="card-img-top" src="/images/template.jpg" alt="Card image" style="width:100%">`;
         }
         html += `<div class="card-body">
-                                            <h5 class="card-title">${customers[i].username}</h5>`;
+                                            <h5 class="card-title">${customers[i].firstName + ' ' + customers[i].lastName}</h5>`;
         if (userRole === 'Admin') {
-            html += `<h6 class="card-subtitle mb-2 text-muted">${'Password: ' + customers[i].password}</h6>`;
+            html += `<h6 class="card-subtitle mb-2 text-muted">${'Username:  ' + customers[i].username}</h6>`;
         }
         html += `<p class="card-text">${'ID: ' + customers[i].id}</p>
                                             <p class="card-subtitle">${'Phone: ' + customers[i].phone}</p>
-                                            <p class="card-text">${'Address: ' + customers[i].address}</p>`;
+                                            <p class="card-text">${'Email: ' + customers[i].address}</p>`;
         if (userRole === 'Admin') {
             html += `<div style="text-align: center;">
                                                     <a id="remove-customer" href="#" class="card-link" style="color: red"

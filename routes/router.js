@@ -2,15 +2,16 @@ const express = require('express');
 const passport = require('passport');
 const nodemailer = require('nodemailer');
 const router = express.Router();
-const repository_helper = require('../repositories/repository_helper');
-const { getCustomer, setToken } = require('../repositories/customers_repository');
+const { initDB, getUserByEmail} = require('../repositories/repository_helper');
+const { setEmpToken } = require('../repositories/employee_repository');
+const { setToken } = require('../repositories/customers_repository');
 const expires = 10 * 60 * 1000; // min * sec * millis
 const timeout = 1000;
 
 router.put('/init_db', async (req, res) => {
     console.log('Received init db request');
     await setTimeout(async () => {
-        await repository_helper.initDB();
+        await initDB();
         res.status(200).send('OK');
     }, timeout);
 });
@@ -45,11 +46,11 @@ router.post('/reset_pass', async (req, res) => {
     const email = req.body.email;
     console.log(`Received reset password request for email: ${email}`);
     try {
-        const user = await getCustomer(email);
+        const user = await getUserByEmail(email);
         if (user) {
             const token = generateToken()
             resetPassword(user, token, res);
-            sendEmail(email, user.username, token, res);
+            sendEmail(email, user.firstName, token, res);
         } else if (user === null) {
             console.log(`User with email: '${email}' not found`);
             res.status(400).send('User not found');
@@ -64,14 +65,18 @@ const resetPassword = async (user, token, res) => {
     user.token = token;
     user.expiresOn = Date.now() + expires;
     try {
-        await setToken(user);
+        if (user.role === 'customer') {
+            await setToken(user);
+        } else {
+            await setEmpToken(user);
+        }
     } catch (err) {
         console.error(err.message);
         res.status(500).send('ERROR');
     }
 };
 
-const sendEmail = (email, username, token, res) => {
+const sendEmail = (email, name, token, res) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -83,7 +88,8 @@ const sendEmail = (email, username, token, res) => {
         sender: "doNotReply@blabla", // ??????????
         to: email,
         subject: 'Password reset ✔',
-        html: generateEmailHtml(username, token)
+        text: generateEmailText(name, token),
+        html: generateEmailHtml(name, token)
     };
     transporter.sendMail(mailOptions, function (err, info) {
         if (err) {
@@ -98,12 +104,22 @@ const sendEmail = (email, username, token, res) => {
 };
 const generateToken = () => Math.random().toString(36).substring(2);
 
-const generateEmailHtml = (username, token) =>  // TODO: update and add a text version
-    `<h4 style="color: #500050;">Hello ${username},</h4>
-        <h4 style="color: #500050;">Your password has been reset and is now: <label style="color: brown"> ${token}</label>.<br>
-        Note ! This password is for one-time use and it expires in 10 minutes.<br>
-        As soon as you enter the site you will be asked to update your password again.</h4>
+const generateEmailHtml = (name, token) =>
+    `<h4 style="color: #500050;">Hello ${name},</h4>
+        <h4 style="color: #500050;">Your password has been reset.<br>
+        The verification code to choose a new password is: <label style="color: brown"> ${token}</label>.<br>
+        Note ! This token is for one-time use and it expires in 10 minutes.<br>
+        Go back now to the site and choose a new password.</h4>
         <h4 style="color: #500050;">Regards,<br>
-        The site team</h4>`
+        The site team</h4>`;
+
+const generateEmailText = (name, token) =>
+    `Hello ${name},\n
+    Your password has been reset\n
+    The verification code to choose a new password is: ${token}.\n
+    Note ! This token is for one-time use and it expires in 10 minutes.\n
+    Go back now to the site and choose a new password.\n
+    Regards,\n
+    The site team`;
 
 module.exports = router;

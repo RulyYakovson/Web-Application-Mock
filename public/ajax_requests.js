@@ -116,15 +116,8 @@ $("form#after-reset-submit").submit(async e => {
     if (response.ok) {
         $('#after-reset-msg').css("color", "#bd3200");
         $('#after-reset-msg').text('Password has been changed, you can now log in by using the new password.');
-    } else if (response.status === 400) {
-        $('#after-reset-msg').css("color", "red");
-        $('#after-reset-msg').text(`User ${username} doesn't exist.`);
-    } else if (response.status === 401) {
-        $('#after-reset-msg').css("color", "red");
-        $('#after-reset-msg').text('Token has incorrect or expired.');
     } else {
-        $('#after-reset-msg').css("color", "red");
-        $('#after-reset-msg').text('An error occurred while trying to update the password.');
+        tryEmpPath(token, username, encryptedPass);
     }
     $(".cover").hide();
 });
@@ -157,6 +150,34 @@ $("form#login-form-data").submit(async e => {
     }
     $(".cover").hide();
 });
+
+const tryEmpPath = async (token, username, encryptedPass) => {
+    const response = await fetch('employee/new_pass',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                token: token,
+                username: username,
+                password: encryptedPass,
+            })
+        });
+    if (response.ok) {
+        $('#after-reset-msg').css("color", "#bd3200");
+        $('#after-reset-msg').text('Password has been changed, you can now log in by using the new password.');
+    } else if (response.status === 400) {
+        $('#after-reset-msg').css("color", "red");
+        $('#after-reset-msg').text(`User ${username} doesn't exist.`);
+    } else if (response.status === 401) {
+        $('#after-reset-msg').css("color", "red");
+        $('#after-reset-msg').text('Token has incorrect or expired.');
+    } else {
+        $('#after-reset-msg').css("color", "red");
+        $('#after-reset-msg').text('An error occurred while trying to update the password.');
+    }
+}
 
 const removeMsg = () => {
     $('#add-emp-err-msg').text('');

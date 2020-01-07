@@ -2,7 +2,7 @@ const employeeRepository = require('../model')('Employee');
 const customerRepository = require('../model')('Customer');
 const { isEmpUser } = require('../repositories/repository_helper');
 const LocalStrategy = require('passport-local').Strategy;
-const rsa = require('./node-rsa');
+const { decrypt } = require('./node-rsa');
 
 const strategy = new LocalStrategy(async (username, password, done) => {
     console.log(`Received login request for user: ${username}`);
@@ -20,7 +20,7 @@ const strategy = new LocalStrategy(async (username, password, done) => {
             console.log(`ERROR: User '${username}' not found`);
             return done(null, false);
         }
-        const decryptedPass = rsa.decrypt(password);
+        const decryptedPass = decrypt(password);
         console.log(`Decrypted password: '${decryptedPass}'`)
 
         const authentication = await user.authenticate(decryptedPass);

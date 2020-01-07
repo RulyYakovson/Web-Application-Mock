@@ -29,6 +29,9 @@ $("form#add-emp-form-data").submit(async e => {
     $(".cover").show();
     e.preventDefault();
     const username = $('#add-emp-username').val();
+    const firstName = $('#add-emp-first-name').val();
+    const lastName = $('#add-emp-last-name').val();
+    const email = $('#add-emp-email').val();
     const password = $('#add-emp-password').val();
     const id = $('#add-emp-id').val();
     const role = $('#add-emp-role').val();
@@ -43,7 +46,10 @@ $("form#add-emp-form-data").submit(async e => {
             },
             body: JSON.stringify({
                 username: username,
+                firstName: firstName,
+                lastName: lastName,
                 password: encryptedPass,
+                email: email,
                 id: id,
                 role: role,
                 branch: branch,
@@ -184,13 +190,14 @@ const generateEmployeesHtml = data => {
             html += `<img class="card-img-top" src="/images/template.jpg" alt="Card image" style="width:100%">`;
         }
         html += `<div class="card-body">
-                                            <h5 class="card-title">${employees[i].username}</h5>
+                                            <h5 class="card-title">${employees[i].firstName + ' ' + employees[i].lastName}</h5>
                                             <h6 class="card-subtitle mb-2 text-muted">${employees[i].role}</h6>`;
         if (userRole === 'Admin') {
-            html += `<h6 class="card-subtitle mb-2 text-muted">${'Password: ' + employees[i].password}</h6>`;
+            html += `<h6 class="card-subtitle mb-2 text-muted">${'Username:  ' + employees[i].username}</h6>`;
         }
-        html += `<p class="card-subtitle">${'Branch: ' + employees[i].branch}</p>
-                                            <p class="card-text">${'ID: ' + employees[i].id}</p>`;
+        html += `<h6 class="card-subtitle mb-2 text-muted">${'Email: ' + employees[i].email}</h6>
+                 <p class="card-subtitle">${'Branch: ' + employees[i].branch}</p>
+                 <p class="card-text">${'ID: ' + employees[i].id}</p>`;
         if (userRole === 'Admin') {
             html += `<div style="text-align: center;">
                                                     <a id="remove-employee" href="#" class="card-link" style="color: red"
