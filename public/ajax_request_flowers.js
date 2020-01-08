@@ -119,7 +119,7 @@ const generateFlowersHtml = (data) => {
         if (userRole && userRole === 'Admin') {
             html += `<div class="row justify-content-end">
                                                         <button style="height:27px" class="btn-danger align-self-end" onclick="removeFlower('${flowers[i].name}')">
-                                                            <i class="fas fa-remove" ></i>
+                                                            <i class="fa fa-trash-o" style="font-weight: 900; display: block;"></i>
                                                         </button>
                                                     </div>`;
         }
