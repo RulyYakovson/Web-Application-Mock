@@ -28,7 +28,14 @@ router.post('/login', passport.authenticate('local'), async (req, res) => {
     const user = req.user;
     req.session.userId = user.id;
     req.session.username = user.username;
+    req.session.firstName = user.firstName;
+    req.session.lastName = user.lastName;
+    req.session.gender = user.gender;
+    req.session.phone = user.phone;
     req.session.role = user.role;
+    if (user.role === 'customer) {
+        req.session.email = user.address;
+    }
     console.log(`Session for User: '${user.username}', Role: '${user.role}' added successfully`);
     res.status(200).send('OK');
 });
