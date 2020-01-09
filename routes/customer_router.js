@@ -86,4 +86,18 @@ router.post('/change_pass', auth.authUser, async (req, res) => {
     }
 });
 
+router.get('/user', auth.authUser, async (req, res) => {
+    console.log('Received get user details request');
+    const data = {
+        id: req.session.userId,
+        username: req.session.username,
+        firstName: req.session.firstName,
+        lastName: req.session.lastName,
+        phone: req.session.phone,
+        gender: req.session.gender,
+        email: req.session.email
+    }
+    res.status(200).json(data);;
+});
+
 module.exports = router;
