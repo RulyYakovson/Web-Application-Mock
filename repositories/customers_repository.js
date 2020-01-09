@@ -53,7 +53,11 @@ module.exports.updatePassword = async (req, res) => {
             user.changePassword(req.body.oldPassword, req.body.newPassword, (err, user) => {
                 if (err) {
                     console.log(`Error while trying to update password for user: '${username}'. \n${err.message}`);
-                    res.status(500).send('ERROR');
+                    if (err.message.includes('Password or username is incorrect')) {
+                        res.status(401).send('ERROR');
+                    } else {
+                        res.status(500).send('ERROR');
+                    }
                 } else {
                     console.log(`Password update successfully for user: \n'${user}'`);
                     res.status(200).send('OK');

@@ -149,6 +149,8 @@ $("form#change-pass-submit").submit(async e => {
     if (response.ok) {
         jQuery.noConflict();
         $('#change-pass-modal').modal('hide');
+    } else if (response.status === 401) {
+        $('#change-pass-err-msg').text('Username or password incorrect.');
     } else {
         tryEmpPathChange(encryptedOldPass, encryptedNewPass);
     }
@@ -198,14 +200,17 @@ const tryEmpPathReset = async (token, username, encryptedPass) => {
             })
         });
     if (response.ok) {
-        jQuery.noConflict();
-        $('#change-pass-modal').modal('hide');
+        $('#after-reset-msg').css("color", "#bd3200");
+        $('#after-reset-msg').text('Password has been changed, you can now log in by using the new password.');
     } else if (response.status === 400) {
-        $('#change-pass-err-msg').text(`User ${username} doesn't exist.`);
+        $('#after-reset-msg').css("color", "red");
+        $('#after-reset-msg').text(`User ${username} doesn't exist.`);
     } else if (response.status === 401) {
-        $('#change-pass-err-msg').text('Token has incorrect or expired.');
+        $('#after-reset-msg').css("color", "red");
+        $('#after-reset-msg').text('Token has incorrect or expired.');
     } else {
-        $('#change-pass-err-msg').text('An error occurred while trying to update the password.');
+        $('#after-reset-msg').css("color", "red");
+        $('#after-reset-msg').text('An error occurred while trying to update the password.');
     }
 };
 
@@ -222,17 +227,14 @@ const tryEmpPathChange = async (encryptedOldPass, encryptedNewPass) => {
             })
         });
     if (response.ok) {
-        $('#after-reset-msg').css("color", "#bd3200");
-        $('#after-reset-msg').text('Password has been changed, you can now log in by using the new password.');
+        jQuery.noConflict();
+        $('#change-pass-modal').modal('hide');
     } else if (response.status === 400) {
-        $('#after-reset-msg').css("color", "red");
-        $('#after-reset-msg').text(`User ${username} doesn't exist.`);
+        $('#change-pass-err-msg').text(`User ${username} doesn't exist.`);
     } else if (response.status === 401) {
-        $('#after-reset-msg').css("color", "red");
-        $('#after-reset-msg').text('Token has incorrect or expired.');
+        $('#change-pass-err-msg').text('Username or password incorrect.');
     } else {
-        $('#after-reset-msg').css("color", "red");
-        $('#after-reset-msg').text('An error occurred while trying to update the password.');
+        $('#change-pass-err-msg').text('An error occurred while trying to update the password.');
     }
 };
 
