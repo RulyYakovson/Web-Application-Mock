@@ -12,6 +12,6 @@ npm start
 ```
 Then, go to localhost:8080 from browser and push Init DB button (require mongoDB to be installed on your PC).\
 Login by insert:\
-&nbsp;israel, password: 123456 to get an "admin" permissions.\
-  roy , password: 123456 to get an "employee" permissions.\
-  shani, password: 123456 to get an "customer" permissions.\
+&nbsp;&nbsp;israel, password: 123456 to get an "admin" permissions.\
+&nbsp;&nbsp;roy , password: 123456 to get an "employee" permissions.\
+&nbsp;&nbsp;shani, password: 123456 to get an "customer" permissions.\
