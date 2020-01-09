@@ -150,9 +150,11 @@ $("form#change-pass-submit").submit(async e => {
         jQuery.noConflict();
         $('#change-pass-modal').modal('hide');
     } else if (response.status === 401) {
-        $('#change-pass-err-msg').text('Username or password incorrect.');
-    } else {
+        $('#change-pass-err-msg').text('Wrong password.');
+    } else if (response.status === 404) {
         tryEmpPathChange(encryptedOldPass, encryptedNewPass);
+    } else {
+        $('#change-pass-err-msg').text('An error occurred while trying to update the password.');
     }
     $(".cover").hide();
 });
@@ -229,10 +231,8 @@ const tryEmpPathChange = async (encryptedOldPass, encryptedNewPass) => {
     if (response.ok) {
         jQuery.noConflict();
         $('#change-pass-modal').modal('hide');
-    } else if (response.status === 400) {
-        $('#change-pass-err-msg').text(`User ${username} doesn't exist.`);
     } else if (response.status === 401) {
-        $('#change-pass-err-msg').text('Username or password incorrect.');
+        $('#change-pass-err-msg').text('Wrong password.');
     } else {
         $('#change-pass-err-msg').text('An error occurred while trying to update the password.');
     }

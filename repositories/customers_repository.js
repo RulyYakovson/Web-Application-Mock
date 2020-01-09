@@ -45,7 +45,7 @@ module.exports.updatePassword = async (req, res) => {
     await customerRepository.findOne({ username: username }, async (err, user) => {
         if (err) {
             console.log(`Error while trying to find user to update password for. \nUser: '${username}' \nError: ${err.message}`);
-            res.status(500).send('ERROR');
+            res.status(400).send('ERROR');
         } else if (!user) {
             console.log(`User: '${username}' not found`);
             res.status(400).send('ERROR');
