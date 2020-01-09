@@ -76,9 +76,25 @@
                     <i class="fas fa-user-plus"></i> Sign up</a>
             </li>
             <% } else { %>
-            <li class="nav-item" id="log-out"><a href="#" class="nav-link" onclick="location = '/logout'">
-                    <i class="fa fa-sign-out"></i> Sign out</a>
-                <% } %>
+            <li class="nav-item dropdown" id="profile-menu">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user-circle-o" style="font-size: x-large; font-weight: 700"></i>
+                    &nbsp;Profile
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="margin-left: -50px;">
+                    <a id="change-password-btn" class="dropdown-item text-muted" href="#" data-toggle="modal"
+                        data-target="#change-pass-modal">
+                    <i class="fa fa-lock profile-dropdown"></i> Change password</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-muted" href="#" data-toggle="modal" data-target="#add-flower-modal"><i
+                            class="fa fa-edit profile-dropdown"></i>Edit profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item text-muted" onclick="location = '/logout'">
+                        <i class="fa fa-sign-out profile-dropdown"></i>Sign out</a>
+                </div>
+            </li>
+            <% } %>
         </ul>
     </div>
 </nav>

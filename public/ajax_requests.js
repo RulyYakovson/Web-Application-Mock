@@ -41,6 +41,12 @@ $(document).ready(() => {
     $('#after-reset-confirm').on('input', () => {
         validatePasswordForSet();
     });
+    $('#change-pass-new').on('input', () => {
+        validatePasswordForChange();
+    });
+    $('#change-pass-confirm').on('input', () => {
+        validatePasswordForChange();
+    });
 });
 
 $('#init-db').click(() => {
@@ -117,7 +123,34 @@ $("form#after-reset-submit").submit(async e => {
         $('#after-reset-msg').css("color", "#bd3200");
         $('#after-reset-msg').text('Password has been changed, you can now log in by using the new password.');
     } else {
-        tryEmpPath(token, username, encryptedPass);
+        tryEmpPathReset(token, username, encryptedPass);
+    }
+    $(".cover").hide();
+});
+
+$("form#change-pass-submit").submit(async e => {
+    $(".cover").show();
+    e.preventDefault();
+    const oldPassword = $('#change-pass-old').val();
+    const newPassword = $('#change-pass-new').val();
+    const encryptedOldPass = encrypt(oldPassword);
+    const encryptedNewPass = encrypt(newPassword);
+    const response = await fetch('customer/change_pass',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                oldPassword: encryptedOldPass,
+                newPassword: encryptedNewPass,
+            })
+        });
+    if (response.ok) {
+        jQuery.noConflict();
+        $('#change-pass-modal').modal('hide');
+    } else {
+        tryEmpPathChange(encryptedOldPass, encryptedNewPass);
     }
     $(".cover").hide();
 });
@@ -151,7 +184,7 @@ $("form#login-form-data").submit(async e => {
     $(".cover").hide();
 });
 
-const tryEmpPath = async (token, username, encryptedPass) => {
+const tryEmpPathReset = async (token, username, encryptedPass) => {
     const response = await fetch('employee/new_pass',
         {
             method: 'POST',
@@ -162,6 +195,30 @@ const tryEmpPath = async (token, username, encryptedPass) => {
                 token: token,
                 username: username,
                 password: encryptedPass,
+            })
+        });
+    if (response.ok) {
+        jQuery.noConflict();
+        $('#change-pass-modal').modal('hide');
+    } else if (response.status === 400) {
+        $('#change-pass-err-msg').text(`User ${username} doesn't exist.`);
+    } else if (response.status === 401) {
+        $('#change-pass-err-msg').text('Token has incorrect or expired.');
+    } else {
+        $('#change-pass-err-msg').text('An error occurred while trying to update the password.');
+    }
+};
+
+const tryEmpPathChange = async (encryptedOldPass, encryptedNewPass) => {
+    const response = await fetch('employee/change_pass',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                oldPassword: encryptedOldPass,
+                newPassword: encryptedNewPass,
             })
         });
     if (response.ok) {
@@ -177,7 +234,7 @@ const tryEmpPath = async (token, username, encryptedPass) => {
         $('#after-reset-msg').css("color", "red");
         $('#after-reset-msg').text('An error occurred while trying to update the password.');
     }
-}
+};
 
 const removeMsg = () => {
     $('#add-emp-err-msg').text('');
@@ -213,6 +270,20 @@ const validatePasswordForSet = () => {
         $('#after-reset-password-err-msg').attr("hidden", true);
         $('#after-reset-password-err-msg').text('');
         $('#after-reset-button').prop('disabled', false);
+    }
+};
+
+const validatePasswordForChange = () => {
+    const password = $('#change-pass-new').val();
+    const confirm = $('#change-pass-confirm').val();
+    if (password !== confirm) {
+        $('#change-pass-confirm-msg').attr("hidden", false);
+        $('#change-pass-confirm-msg').text(`* Password doesn't match.`);
+        $('#change-pass-button').prop('disabled', true);
+    } else {
+        $('#change-pass-confirm-msg').attr("hidden", true);
+        $('#change-pass-confirm-msg').text('');
+        $('#change-pass-button').prop('disabled', false);
     }
 };
 

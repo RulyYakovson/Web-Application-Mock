@@ -45,6 +45,29 @@ module.exports.setEmpToken = async emp => {
         : console.log(`Error while trying to set token for user with ID: ${emp.id}`);
 };
 
+module.exports.updatePassword = async (req, res) => {
+    const username = req.session.username;
+    await employeeRepository.findOne({ username: username }, async (err, user) => {
+        if (err) {
+            console.log(`Error while trying to find user to update password for. \nUser: '${username}' \nError: ${err.message}`);
+            res.status(500).send('ERROR');
+        } else if (!user) {
+            console.log(`User: '${username}' not found`);
+            res.status(400).send('ERROR');
+        } else {
+            user.changePassword(req.body.oldPassword, req.body.newPassword, (err, user) => {
+                if (err) {
+                    console.log(`Error while trying to update password for user: '${username}'. \n${err.message}`);
+                    res.status(500).send('ERROR');
+                } else {
+                    console.log(`Password update successfully for user: \n'${user}'`);
+                    res.status(200).send('OK');
+                }
+            });
+        }
+    });
+};
+
 module.exports.setNewPassword = async (req, res) => {
     const username = req.body.username;
     await employeeRepository.findOne({ username: username }, async (err, user) => {

@@ -32,7 +32,7 @@ const generateContactHtml = () =>
                     <div class="form-group">
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="fa fa-user icon-color"></i></div>
+                                <div class="input-group-text icon-width"><i class="fa fa-user icon-color"></i></div>
                             </div>
                             <input type="text" class="form-control" placeholder="Full name" required>
                         </div>

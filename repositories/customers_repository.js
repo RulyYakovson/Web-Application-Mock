@@ -40,39 +40,28 @@ module.exports.setToken = async customer => {
         : console.log(`Error while trying to set token for user with ID: ${customer.id}`);
 };
 
-// module.exports.updatePassword = async (req, res) => {
-//     const username = req.body.username;
-//     await customerRepository.findOne({ username: username }, async (err, user) => {
-//         if (err) {
-//             console.log(`Error while trying to change password for user: '${username}'`);
-//             res.status(500).send('ERROR');
-//         } else if (!user) {
-//             console.log(`User: '${username}' not found`);
-//             res.status(400).send('ERROR');
-//         } else if (!validateToken(req.body.token, user)) {
-//             console.log(`The received token for user: '${username}' has expired`);
-//             res.status(401).send('ERROR');
-//         } else {
-//             user.changePassword('1234', req.body.password, (err, user) => {
-//                 if (err) {
-//                     console.log(`Error while trying to change password for user: '${username}'. \n${err.message}`);
-//                     res.status(500).send('ERROR');
-//                 } else {
-//                     console.log(`Password change successfully for user: \n'${user}'`);
-//                     res.status(200).send('OK');
-//                 }
-//             });
-//             // .then(() => {
-//             //     console.log(`Password change successfully for user: '${username}'`);
-//             //     res.status(200).send('OK');
-//             // })
-//             //     .catch((error) => {
-//             //         console.log(`Error while trying to change password for user: '${username}'. \n${error.message}`);
-//             //         res.status(500).send('ERROR');
-//             //     });
-//         }
-//     });
-// };
+module.exports.updatePassword = async (req, res) => {
+    const username = req.session.username;
+    await customerRepository.findOne({ username: username }, async (err, user) => {
+        if (err) {
+            console.log(`Error while trying to find user to update password for. \nUser: '${username}' \nError: ${err.message}`);
+            res.status(500).send('ERROR');
+        } else if (!user) {
+            console.log(`User: '${username}' not found`);
+            res.status(400).send('ERROR');
+        } else {
+            user.changePassword(req.body.oldPassword, req.body.newPassword, (err, user) => {
+                if (err) {
+                    console.log(`Error while trying to update password for user: '${username}'. \n${err.message}`);
+                    res.status(500).send('ERROR');
+                } else {
+                    console.log(`Password update successfully for user: \n'${user}'`);
+                    res.status(200).send('OK');
+                }
+            });
+        }
+    });
+};
 
 module.exports.setNewPassword = async (req, res) => {
     const username = req.body.username;
