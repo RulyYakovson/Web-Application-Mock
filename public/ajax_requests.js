@@ -47,6 +47,9 @@ $(document).ready(() => {
     $('#change-pass-confirm').on('input', () => {
         validatePasswordForChange();
     });
+    $('#edit-user-btn').click(() => {
+        fillUserFields();
+    });
 });
 
 $('#init-db').click(() => {
@@ -149,6 +152,7 @@ $("form#change-pass-submit").submit(async e => {
     if (response.ok) {
         jQuery.noConflict();
         $('#change-pass-modal').modal('hide');
+        alert('Your password changed successfully.')
     } else if (response.status === 401) {
         $('#change-pass-err-msg').text('Wrong password.');
     } else if (response.status === 404) {

@@ -22,13 +22,30 @@ module.exports.addCustomer = async (req, res) => {
     await customerRepository.CREATE(req, res);
 };
 
-module.exports.updateCustomer = async customer => {
+module.exports.updateCustomer = async (req, edit) => {
+    const customer = req.body;
+    const id = req.session.userId;
     let user = null;
-    const fieldsToUpdate = { phone: customer.phone, address: customer.address, gender: customer.gender };
-    user = await customerRepository.findOneAndUpdate({ id: customer.id }, fieldsToUpdate, { new: true });
+    const fieldsToUpdate = !edit ? { phone: customer.phone, address: customer.address, gender: customer.gender }
+        : {
+            id: customer.id,
+            username: customer.username,
+            firstName: customer.firstName,
+            lastName: customer.lastName,
+            phone: customer.phone,
+            gender: customer.gender,
+            address: customer.email
+        };
+    user = await customerRepository.findOneAndUpdate({ id: id }, fieldsToUpdate, { new: true });
 
-    !!user ? console.log(`User: ${user} \nsuccessfully updeted !!`)
-        : console.log(`Error while trying to update user with ID: ${customer.id}`);
+    if (user) {
+        console.log(`User: ${user} \nsuccessfully updeted !!`);
+        updateSession(user, req.session);
+    } else {
+        const err = `Error while trying to update user with ID: ${customer.id}`;
+        console.log(err);
+        throw new EditException(err);
+    }
 };
 
 module.exports.setToken = async customer => {
@@ -107,3 +124,22 @@ const setPassword = (password, userToSet, username, res) => {
         }
     });
 };
+ const updateSession = (user, session) => {
+    session.userId = user.id;
+    session.username = user.username;
+    session.firstName = user.firstName;
+    session.lastName = user.lastName;
+    session.gender = user.gender;
+    session.phone = user.phone;
+    session.role = user.role;
+    if (user.role === 'customer') {
+        session.email = user.address;
+    }
+ };
+
+class EditException {
+    constructor(message) {
+        this.message = message;
+        this.name = 'EditException';
+    }
+}

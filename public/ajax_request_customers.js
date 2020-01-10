@@ -67,6 +67,68 @@ $("form#add-customer-form-data").submit(async e => {
     $(".cover").hide();
 });
 
+$("form#edit-account-form-data").submit( async e => {
+    $(".cover").show();
+    e.preventDefault();
+    const username = $('#edit-user-username').val();
+    const firstName = $('#edit-user-first-name').val();
+    const lastName = $('#edit-user-last-name').val();
+    const id = $('#edit-user-id').val();
+    const phone = $('#edit-user-phone').val();
+    const email = $('#edit-user-email').val();
+    const gender = $('#edit-user-gender').val();
+    const response = await fetch('customer/edit',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                firstName: firstName,
+                lastName: lastName,
+                id: id,
+                phone: phone,
+                email: email,
+                gender: gender
+            })
+        });
+    if (response.ok) {
+        jQuery.noConflict();
+        $('#edit-user-modal').modal('hide');
+        alert('Profile updated successfully.')
+    } else if (response.status === 400) {
+        $('#edit-user-err-msg').text('A user with the given username or ID is already exist');
+    } else {
+        $('#edit-user-err-msg').text('An error occurred while trying to edit profile.');
+    }
+    $(".cover").hide();
+});
+
+const fillUserFields = () => {
+    $.ajax({
+        url: 'customer/user',
+        type: 'GET',
+        contentType: 'application/json',
+        success: (data, status) => {
+            console.log('Status: ' + status);
+            if (status == 'success') {
+                const { id, username, firstName, lastName, phone, gender, email } = data;
+                $('#edit-user-first-name').val(firstName);
+                $('#edit-user-last-name').val(lastName);
+                $('#edit-user-phone').val(phone);
+                $('#edit-user-email').val(email);
+                $('#edit-user-username').val(username);
+                $('#edit-user-id').val(id);
+                $(`#edit-user-gender option[value=${gender}]`).attr('selected', 'selected');
+            }
+        },
+        error: () => {
+            $('#edit-user-err-msg').text('An error occurred while trying to get details');
+        }
+    });
+};
+
 const update_customer = async id => {
     const phone = $('#update-customer-phone' + id).val();
     const address = $('#update-customer-address' + id).val();
@@ -117,12 +179,7 @@ const removeCustomer = id => {
 };
 
 const selectCurrentGender = (id, gender) => {
-    if (gender === 'Male') {
-        $('#update-customer-gender' + id + ' option[value=Male]').attr('selected', 'selected');
-    }
-    else if (gender === 'Female') {
-        $('#update-customer-gender' + id + ' option[value=Female]').attr('selected', 'selected');
-    }
+    $(`#update-customer-gender${id}option[value=${gender}]`).attr('selected', 'selected');
 };
 
 const generateCustomersHtml = (data) => {

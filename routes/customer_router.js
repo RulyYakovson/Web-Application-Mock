@@ -86,6 +86,21 @@ router.post('/change_pass', auth.authUser, async (req, res) => {
     }
 });
 
+router.post('/edit', auth.authUser, async (req, res) => {
+    try {
+        console.log('Received edit profile request');
+        await repository.updateCustomer(req, true);
+        res.status(200).send('OK');
+    } catch (err) {
+        console.error(err.message);
+        if (err.message.includes('duplicate key error')) {
+            res.status(400).send('ERROR');
+        } else {
+            res.status(500).send('ERROR');
+        }
+    }
+});
+
 router.get('/user', auth.authUser, async (req, res) => {
     console.log('Received get user details request');
     const data = {
