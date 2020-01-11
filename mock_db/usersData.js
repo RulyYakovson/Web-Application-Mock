@@ -2,25 +2,37 @@ module.exports = usersData =
     [
         // Admins
         {
-            "username": "Israel israeli",
+            "firstName": "Israel",
+            "lastName": "Israeli",
+            "username": "israel",
             "id": "508068457",
             "branch": 100,
+            "phone": "0528888888",
             "password": "123456",
+            "email": "sariruli@gmail.com",
             "role": "Admin",
             "gender": "Male"
         },
         {
-            "username": "Shy shmuly",
+            "firstName": "Shy",
+            "lastName": "Shmuly",
+            "username": "shy",
             "id": "362498524",
+            "phone": "0528888888",
             "branch": 101,
+            "email": "stam1@mail.com",
             "password": "123456",
             "role": "Admin",
             "gender": "Male"
         },
         {
-            "username": "Guy gby",
+            "firstName": "Guy",
+            "lastName": "gby",
+            "username": "guy",
+            "phone": "0528888888",
             "id": "967458524",
             "branch": 102,
+            "email": "stam2@mail.com",
             "password": "123456",
             "role": "Admin",
             "gender": "Male"
@@ -28,49 +40,73 @@ module.exports = usersData =
        
         // Employees
         {
-            "username": "Roy ariel",
+            "firstName": "Roy",
+            "lastName": "ariel",
+            "username": "roy",
             "id": "963521458",
+            "phone": "0528888888",
             "branch": 100,
+            "email": "stam3@mail.com",
             "password": "123456",
             "role": "Employee",
             "gender": "Male"
         },
         {
-            "username": "Yochy ochi",
+            "firstName": "Yochy",
+            "lastName": "Ochi",
+            "username": "yochy",
             "id": "632784569",
             "branch": 100,
+            "email": "stam4@mail.com",
+            "phone": "0528888888",
             "password": "123456",
             "role": "Employee",
             "gender": "Male"
         },
         {
-            "username": "Dan zilber",
+            "firstName": "Dan",
+            "lastName": "Zilber",
+            "username": "dan",
             "id": "589125473",
+            "phone": "0528888888",
             "branch": 101,
+            "email": "ruliweiss@gmail.com",
             "password": "123456",
             "role": "Employee",
             "gender": "Male"
         },
         {
-            "username": "Sari ariel",
+            "firstName": "Sara",
+            "lastName": "Ariel",
+            "username": "sara",
             "id": "583124569",
+            "phone": "0528888888",
             "branch": 101,
+            "email": "stam5@mail.com",
             "password": "123456",
             "role": "Employee",
             "gender": "Female"
         },
         {
-            "username": "Rachi riche",
+            "firstName": "Rachi",
+            "lastName": "Riche",
+            "username": "rachi",
             "id": "25968741",
+            "phone": "0528888888",
             "branch": 102,
+            "email": "stam6@mail.com",
             "password": "123456",
             "role": "Employee",
             "gender": "Female"
         },
         {
-            "username": "Riki levi",
+            "firstName": "Riki",
+            "lastName": "Levi",
+            "username": "riki",
             "id": "967325648",
+            "phone": "0528888888",
             "branch": 102,
+            "email": "stam7@mail.com",
             "password": "123456",
             "role": "Admin",
             "gender": "Female"
@@ -78,57 +114,69 @@ module.exports = usersData =
 
         // Customers
         {
-            "username": "Ari cohen",
+            "firstName": "Meir",
+            "lastName": "cohen",
+            "username": "meir",
             "id": "98653214",
             "password": "123456",
             "role": "customer",
             "phone": "0528888888",
-            "address": "mail@dom.co",
+            "address": "sariruli@gmail.com",
             "gender": "Male"
         },
         {
-            "username": "Hana levi",
+            "firstName": "Hana",
+            "lastName": "Levi",
+            "username": "hana",
             "id": "63528741",
             "password": "123456",
             "role": "customer",
             "phone": "0524856582",
-            "address": "mail@dom.co",
+            "address": "ruliweiss@gmail.com‏",
             "gender": "Female"
         },
         {
-            "username": "Ari levi",
+            "firstName": "Ari",
+            "lastName": "Levi",
+            "username": "ari",
             "id": "98653564",
             "password": "123456",
             "role": "customer",
             "phone": "0528888888",
-            "address": "mail@dom.co",
+            "address": "stam1@mail.com",
             "gender": "Male"
         },
         {
-            "username": "Hana shlomovich",
+            "firstName": "Shani",
+            "lastName": "Shlomovich",
+            "username": "shani",
             "id": "635287777",
             "password": "123456",
             "role": "customer",
             "phone": "0524856582",
-            "address": "mail@dom.co",
+            "address": "stam2@mail.com",
             "gender": "Female"
         },
         {
-            "username": "Moshe rabinu",
+            "firstName": "Moshe",
+            "lastName": "Rabinu",
+            "username": "moshe",
             "id": "1151515",
             "password": "123456",
             "role": "customer",
             "phone": "2566885684",
-            "address": "mail@dom.co",
+            "address": "stam3@mail.com",
             "gender": "Male"
         },
         {
-            "username": "Dvora haneviah",
+            "firstName": "Dvora",
+            "lastName": "Haneviah",
+            "username": "dvora",
             "id": "63528555",
             "password": "123456",
             "role": "customer",
             "phone": "0524856582",
-            "address": "mail@dom.co",
+            "address": "stam4@mail.com",
             "gender": "Female"
         }
     ]

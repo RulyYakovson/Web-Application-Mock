@@ -1,4 +1,4 @@
-let brancheRepository = require('../model')('Branch');
+const brancheRepository = require('../model')('Branch');
 
 module.exports.getAllBranches = async () => {
     let success = false;

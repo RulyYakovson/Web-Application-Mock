@@ -1,8 +1,8 @@
-let express = require('express');
-let router = express.Router();
-let repository = require('../repositories/branches_repository');
-let auth = require('./auth_user');
-let timeout = 1000;
+const express = require('express');
+const router = express.Router();
+const repository = require('../repositories/branches_repository');
+const auth = require('./auth_user');
+const timeout = 1000;
 
 router.get('/all', auth.authUser, async (req, res) => {
     console.log('Received get branches request');

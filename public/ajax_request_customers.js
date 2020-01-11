@@ -29,6 +29,8 @@ $("form#add-customer-form-data").submit(async e => {
     $(".cover").show();
     e.preventDefault();
     const username = $('#add-customer-username').val();
+    const firstName = $('#add-customer-first-name').val();
+    const lastName = $('#add-customer-last-name').val();
     const password = $('#add-customer-password').val();
     const id = $('#add-customer-id').val();
     const phone = $('#add-customer-phone').val();
@@ -43,6 +45,8 @@ $("form#add-customer-form-data").submit(async e => {
             },
             body: JSON.stringify({
                 username: username,
+                firstName: firstName,
+                lastName: lastName,
                 password: encryptedPass,
                 id: id,
                 role: 'customer',
@@ -62,6 +66,68 @@ $("form#add-customer-form-data").submit(async e => {
     }
     $(".cover").hide();
 });
+
+$("form#edit-account-form-data").submit( async e => {
+    $(".cover").show();
+    e.preventDefault();
+    const username = $('#edit-user-username').val();
+    const firstName = $('#edit-user-first-name').val();
+    const lastName = $('#edit-user-last-name').val();
+    const id = $('#edit-user-id').val();
+    const phone = $('#edit-user-phone').val();
+    const email = $('#edit-user-email').val();
+    const gender = $('#edit-user-gender').val();
+    const response = await fetch('edit',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                firstName: firstName,
+                lastName: lastName,
+                id: id,
+                phone: phone,
+                email: email,
+                gender: gender
+            })
+        });
+    if (response.ok) {
+        jQuery.noConflict();
+        $('#edit-user-modal').modal('hide');
+        alert('Profile updated successfully.')
+    } else if (response.status === 400) {
+        $('#edit-user-err-msg').text('A user with the given username or ID is already exist');
+    } else {
+        $('#edit-user-err-msg').text('An error occurred while trying to edit profile.');
+    }
+    $(".cover").hide();
+});
+
+const fillUserFields = () => {
+    $.ajax({
+        url: 'user',
+        type: 'GET',
+        contentType: 'application/json',
+        success: (data, status) => {
+            console.log('Status: ' + status);
+            if (status == 'success') {
+                const { id, username, firstName, lastName, phone, gender, email } = data;
+                $('#edit-user-first-name').val(firstName);
+                $('#edit-user-last-name').val(lastName);
+                $('#edit-user-phone').val(phone);
+                $('#edit-user-email').val(email);
+                $('#edit-user-username').val(username);
+                $('#edit-user-id').val(id);
+                $(`#edit-user-gender option[value=${gender}]`).attr('selected', 'selected');
+            }
+        },
+        error: () => {
+            $('#edit-user-err-msg').text('An error occurred while trying to get details');
+        }
+    });
+};
 
 const update_customer = async id => {
     const phone = $('#update-customer-phone' + id).val();
@@ -113,12 +179,7 @@ const removeCustomer = id => {
 };
 
 const selectCurrentGender = (id, gender) => {
-    if (gender === 'Male') {
-        $('#update-customer-gender' + id + ' option[value=Male]').attr('selected', 'selected');
-    }
-    else if (gender === 'Female') {
-        $('#update-customer-gender' + id + ' option[value=Female]').attr('selected', 'selected');
-    }
+    $(`#update-customer-gender${id} option[value=${gender}]`).attr('selected', 'selected');
 };
 
 const generateCustomersHtml = (data) => {
@@ -141,11 +202,11 @@ const generateCustomersHtml = (data) => {
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">				
-                                                    <h4 class="modal-title">${'Update details for ' + customers[i].username}</h4>
+                                                    <h4 class="modal-title w-100 text-center">${'Update details for ' + customers[i].username}</h4>
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form id="update-customer-form-data" onsubmit="update_customer(${customers[i].id})">
+                                                    <form onsubmit="update_customer(${customers[i].id})">
                                                         <div class="form-group">
                                                             <h5 class="modal-dialog">${'ID: ' + customers[i].id}</h5>
                                                         </div>
@@ -178,13 +239,13 @@ const generateCustomersHtml = (data) => {
             html += `<img class="card-img-top" src="/images/template.jpg" alt="Card image" style="width:100%">`;
         }
         html += `<div class="card-body">
-                                            <h5 class="card-title">${customers[i].username}</h5>`;
+                                            <h5 class="card-title">${customers[i].firstName + ' ' + customers[i].lastName}</h5>`;
         if (userRole === 'Admin') {
-            html += `<h6 class="card-subtitle mb-2 text-muted">${'Password: ' + customers[i].password}</h6>`;
+            html += `<h6 class="card-subtitle mb-2 text-muted">${'Username:  ' + customers[i].username}</h6>`;
         }
         html += `<p class="card-text">${'ID: ' + customers[i].id}</p>
                                             <p class="card-subtitle">${'Phone: ' + customers[i].phone}</p>
-                                            <p class="card-text">${'Address: ' + customers[i].address}</p>`;
+                                            <p class="card-text">${'Email: ' + customers[i].address}</p>`;
         if (userRole === 'Admin') {
             html += `<div style="text-align: center;">
                                                     <a id="remove-customer" href="#" class="card-link" style="color: red"

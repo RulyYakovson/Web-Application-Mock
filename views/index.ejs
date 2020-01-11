@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <% include partials/head %> 
-    </head>
-    <header>
-        <% include partials/header %> 
-    </header>
-    <body>
-        <div class="cover">
-            <div class="sk-folding-cube">
-                <div class="sk-cube1 sk-cube"></div>
-                <div class="sk-cube2 sk-cube"></div>
-                <div class="sk-cube4 sk-cube"></div>
-                <div class="sk-cube3 sk-cube"></div>
-            </div>
-        </div>
-        <main>
-            <% include partials/modals/login_modal %> 
-            <% include partials/modals/add_emp_modal %> 
-            <% include partials/modals/add_customer_modal %> 
-            <% include partials/modals/add_flower_modal %> 
-            <div id='main-body' style="min-height: 420px">
 
-            </div>
-        </main>
-        <footer>
-            <% include partials/footer %>
-        </footer>
-    </body>
-    <% include partials/scripts %>
+<head>
+    <% include partials/head %>
+</head>
+<header>
+    <% include partials/header %>
+</header>
+
+<body>
+    <div class="cover">
+        <div class="sk-folding-cube">
+            <div class="sk-cube1 sk-cube"></div>
+            <div class="sk-cube2 sk-cube"></div>
+            <div class="sk-cube4 sk-cube"></div>
+            <div class="sk-cube3 sk-cube"></div>
+        </div>
+    </div>
+    <main>
+        <% include partials/modals/login_modal %>
+        <% include partials/modals/add_emp_modal %>
+        <% include partials/modals/add_customer_modal %>
+        <% include partials/modals/add_flower_modal %>
+        <% include partials/modals/reset_pass_modal %>
+        <% include partials/modals/after_reset_modal %>
+        <% include partials/modals/change_pass_modal %>
+        <% include partials/modals/edit_user_modal %>
+        <div id='main-body' style="min-height: 420px">
+
+        </div>
+    </main>
+    <footer>
+        <% include partials/footer %>
+    </footer>
+</body>
+<% include partials/scripts %>
+
 </html>

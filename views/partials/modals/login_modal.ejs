@@ -1,33 +1,42 @@
 <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">				
-                <h4 class="modal-title">Login</h4>
+            <div class="modal-header">
+                <h4 class="modal-title w-100 text-center">Log in</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
-                <form id="login-form-data">
-                    <div class="form-group">
-                        <div class="input-group mb-2">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="fa fa-user login-icon-color"></i></div>
+                <div class="text-center">
+                    <form id="login-form-data">
+                        <div class="form-group">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text icon-width"><i class="fa fa-user icon-color"></i></div>
+                                </div>
+                                <input id="login-username" type="text" class="form-control" placeholder="Username"
+                                    required="required">
                             </div>
-                            <input id="login-username" type="text" class="form-control" placeholder="Username" required="required">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group mb-2">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="fa fa-lock login-icon-color"></i></div>
+                        <div class="form-group">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text icon-width"><i class="fa fa-lock icon-color"></i></div>
+                                </div>
+                                <input id="login-password" type="password" class="form-control" placeholder="Password"
+                                    required="required">
                             </div>
-                            <input id="login-password" type="password" class="form-control" placeholder="Password" required="required">					
                         </div>
+                        <div class="form-group">
+                            <input type="submit" id="login-button" value="Login"
+                                class="btn btn-primary btn-block btn-lg">
+                        </div>
+                    </form>
+                    <div class="container">
+                        <a class="forgot-button" href="#" data-target="#reset-pass-modal" data-toggle="modal"
+                            data-dismiss="modal">Forgot your password?</a>
                     </div>
-                    <div class="form-group">
-                        <input type="submit" id="login-button" value="Login" class="btn btn-primary btn-block btn-lg">
-                    </div>
-                </form>    
-                <p id="login-err-msg" style="color: red"></p>
+                    <p id="login-err-msg" style="color: red"></p>
+                </div>
             </div>
         </div>
     </div>

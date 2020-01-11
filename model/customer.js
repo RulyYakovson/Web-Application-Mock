@@ -1,18 +1,22 @@
 const debug = require("debug")("mongo:model-customer");
 const passportLocalMongoose = require('passport-local-mongoose');
 const mongoose = require("mongoose");
-let Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 module.exports = function (db) {
-    let customerSchema = Schema(
+    const customerSchema = Schema(
         {
             id: { type: String, required: true, unique: true },
             username: { type: String, required: true, unique: true },
+            firstName: String,
+            lastName: String,
             password: { type: String, maxlength: [8, 'Too long password'], minlength: [3, 'Too short password'] },
-            phone: { type: String, maxlength: [10, 'Invalid phone number'], minlength: [9, 'Invalid phone number'] },
+            phone: { type: String, maxlength: [13, 'Invalid phone number'], minlength: [9, 'Invalid phone number'] },
             gender: { type: String, enum: ['Male', 'Female', 'Gender'] },
             role: { type: String, enum: ['Employee', 'Admin', 'customer'] },
-            address: String,
+            address: { type: String, required: true, unique: true },
+            token: String,
+            expiresOn: String,
             lastUpdate: Date,
             created: Date
         },
@@ -25,6 +29,8 @@ module.exports = function (db) {
         const newCustomerDetails = req.body;
         const newCustomer = new this({
             username: newCustomerDetails.username,
+            firstName: newCustomerDetails.firstName,
+            lastName: newCustomerDetails.lastName,
             id: newCustomerDetails.id,
             role: newCustomerDetails.role,
             address: newCustomerDetails.address,
@@ -48,7 +54,7 @@ module.exports = function (db) {
     };
 
     customerSchema.pre('save', function (next) {
-        let date = new Date();
+        const date = new Date();
         this.lastUpdate = date;
         if (!this.created) {
             this.created = date;

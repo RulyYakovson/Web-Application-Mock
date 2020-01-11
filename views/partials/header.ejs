@@ -13,66 +13,82 @@
             <li class="nav-item" id="contact"><a href="#contact" class="nav-link">Contact Us</a></li>
 
             <% if (userRole) { %>
-                <li class="nav-item" id="branches"><a href="#branches" class="nav-link">Branches</a></li>
-                <% if (userRole === 'Admin') { %>
-                    <li class="nav-item dropdown" id="flowers-menu">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false" >
-                            Flowers
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a id="flowers" class="dropdown-item" href="#flowers">All</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-flower-modal">Add</a>
-                        </div>
-                    </li>
-                <% } else { %>    
-                    <li class="nav-item" id="flowers"><a href="#flowers" class="nav-link">Flowers</a></li>
-                <% } %>
+            <li class="nav-item" id="branches"><a href="#branches" class="nav-link">Branches</a></li>
+            <% if (userRole === 'Admin') { %>
+            <li class="nav-item dropdown" id="flowers-menu">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Flowers
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a id="flowers" class="dropdown-item" href="#flowers">All</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-flower-modal">Add</a>
+                </div>
+            </li>
+            <% } else { %>
+            <li class="nav-item" id="flowers"><a href="#flowers" class="nav-link">Flowers</a></li>
             <% } %>
-            
+            <% } %>
+
             <% if (userRole && (userRole === 'Admin' || userRole === 'Employee')) { %>
-                <li class="nav-item dropdown" id="customers-menu">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" >
-                        Customers
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a id="customers" class="dropdown-item" href="#customers">All</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-customer-modal">Add</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown" id="employees-menu">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        Employees
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a id="employees" class="dropdown-item" href="#employees">All</a>
-                        <% if (userRole && userRole === 'Admin') { %>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-emp-modal">Add</a>
-                        <% } %>
-                    </div>
-                </li>
+            <li class="nav-item dropdown" id="customers-menu">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Customers
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a id="customers" class="dropdown-item" href="#customers">All</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-customer-modal">Add</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" id="employees-menu">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Employees
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a id="employees" class="dropdown-item" href="#employees">All</a>
+                    <% if (userRole && userRole === 'Admin') { %>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-emp-modal">Add</a>
+                    <% } %>
+                </div>
+            </li>
             <% } %>
-        </ul>
-    </div>
-    <div class="collapse navbar-collapse justify-content-center">
-        <ul class="navbar-nav mr-2 my-2 my-lg-0">
-            <li class="nav-item" id="init-db"><a href="#" class="nav-link">Init DB (for dev use)</a></li>
         </ul>
     </div>
     <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav mr-2 my-2 my-lg-0">
             <% if (!userRole) { %>
-                <li class="nav-item" id="sign-in"><a href="#" class="nav-link" data-toggle="modal" data-target="#login-modal">
-                <i class="fa fa-sign-in"></i> LogIn</a>
+            <li class="nav-item" id="sign-in" style="margin-right: 1.0rem;"><a href="#" class="nav-link"
+                    data-toggle="modal" data-target="#login-modal">
+                    <i class="fa fa-sign-in"></i> Log in</a>
+            </li>
+            <li class="nav-item" id="sign-up"><a href="#" class="nav-link sign-up" data-toggle="modal"
+                    data-target="#add-customer-modal">
+                    <i class="fas fa-user-plus"></i> Sign up</a>
             </li>
             <% } else { %>
-                <li class="nav-item" id="logout"><a href="#" class="nav-link" onclick="location = '/logout'">
-                <i class="fa fa-sign-out"></i> LogOut</a>
+            <li class="nav-item dropdown" id="profile-menu">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user-circle-o" style="font-size: x-large; font-weight: 700"></i>
+                    &nbsp;Profile
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="margin-left: -50px;">
+                    <a id="change-password-btn" class="dropdown-item text-muted" href="#" data-toggle="modal"
+                        data-target="#change-pass-modal">
+                    <i class="fa fa-lock profile-dropdown"></i> Change password</a>
+                    <div class="dropdown-divider"></div>
+                    <a id="edit-user-btn" class="dropdown-item text-muted" href="#" data-toggle="modal" data-target="#edit-user-modal"><i
+                            class="fa fa-edit profile-dropdown"></i>Edit profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item text-muted" onclick="location = '/logout'">
+                        <i class="fa fa-sign-out profile-dropdown"></i>Sign out</a>
+                </div>
+            </li>
             <% } %>
         </ul>
     </div>

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const repository = require('../repositories/customers_repository');
 const auth = require('./auth_user');
-const rsa = require('../encryption/node-rsa');
+const { decrypt } = require('../encryption/node-rsa');
 const timeout = 1000;
 
 router.get('/all', auth.authEmployee, async (req, res) => {
@@ -45,12 +45,12 @@ router.delete('/remove/:id', auth.authEmployee, async (req, res) => {
     res.json(data);
 });
 
-router.post('/add', auth.authEmployee, async (req, res) => {
+router.post('/add', async (req, res) => {
     try {
-        req.body.password = rsa.decrypt(req.body.password);
+        req.body.password = decrypt(req.body.password);
         await repository.addCustomer(req, res);
     } catch (err) {
-        console.log(err.message)
+        console.error(err.message);
         res.status(500).send('ERROR');
     }
 });
@@ -60,7 +60,28 @@ router.post('/update', auth.authEmployee, async (req, res) => {
         await repository.updateCustomer(req.body);
         res.status(200).send('OK');
     } catch (err) {
-        console.log(err.message)
+        console.error(err.message);
+        res.status(500).send('ERROR');
+    }
+});
+
+router.post('/new_pass', async (req, res) => {
+    try {
+        req.body.password = decrypt(req.body.password);
+        await repository.setNewPassword(req, res);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('ERROR');
+    }
+});
+
+router.post('/change_pass', auth.authUser, async (req, res) => {
+    try {
+        req.body.oldPassword = decrypt(req.body.oldPassword);
+        req.body.newPassword = decrypt(req.body.newPassword);
+        await repository.updatePassword(req, res);
+    } catch (err) {
+        console.error(err.message);
         res.status(500).send('ERROR');
     }
 });

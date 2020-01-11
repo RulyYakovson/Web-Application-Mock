@@ -1,18 +1,24 @@
 const debug = require("debug")("mongo:model-employee");
 const passportLocalMongoose = require('passport-local-mongoose');
 const mongoose = require("mongoose");
-let Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 
 module.exports = function (db) {
-    let employeeSchema = Schema(
+    const employeeSchema = Schema(
         {
             id: { type: String, required: true, unique: true },
             username: { type: String, required: true, unique: true },
+            firstName: String,
+            lastName: String,
             password: { type: String, maxlength: [8, 'Too long password'], minlength: [4, 'Too short password'] },
             gender: { type: String, enum: ['Male', 'Female', 'Gender'] },
             role: { type: String, enum: ['Employee', 'Admin', 'customer', 'Role'] },
+            email: { type: String, required: true, unique: true },
+            phone: { type: String, maxlength: [13, 'Invalid phone number'], minlength: [9, 'Invalid phone number'] },
             branch: Number,
+            token: String,
+            expiresOn: String,
             lastUpdate: Date,
             created: Date
         },
@@ -25,9 +31,11 @@ module.exports = function (db) {
         const newEmpDetails = req.body;
         const newEmp = new this({
             username: newEmpDetails.username,
+            firstName: newEmpDetails.firstName,
+            lastName: newEmpDetails.lastName,
             id: newEmpDetails.id,
             role: newEmpDetails.role,
-            address: newEmpDetails.address,
+            email: newEmpDetails.email,
             branch: newEmpDetails.branch,
             gender: newEmpDetails.gender,
         });
@@ -48,7 +56,7 @@ module.exports = function (db) {
     };
 
     employeeSchema.pre('save', function (next) {
-        let date = new Date();
+        const date = new Date();
         this.lastUpdate = date;
         if (!this.created) {
             this.created = date;

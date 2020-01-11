@@ -90,7 +90,7 @@ router.post('/add', uploadImgHandler, async (req, res) => {
             fs.unlinkSync(imageTempPath);
         }
     } catch (err) { // TODO: send the error message and show it to the user...
-        console.log(err.message)
+        console.error(err.message);
         res.status(500).send(err.message);
     }
 });

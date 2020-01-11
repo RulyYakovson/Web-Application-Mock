@@ -1,4 +1,4 @@
-let flowerRepository = require('../model')('Flower');
+const flowerRepository = require('../model')('Flower');
 
 module.exports.getAllFlowers = async () => {
     let success = false;
@@ -6,7 +6,7 @@ module.exports.getAllFlowers = async () => {
     await flowerRepository.find({}, (err, flowers) => {
         if (!err) {
             success = true;
-            result = flowers.map( flower => {
+            result = flowers.map(flower => {
                 return {
                     id: flower._id,
                     name: flower.name,
@@ -21,12 +21,12 @@ module.exports.getAllFlowers = async () => {
 };
 
 module.exports.addFlower = async flower => {
-    let createdFlower = await flowerRepository.CREATE(flower);
+    const createdFlower = await flowerRepository.CREATE(flower);
     console.log(`A new flower created: ${createdFlower}`);
 };
 
 module.exports.removeFlower = async name => {
-    let flower = await flowerRepository.findOneAndDelete({ name: name });
+    const flower = await flowerRepository.findOneAndDelete({ name: name });
     !!flower ? console.log(`Flower: ${flower} \nsuccessfully deleted !!`)
-    : console.log(`ERROR: Flower: ${name} not found !!`);
+        : console.log(`ERROR: Flower: ${name} not found !!`);
 };

@@ -4,6 +4,26 @@
     padding: 4rem 6rem;
 }
 
+.forgot-button:hover {
+    color: #bd3200;
+    text-decoration: underline;
+}
+.forgot-button {
+    color: red;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.profile-dropdown {
+    font-size: larger;
+    margin-right: .5rem;
+    color: #007bff!important;
+}
+
+.icon-width {
+    width: 42px;
+}
+
 .user-td-style {
     min-width: 251.2px;
     min-height: 470.54px;
@@ -40,8 +60,12 @@
     box-shadow: 0 7px 14px 0 rgba(0, 0, 0, 0.6);
 }
 
-.login-icon-color {
+.icon-color {
     color: #007bff!important;
+}
+
+.contact-header {
+    background-color: #007bff !important;
 }
 
 .ligth-blue {
@@ -70,6 +94,23 @@
 
 .red {
     background: red;
+}
+
+.sign-up {
+    outline: double;
+    outline-offset: -4px;
+}
+
+.inner-error-msg {
+    display: block;
+    font-size: .8em;
+    text-align: left;
+    color: #bd3200;
+    margin-bottom: -.6rem;
+}
+
+.container {
+    text-align: center;
 }
 
 .files input {
