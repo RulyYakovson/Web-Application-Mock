@@ -8,10 +8,10 @@ git clone https://github.com/RulyYakovson/Web-Application-Mock.git
 
 cd Web-Application-Mock
 npm install
-npm run init-db  #(To insert some mock data)
+npm run init-db  #(To insert some mock data. require mongoDB to be installed on your PC)
 npm start
 ```
-Then, go to localhost:8080 from browser and push Init DB button (require mongoDB to be installed on your PC).\
+Then, go to localhost:8080 from browser.\
 Login by insert:\
 &nbsp;&nbsp;israel, password: 123456 to get an "admin" permissions.\
 &nbsp;&nbsp;roy , password: 123456 to get an "employee" permissions.\
