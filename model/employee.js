@@ -15,6 +15,7 @@ module.exports = function (db) {
             gender: { type: String, enum: ['Male', 'Female', 'Gender'] },
             role: { type: String, enum: ['Employee', 'Admin', 'customer', 'Role'] },
             email: { type: String, required: true, unique: true },
+            phone: { type: String, maxlength: [13, 'Invalid phone number'], minlength: [9, 'Invalid phone number'] },
             branch: Number,
             token: String,
             expiresOn: String,

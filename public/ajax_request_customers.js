@@ -77,7 +77,7 @@ $("form#edit-account-form-data").submit( async e => {
     const phone = $('#edit-user-phone').val();
     const email = $('#edit-user-email').val();
     const gender = $('#edit-user-gender').val();
-    const response = await fetch('customer/edit',
+    const response = await fetch('edit',
         {
             method: 'POST',
             headers: {
@@ -107,7 +107,7 @@ $("form#edit-account-form-data").submit( async e => {
 
 const fillUserFields = () => {
     $.ajax({
-        url: 'customer/user',
+        url: 'user',
         type: 'GET',
         contentType: 'application/json',
         success: (data, status) => {
@@ -179,7 +179,7 @@ const removeCustomer = id => {
 };
 
 const selectCurrentGender = (id, gender) => {
-    $(`#update-customer-gender${id}option[value=${gender}]`).attr('selected', 'selected');
+    $(`#update-customer-gender${id} option[value=${gender}]`).attr('selected', 'selected');
 };
 
 const generateCustomersHtml = (data) => {
@@ -206,7 +206,7 @@ const generateCustomersHtml = (data) => {
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form id="update-customer-form-data" onsubmit="update_customer(${customers[i].id})">
+                                                    <form onsubmit="update_customer(${customers[i].id})">
                                                         <div class="form-group">
                                                             <h5 class="modal-dialog">${'ID: ' + customers[i].id}</h5>
                                                         </div>

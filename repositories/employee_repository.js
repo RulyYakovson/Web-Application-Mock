@@ -1,4 +1,6 @@
 const employeeRepository = require('../model')('Employee');
+const EditException = require('../exceptions/exceptions');
+const { updateSession } = require('../utils/helper');
 
 module.exports.getAllEmployees = async () => {
     let success = false;
@@ -23,7 +25,7 @@ module.exports.addEmployee = async (req, res) => {
     await employeeRepository.CREATE(req, res);
 };
 
-module.exports.updateEmployee = async (employee) => {
+module.exports.updateEmployee = async employee => {
     let user = null;
     const fieldsToUpdate = {
         role: employee.role,
@@ -34,6 +36,31 @@ module.exports.updateEmployee = async (employee) => {
 
     !!user ? console.log(`Employee: ${user} \nsuccessfully updeted !!`)
         : console.log(`Error while trying to update employee with ID: ${employee.id}`);
+};
+
+module.exports.editEmployee = async req => {
+    const employee = req.body;
+    const id = req.session.userId;
+    let user = null;
+    const fieldsToUpdate = {
+        id: employee.id,
+        username: employee.username,
+        firstName: employee.firstName,
+        lastName: employee.lastName,
+        phone: employee.phone,
+        gender: employee.gender,
+        email: employee.email
+    };
+    user = await employeeRepository.findOneAndUpdate({ id: id }, fieldsToUpdate, { new: true });
+
+    if (user) {
+        console.log(`Employee: ${user} \nsuccessfully updeted !!`);
+        updateSession(user, req.session);
+    } else {
+        const err = `Error while trying to update employee with ID: ${employee.id}`;
+        console.log(err);
+        throw new EditException(err);
+    }
 };
 
 module.exports.setEmpToken = async emp => {

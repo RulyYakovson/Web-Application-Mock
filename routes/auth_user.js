@@ -12,13 +12,12 @@ module.exports.authEmployee = (req, res, next) => {
 };
 
 module.exports.authUser = (req, res, next) => {
-    console.log('CUS ' + req.session.username);
     if (isSessionExist(req)) {
-        console.log(`Authentication for customer: '${req.session.username}' finish successfully`);
+        console.log(`Authentication for user: '${req.session.username}' finish successfully`);
         req.userRole = req.session.role;
         next();
     } else {
-        console.log('Faild to authenticate customer !!!');
+        console.log('Faild to authenticate user !!!');
         res.status(401);
         res.json({ status: 401 });
     }

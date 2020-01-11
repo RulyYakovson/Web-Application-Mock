@@ -2,9 +2,10 @@ const express = require('express');
 const passport = require('passport');
 const nodemailer = require('nodemailer');
 const router = express.Router();
+const { authUser } = require('./auth_user');
 const { initDB, getUserByEmail} = require('../repositories/repository_helper');
-const { setEmpToken } = require('../repositories/employee_repository');
-const { setToken } = require('../repositories/customers_repository');
+const { setEmpToken, editEmployee } = require('../repositories/employee_repository');
+const { setToken, editCustomer } = require('../repositories/customers_repository');
 const expires = 10 * 60 * 1000; // min * sec * millis
 const timeout = 1000;
 
@@ -47,6 +48,39 @@ router.get('/logout', async (req, res) => {
         console.log(`User ${user} logged out`);
         res.redirect('/');
     });
+});
+
+router.get('/user', authUser, async (req, res) => {
+    console.log('Received get user details request');
+    const data = {
+        id: req.session.userId,
+        username: req.session.username,
+        firstName: req.session.firstName,
+        lastName: req.session.lastName,
+        phone: req.session.phone,
+        gender: req.session.gender,
+        email: req.session.email
+    }
+    res.status(200).json(data);;
+});
+
+router.post('/edit', authUser, async (req, res) => {
+    try {
+        console.log('Received edit profile request');
+        if (req.session.role === 'customer') {
+            await editCustomer(req);
+        } else {
+            await editEmployee(req);
+        }
+        res.status(200).send('OK');
+    } catch (err) {
+        console.error(err.message);
+        if (err.message.includes('duplicate key error')) {
+            res.status(400).send('ERROR');
+        } else {
+            res.status(500).send('ERROR');
+        }
+    }
 });
 
 router.post('/reset_pass', async (req, res) => {

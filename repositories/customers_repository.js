@@ -1,4 +1,6 @@
 const customerRepository = require('../model')('Customer');
+const EditException = require('../exceptions/exceptions');
+const { updateSession } = require('../utils/helper');
 
 module.exports.getAllCustomers = async () => {
     let success = false;
@@ -22,12 +24,25 @@ module.exports.addCustomer = async (req, res) => {
     await customerRepository.CREATE(req, res);
 };
 
-module.exports.updateCustomer = async (req, edit) => {
+module.exports.updateCustomer = async customer => {
+    let user = null;
+    let fieldsToUpdate = {
+        phone: customer.phone,
+        address: customer.address,
+        gender: customer.gender
+    };
+
+    user = await customerRepository.findOneAndUpdate({ id: customer.id }, fieldsToUpdate, { new: true });
+
+    !!user ? console.log(`User: ${user} \nsuccessfully updeted !!`)
+    : console.log(`Error while trying to update user with ID: ${customer.id}`);
+};
+
+module.exports.editCustomer = async req => {
     const customer = req.body;
     const id = req.session.userId;
     let user = null;
-    const fieldsToUpdate = !edit ? { phone: customer.phone, address: customer.address, gender: customer.gender }
-        : {
+    const fieldsToUpdate = {
             id: customer.id,
             username: customer.username,
             firstName: customer.firstName,
@@ -36,6 +51,7 @@ module.exports.updateCustomer = async (req, edit) => {
             gender: customer.gender,
             address: customer.email
         };
+        
     user = await customerRepository.findOneAndUpdate({ id: id }, fieldsToUpdate, { new: true });
 
     if (user) {
@@ -124,22 +140,3 @@ const setPassword = (password, userToSet, username, res) => {
         }
     });
 };
- const updateSession = (user, session) => {
-    session.userId = user.id;
-    session.username = user.username;
-    session.firstName = user.firstName;
-    session.lastName = user.lastName;
-    session.gender = user.gender;
-    session.phone = user.phone;
-    session.role = user.role;
-    if (user.role === 'customer') {
-        session.email = user.address;
-    }
- };
-
-class EditException {
-    constructor(message) {
-        this.message = message;
-        this.name = 'EditException';
-    }
-}

@@ -49,6 +49,7 @@ $(document).ready(() => {
     });
     $('#edit-user-btn').click(() => {
         fillUserFields();
+        $('#edit-user-err-msg').text('');
     });
 });
 

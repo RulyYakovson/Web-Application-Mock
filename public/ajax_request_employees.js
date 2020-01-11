@@ -111,19 +111,8 @@ const removeEmployee = (id) => {
 };
 
 const selectCurrentDetails = (id, gender, role) => {
-    if (gender === 'Male') {
-        $('#update-emp-gender' + id + ' option[value=Male]').attr('selected', 'selected');
-    }
-    else if (gender === 'Female') {
-        $('#update-emp-gender' + id + ' option[value=Female]').attr('selected', 'selected');
-    }
-
-    if (role === 'Admin') {
-        $('#update-emp-role' + id + ' option[value=Admin]').attr('selected', 'selected');
-    }
-    else if (role === 'Employee') {
-        $('#update-emp-role' + id + ' option[value=Employee]').attr('selected', 'selected');
-    }
+        $(`#update-emp-gender${id} option[value=${gender}]`).attr('selected', 'selected');
+        $(`#update-emp-role${id} option[value=${role}]`).attr('selected', 'selected');
 };
 
 const generateEmployeesHtml = data => {
