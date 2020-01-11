@@ -6,7 +6,7 @@ const branch = require('./branch');
 const flower = require('./flower');
 
 const db = mongo.createConnection();
-const uri = 'mongodb://localhost/web-application-mock';
+const uri = 'mongodb://localhost/web-application-mock-db';
 const connectionOptions = { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true };
 
 (async () => {

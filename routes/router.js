@@ -9,14 +9,6 @@ const { setToken, editCustomer } = require('../repositories/customers_repository
 const expires = 10 * 60 * 1000; // min * sec * millis
 const timeout = 1000;
 
-router.put('/init_db', async (req, res) => {
-    console.log('Received init db request');
-    await setTimeout(async () => {
-        await initDB();
-        res.status(200).send('OK');
-    }, timeout);
-});
-
 router.get('/', async (req, res) => {
     console.log('Received get index page request');
     res.status(200);

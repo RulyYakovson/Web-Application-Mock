@@ -36,7 +36,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "init-db": "node ./utils/init_db.js"
   },
   "repository": {
     "type": "git",

@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const uri = 'mongodb://localhost/web-application-mock';
+const uri = 'mongodb://localhost/web-application-mock-db';
 const sessionConnect = mongo.createConnection();
 const connectionOptions = { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true };
 
